@@ -16,7 +16,7 @@ Each of the phases follows the same structured breakdown:
 - **Tool Tasks** — Hands-on tasks covering the specific tools introduced
 - **Follow-Along Project** — A guided build, video-led
 - **Monetization** — Market value estimate, a cold-pitch script, and where to actually find clients for this specific skill
-- **Resources** — External links (docs, certifications, further reading)
+- **Resources** — External links (documentation, certifications, further reading)
 
 Beyond the core curriculum, the app also includes:
 - **Dashboard** — Overall progress, tasks completed, active phase, and a learning-velocity chart

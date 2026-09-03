@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, Pause, SkipBack, SkipForward, Maximize, X, Volume2, VolumeX, ListVideo, ChevronRight, ChevronDown } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Maximize, X, Volume2, VolumeX, ListVideo, ChevronRight, ChevronDown, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { PHASES, VIDEO_PHASES, MARKETING_PHASES } from '../constants';
 import { getVideoId } from '../lib/youtube';
@@ -12,6 +12,7 @@ interface VideoItem {
   url: string;
   phaseId: string;
   phaseTitle: string;
+  track: 'fullstack' | 'video' | 'marketing';
   type: 'resource' | 'project';
 }
 
@@ -40,17 +41,35 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
   const [showThumbnail, setShowThumbnail] = useState(true);
   const [expandedPhases, setExpandedPhases] = useState<Record<string, boolean>>({});
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [selectedTrackFilter, setSelectedTrackFilter] = useState<'all' | 'fullstack' | 'video' | 'marketing'>('all');
 
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const progressInterval = useRef<NodeJS.Timeout | null>(null);
   const shouldPlayOnReady = useRef(false);
 
+  // Keyboard shortcut (Ctrl+B / Cmd+B) to toggle Course Content on PC
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+        e.preventDefault();
+        setIsSidebarOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isOpen]);
+
   useEffect(() => {
     // Extract all videos from all phase tracks
     const allVideos: VideoItem[] = [];
     const allPhaseTracks = [...PHASES, ...VIDEO_PHASES, ...MARKETING_PHASES];
     allPhaseTracks.forEach(phase => {
+      const track: 'fullstack' | 'video' | 'marketing' = 
+        phase.id.startsWith('v-p') ? 'video' : 
+        phase.id.startsWith('marketing-p') ? 'marketing' : 'fullstack';
+
       phase.resources.forEach((res, idx) => {
         const ytId = getVideoId(res.url);
         if (res.type === 'yt' && ytId) {
@@ -61,6 +80,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
             url: res.url,
             phaseId: phase.id,
             phaseTitle: phase.title,
+            track,
             type: 'resource'
           });
         }
@@ -76,6 +96,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
               url: proj.url,
               phaseId: phase.id,
               phaseTitle: phase.title,
+              track,
               type: 'project'
             });
           }
@@ -90,6 +111,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
       if (found) {
         setCurrentVideo(found);
         setExpandedPhases({ [found.phaseId]: true });
+        setSelectedTrackFilter(found.track);
       } else if (initialId) {
         setCurrentVideo({
           uid: `custom-${initialId}`,
@@ -98,12 +120,14 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
           url: initialVideoUrl,
           phaseId: 'custom',
           phaseTitle: 'Custom',
+          track: 'fullstack',
           type: 'resource'
         });
       }
     } else if (allVideos.length > 0) {
       setCurrentVideo(allVideos[0]);
       setExpandedPhases({ [allVideos[0].phaseId]: true });
+      setSelectedTrackFilter(allVideos[0].track);
     }
   }, [initialVideoUrl]);
 
@@ -343,11 +367,16 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
 
   if (!isOpen) return null;
 
+  // Filter videos by selected track
+  const filteredVideos = selectedTrackFilter === 'all' 
+    ? videos 
+    : videos.filter(v => v.track === selectedTrackFilter);
+
   // Group videos by phase
-  const groupedVideos: Record<string, { title: string, items: VideoItem[] }> = {};
-  videos.forEach(v => {
+  const groupedVideos: Record<string, { title: string, track: 'fullstack' | 'video' | 'marketing', items: VideoItem[] }> = {};
+  filteredVideos.forEach(v => {
     if (!groupedVideos[v.phaseId]) {
-      groupedVideos[v.phaseId] = { title: v.phaseTitle, items: [] };
+      groupedVideos[v.phaseId] = { title: v.phaseTitle, track: v.track, items: [] };
     }
     groupedVideos[v.phaseId].items.push(v);
   });
@@ -360,24 +389,88 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[100] bg-[#0B0B0F] flex flex-col md:flex-row overflow-hidden font-sans text-white"
       >
-        {/* Sidebar */}
+        {/* Course Content Sidebar */}
         <motion.div 
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: isSidebarOpen ? (window.innerWidth < 768 ? '100%' : '320px') : 0, opacity: isSidebarOpen ? 1 : 0 }}
+          initial={false}
+          animate={{ 
+            width: isSidebarOpen ? (typeof window !== 'undefined' && window.innerWidth < 768 ? '100%' : '320px') : 0, 
+            opacity: isSidebarOpen ? 1 : 0 
+          }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
           className={cn(
-            "h-full bg-[#111118] border-r border-white/10 flex flex-col shrink-0 overflow-hidden",
-            !isSidebarOpen && "hidden md:flex"
+            "h-full bg-[#111118] border-r border-white/10 flex flex-col shrink-0 overflow-hidden transition-[border-color]",
+            !isSidebarOpen && "border-r-0 pointer-events-none"
           )}
         >
-          <div className="p-4 border-b border-white/10 flex items-center justify-between bg-[#111118] z-10">
-            <h2 className="text-lg font-bold flex items-center gap-2">
+          <div className="p-4 border-b border-white/10 flex items-center justify-between bg-[#111118] z-10 shrink-0">
+            <h2 className="text-lg font-bold flex items-center gap-2 text-white">
               <ListVideo className="w-5 h-5 text-[#7C3AED]" />
               Course Content
             </h2>
-            <button onClick={() => setIsSidebarOpen(false)} className="md:hidden p-2 hover:bg-white/10 rounded-lg">
-              <X className="w-5 h-5" />
+            {/* Close button works on both PC (desktop) and mobile */}
+            <button 
+              id="close-course-content-btn"
+              onClick={() => setIsSidebarOpen(false)} 
+              className="p-1.5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white transition-colors flex items-center gap-1 cursor-pointer group"
+              title="Close Course Content (Ctrl+B)"
+              aria-label="Close Course Content"
+            >
+              <PanelLeftClose className="w-5 h-5 hidden md:block group-hover:text-[#A78BFA] transition-colors" />
+              <X className="w-5 h-5 md:hidden" />
             </button>
           </div>
+
+          {/* Track Filter Tabs */}
+          <div className="p-2 border-b border-white/10 grid grid-cols-4 gap-1 bg-[#0b0b10]">
+            <button
+              onClick={() => setSelectedTrackFilter('all')}
+              className={cn(
+                "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
+                selectedTrackFilter === 'all'
+                  ? "bg-white/20 text-white font-bold"
+                  : "text-[#A1A1AA] hover:text-white hover:bg-white/5"
+              )}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setSelectedTrackFilter('fullstack')}
+              className={cn(
+                "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
+                selectedTrackFilter === 'fullstack'
+                  ? "bg-[#7C3AED] text-white font-bold shadow-sm"
+                  : "text-[#A1A1AA] hover:text-[#7C3AED] hover:bg-white/5"
+              )}
+              title="Track 1: Full-Stack AI Mastery"
+            >
+              Full-Stack
+            </button>
+            <button
+              onClick={() => setSelectedTrackFilter('video')}
+              className={cn(
+                "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
+                selectedTrackFilter === 'video'
+                  ? "bg-amber-500 text-white font-bold shadow-sm"
+                  : "text-[#A1A1AA] hover:text-amber-400 hover:bg-white/5"
+              )}
+              title="Track 2: AI Video & Animation"
+            >
+              Animation
+            </button>
+            <button
+              onClick={() => setSelectedTrackFilter('marketing')}
+              className={cn(
+                "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
+                selectedTrackFilter === 'marketing'
+                  ? "bg-emerald-500 text-white font-bold shadow-sm"
+                  : "text-[#A1A1AA] hover:text-emerald-400 hover:bg-white/5"
+              )}
+              title="Track 3: Digital Marketing"
+            >
+              Marketing
+            </button>
+          </div>
+
           <div className="flex-1 overflow-y-auto p-2 custom-scrollbar">
             {Object.entries(groupedVideos).map(([phaseId, group]) => (
               <div key={phaseId} className="mb-2">
@@ -385,7 +478,13 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                   onClick={() => togglePhase(phaseId)}
                   className="w-full flex items-center justify-between p-3 hover:bg-white/5 rounded-lg transition-colors text-left"
                 >
-                  <span className="font-semibold text-sm text-[#A1A1AA] truncate pr-2">{group.title}</span>
+                  <div className="flex items-center gap-2 truncate pr-2">
+                    <span className={cn(
+                      "w-1.5 h-1.5 rounded-full shrink-0",
+                      group.track === 'video' ? "bg-amber-500" : group.track === 'marketing' ? "bg-emerald-500" : "bg-[#7C3AED]"
+                    )} />
+                    <span className="font-semibold text-sm text-[#A1A1AA] truncate">{group.title}</span>
+                  </div>
                   {expandedPhases[phaseId] ? <ChevronDown className="w-4 h-4 shrink-0 text-[#A1A1AA]" /> : <ChevronRight className="w-4 h-4 shrink-0 text-[#A1A1AA]" />}
                 </button>
                 <AnimatePresence>
@@ -404,13 +503,23 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                             className={cn(
                               "w-full text-left p-3 rounded-lg text-sm transition-all flex items-start gap-3 group",
                               currentVideo?.uid === video.uid 
-                                ? "bg-[#7C3AED]/20 text-white border border-[#7C3AED]/30" 
+                                ? group.track === 'video'
+                                  ? "bg-amber-500/20 text-white border border-amber-500/40"
+                                  : group.track === 'marketing'
+                                  ? "bg-emerald-500/20 text-white border border-emerald-500/40"
+                                  : "bg-[#7C3AED]/20 text-white border border-[#7C3AED]/30" 
                                 : "text-[#A1A1AA] hover:bg-white/5 hover:text-white"
                             )}
                           >
                             <div className={cn(
                               "mt-0.5 shrink-0 w-2 h-2 rounded-full",
-                              currentVideo?.uid === video.uid ? "bg-[#A78BFA] shadow-[0_0_10px_#A78BFA]" : "bg-white/20 group-hover:bg-white/50"
+                              currentVideo?.uid === video.uid 
+                                ? group.track === 'video'
+                                  ? "bg-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                                  : group.track === 'marketing'
+                                  ? "bg-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+                                  : "bg-[#A78BFA] shadow-[0_0_10px_#A78BFA]" 
+                                : "bg-white/20 group-hover:bg-white/50"
                             )} />
                             <span className="line-clamp-2 leading-snug">{video.title}</span>
                           </button>
@@ -427,23 +536,29 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
         {/* Main Player Area */}
         <div className="flex-1 flex flex-col h-full relative bg-[#0B0B0F]">
           {/* Top Bar */}
-          <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-20 bg-gradient-to-b from-black/80 to-transparent">
-            <div className="flex items-center gap-4">
+          <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-20 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+            <div className="flex items-center gap-3 pointer-events-auto min-w-0 pr-4">
               {!isSidebarOpen && (
                 <button 
+                  id="open-course-content-btn"
                   onClick={() => setIsSidebarOpen(true)}
-                  className="p-2 bg-black/50 hover:bg-[#7C3AED] rounded-xl backdrop-blur-md text-white btn-glow"
+                  className="px-3.5 py-2 bg-black/75 hover:bg-[#7C3AED] border border-white/15 rounded-xl backdrop-blur-md text-white flex items-center gap-2 text-xs font-semibold transition-all shadow-xl hover:scale-105 shrink-0 btn-glow cursor-pointer group"
+                  title="Open Course Content (Ctrl+B)"
+                  aria-label="Open Course Content"
                 >
-                  <ListVideo className="w-5 h-5" />
+                  <PanelLeftOpen className="w-4 h-4 text-purple-300 group-hover:text-white transition-colors" />
+                  <span className="hidden sm:inline">Course Content</span>
                 </button>
               )}
-              <h1 className="text-lg md:text-xl font-bold text-white drop-shadow-md truncate max-w-[60vw]">
+              <h1 className="text-sm md:text-lg font-bold text-white drop-shadow-md truncate max-w-[55vw]">
                 {currentVideo?.title}
               </h1>
             </div>
             <button 
               onClick={onClose}
-              className="p-2 bg-black/50 hover:bg-red-500/80 rounded-xl backdrop-blur-md text-white btn-glow"
+              className="p-2 bg-black/60 hover:bg-red-500/80 rounded-xl backdrop-blur-md text-white btn-glow pointer-events-auto shrink-0 transition-colors cursor-pointer"
+              title="Close player"
+              aria-label="Close player"
             >
               <X className="w-5 h-5" />
             </button>
@@ -543,8 +658,21 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <button onClick={toggleFullscreen} className="text-white/80 hover:text-white hover:scale-110 transition-all">
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+                      className={cn(
+                        "text-white/80 hover:text-white hover:scale-105 transition-all p-1.5 rounded-lg flex items-center gap-1.5 text-xs font-medium cursor-pointer",
+                        isSidebarOpen ? "bg-white/15 text-purple-300" : "hover:bg-white/5"
+                      )}
+                      title={isSidebarOpen ? "Close Course Content (Ctrl+B)" : "Open Course Content (Ctrl+B)"}
+                      aria-label={isSidebarOpen ? "Close Course Content" : "Open Course Content"}
+                    >
+                      <ListVideo className="w-5 h-5" />
+                      <span className="hidden lg:inline text-[11px]">{isSidebarOpen ? "Hide Playlist" : "Playlist"}</span>
+                    </button>
+
+                    <button onClick={toggleFullscreen} className="text-white/80 hover:text-white hover:scale-110 transition-all p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" title="Fullscreen">
                       <Maximize className="w-6 h-6" />
                     </button>
                   </div>

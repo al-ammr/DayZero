@@ -18,6 +18,8 @@ import {
   Flag,
   Search,
   Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
   Pin,
   PinOff,
   X,
@@ -99,6 +101,30 @@ export default function App() {
   };
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState<boolean>(() => {
+    const saved = localStorage.getItem('desktopSidebarOpen');
+    return saved !== null ? saved === 'true' : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('desktopSidebarOpen', String(isDesktopSidebarOpen));
+  }, [isDesktopSidebarOpen]);
+
+  // Keyboard shortcut (Ctrl+B / Cmd+B) to open/close side menu on PC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+        const target = e.target as HTMLElement;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+          return;
+        }
+        e.preventDefault();
+        setIsDesktopSidebarOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
   const [isAiOpen, setIsAiOpen] = useState(false);
   const [activeTrack, setActiveTrack] = useState<'fullstack' | 'video' | 'marketing' | null>('fullstack');
   const [trackSearchQuery, setTrackSearchQuery] = useState("");
@@ -246,9 +272,15 @@ export default function App() {
   const totalTasks = ALL_PHASES.reduce((acc, p) => acc + p.tasks.length, 0);
   const progress = Math.round((completedTasks.length / totalTasks) * 100);
 
-  const currentPhaseIndex = ALL_PHASES.findIndex(p => p.id === activePhaseId);
-  const nextPhase = currentPhaseIndex >= 0 && currentPhaseIndex < ALL_PHASES.length - 1 ? ALL_PHASES[currentPhaseIndex + 1] : null;
-  const prevPhase = currentPhaseIndex > 0 ? ALL_PHASES[currentPhaseIndex - 1] : null;
+  const currentTrackPhases = activePhase.id.startsWith('v-p') 
+    ? VIDEO_PHASES 
+    : activePhase.id.startsWith('marketing-p') 
+    ? MARKETING_PHASES 
+    : PHASES;
+
+  const currentPhaseIndex = currentTrackPhases.findIndex(p => p.id === activePhaseId);
+  const nextPhase = currentPhaseIndex >= 0 && currentPhaseIndex < currentTrackPhases.length - 1 ? currentTrackPhases[currentPhaseIndex + 1] : null;
+  const prevPhase = currentPhaseIndex > 0 ? currentTrackPhases[currentPhaseIndex - 1] : null;
 
   const phaseTasks = activePhase.tasks;
   const completedPhaseTasks = phaseTasks.filter(t => completedTasks.includes(t.id));
@@ -289,10 +321,44 @@ export default function App() {
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 w-[260px] bg-surface-container-low border-r border-outline-variant/20 z-50 transition-transform duration-300 overflow-y-auto custom-scrollbar",
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        "fixed inset-y-0 left-0 w-[260px] bg-surface-container-low border-r border-outline-variant/20 z-50 transition-all duration-300 overflow-y-auto custom-scrollbar shadow-2xl lg:shadow-none",
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full",
+        isDesktopSidebarOpen ? "lg:translate-x-0" : "lg:-translate-x-full"
       )}>
         <div className="p-6 min-h-full flex flex-col">
+          {/* Sidebar Header with Brand & Close Button */}
+          <div className="flex items-center justify-between pb-4 mb-2 border-b border-outline-variant/10">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(108,59,255,0.3)]">
+                <Rocket className="w-4 h-4 text-white" />
+              </div>
+              <h2 className="font-headline font-black text-lg tracking-wider text-on-surface truncate">
+                TechOptyx
+              </h2>
+            </div>
+            
+            {/* Desktop Close Side Menu Button */}
+            <button 
+              id="close-desktop-sidebar-btn"
+              onClick={() => setIsDesktopSidebarOpen(false)}
+              className="hidden lg:flex items-center justify-center p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group cursor-pointer"
+              title="Close side menu (Ctrl+B)"
+              aria-label="Close side menu"
+            >
+              <PanelLeftClose className="w-4 h-4 text-on-surface-variant group-hover:text-primary transition-colors" />
+            </button>
+
+            {/* Mobile Close Button */}
+            <button 
+              onClick={() => setIsSidebarOpen(false)}
+              className="lg:hidden p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors cursor-pointer"
+              title="Close menu"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
           <nav className="flex-1 space-y-2 pb-8">
             <button 
               onClick={() => {
@@ -333,7 +399,7 @@ export default function App() {
                       ? "bg-primary text-white shadow-sm font-bold"
                       : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
                   )}
-                  title="Full-Stack AI Developer"
+                  title="Track 1: Full-Stack AI Mastery"
                 >
                   Full-Stack
                 </button>
@@ -345,9 +411,9 @@ export default function App() {
                       ? "bg-amber-500 text-white shadow-sm font-bold"
                       : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
                   )}
-                  title="AI Video Animation"
+                  title="Track 2: AI Video & Animation"
                 >
-                  Video AI
+                  Animation
                 </button>
                 <button
                   onClick={() => handleSelectTrack('marketing', MARKETING_PHASES[0].id)}
@@ -357,7 +423,7 @@ export default function App() {
                       ? "bg-emerald-500 text-white shadow-sm font-bold"
                       : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
                   )}
-                  title="Digital Marketing"
+                  title="Track 3: Digital Marketing"
                 >
                   Marketing
                 </button>
@@ -365,142 +431,154 @@ export default function App() {
             </div>
 
             {/* Track 1: Full-Stack AI Mastery */}
-            <button 
-              onClick={() => handleSelectTrack('fullstack', PHASES[0].id)}
-              className="w-full text-left px-4 py-2 mt-2 mb-1 flex items-center justify-between rounded-lg hover:bg-primary-container/10 transition-colors group"
-            >
-              <h4 className={cn(
-                "text-[10px] font-bold uppercase tracking-widest transition-colors",
-                activeTrack === 'fullstack' ? "text-primary" : "text-on-surface-variant group-hover:text-primary"
-              )}>
-                Full-Stack AI Mastery
-              </h4>
-              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary">19 Phases</span>
-            </button>
-            {PHASES.map((phase) => {
-              const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
-              const phaseTotalTasks = phase.tasks.length;
-              const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
-
-              return (
-                <button
-                  key={phase.id}
-                  onClick={() => handleSelectPhase(phase.id, 'fullstack')}
-                  className={cn(
-                    "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
-                    activePhaseId === phase.id 
-                      ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]" 
-                      : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
-                  )}
+            {(!activeTrack || activeTrack === 'fullstack') && (
+              <>
+                <button 
+                  onClick={() => handleSelectTrack(activeTrack === 'fullstack' ? null : 'fullstack', PHASES[0].id)}
+                  className="w-full text-left px-4 py-2 mt-2 mb-1 flex items-center justify-between rounded-lg hover:bg-primary-container/10 transition-colors group"
                 >
-                  <div className="flex items-center gap-3 truncate">
-                    <span className="font-mono text-[10px] opacity-50 shrink-0">PH {phase.number}</span>
-                    <span className="text-sm font-medium truncate">{phase.title}</span>
-                  </div>
-                  {phaseProgress > 0 && (
-                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
-                      {phaseProgress === 100 ? (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-secondary" />
-                      ) : (
-                        <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
-                      )}
-                    </div>
-                  )}
+                  <h4 className={cn(
+                    "text-[10px] font-bold uppercase tracking-widest transition-colors",
+                    activeTrack === 'fullstack' ? "text-primary" : "text-on-surface-variant group-hover:text-primary"
+                  )}>
+                    Track 1: Full-Stack AI Mastery
+                  </h4>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary">19 Phases</span>
                 </button>
-              );
-            })}
+                {PHASES.map((phase) => {
+                  const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
+                  const phaseTotalTasks = phase.tasks.length;
+                  const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
+
+                  return (
+                    <button
+                      key={phase.id}
+                      onClick={() => handleSelectPhase(phase.id, 'fullstack')}
+                      className={cn(
+                        "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
+                        activePhaseId === phase.id 
+                          ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]" 
+                          : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
+                      )}
+                    >
+                      <div className="flex items-center gap-3 truncate">
+                        <span className="font-mono text-[10px] opacity-50 shrink-0">PH {phase.number}</span>
+                        <span className="text-sm font-medium truncate">{phase.title}</span>
+                      </div>
+                      {phaseProgress > 0 && (
+                        <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                          {phaseProgress === 100 ? (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-secondary" />
+                          ) : (
+                            <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
+                          )}
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </>
+            )}
 
             {/* Track 2: AI Video Animation */}
-            <button 
-              onClick={() => handleSelectTrack('video', VIDEO_PHASES[0].id)}
-              className="w-full text-left px-4 py-2 mt-4 mb-1 border-t border-outline-variant/10 pt-4 flex items-center justify-between rounded-lg hover:bg-amber-500/10 transition-colors group"
-            >
-              <h4 className={cn(
-                "text-[10px] font-bold uppercase tracking-widest transition-colors",
-                activeTrack === 'video' ? "text-amber-500" : "text-on-surface-variant group-hover:text-amber-500"
-              )}>
-                AI Video Animation
-              </h4>
-              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500">12 Modules</span>
-            </button>
-            {VIDEO_PHASES.map((phase) => {
-              const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
-              const phaseTotalTasks = phase.tasks.length;
-              const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
-
-              return (
-                <button
-                  key={phase.id}
-                  onClick={() => handleSelectPhase(phase.id, 'video')}
-                  className={cn(
-                    "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
-                    activePhaseId === phase.id 
-                      ? "bg-amber-500/20 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" 
-                      : "text-on-surface-variant hover:text-on-surface hover:bg-amber-500/10"
-                  )}
+            {(!activeTrack || activeTrack === 'video') && (
+              <>
+                <button 
+                  onClick={() => handleSelectTrack(activeTrack === 'video' ? null : 'video', VIDEO_PHASES[0].id)}
+                  className="w-full text-left px-4 py-2 mt-4 mb-1 border-t border-outline-variant/10 pt-4 flex items-center justify-between rounded-lg hover:bg-amber-500/10 transition-colors group"
                 >
-                  <div className="flex items-center gap-3 truncate">
-                    <span className="font-mono text-[10px] opacity-50 shrink-0">M {phase.number}</span>
-                    <span className="text-sm font-medium truncate">{phase.title}</span>
-                  </div>
-                  {phaseProgress > 0 && (
-                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
-                      {phaseProgress === 100 ? (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
-                      ) : (
-                        <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
-                      )}
-                    </div>
-                  )}
+                  <h4 className={cn(
+                    "text-[10px] font-bold uppercase tracking-widest transition-colors",
+                    activeTrack === 'video' ? "text-amber-500" : "text-on-surface-variant group-hover:text-amber-500"
+                  )}>
+                    Track 2: AI Video & Animation
+                  </h4>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500">12 Modules</span>
                 </button>
-              );
-            })}
+                {VIDEO_PHASES.map((phase) => {
+                  const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
+                  const phaseTotalTasks = phase.tasks.length;
+                  const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
+
+                  return (
+                    <button
+                      key={phase.id}
+                      onClick={() => handleSelectPhase(phase.id, 'video')}
+                      className={cn(
+                        "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
+                        activePhaseId === phase.id 
+                          ? "bg-amber-500/20 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" 
+                          : "text-on-surface-variant hover:text-on-surface hover:bg-amber-500/10"
+                      )}
+                    >
+                      <div className="flex items-center gap-3 truncate">
+                        <span className="font-mono text-[10px] opacity-50 shrink-0">M {phase.number}</span>
+                        <span className="text-sm font-medium truncate">{phase.title}</span>
+                      </div>
+                      {phaseProgress > 0 && (
+                        <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                          {phaseProgress === 100 ? (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
+                          ) : (
+                            <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
+                          )}
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </>
+            )}
 
             {/* Track 3: Digital Marketing */}
-            <button 
-              onClick={() => handleSelectTrack('marketing', MARKETING_PHASES[0].id)}
-              className="w-full text-left px-4 py-2 mt-4 mb-1 border-t border-outline-variant/10 pt-4 flex items-center justify-between rounded-lg hover:bg-emerald-500/10 transition-colors group"
-            >
-              <h4 className={cn(
-                "text-[10px] font-bold uppercase tracking-widest transition-colors",
-                activeTrack === 'marketing' ? "text-emerald-500" : "text-on-surface-variant group-hover:text-emerald-500"
-              )}>
-                Digital Marketing
-              </h4>
-              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500">12 Modules</span>
-            </button>
-            {MARKETING_PHASES.map((phase) => {
-              const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
-              const phaseTotalTasks = phase.tasks.length;
-              const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
-
-              return (
-                <button
-                  key={phase.id}
-                  onClick={() => handleSelectPhase(phase.id, 'marketing')}
-                  className={cn(
-                    "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
-                    activePhaseId === phase.id 
-                      ? "bg-emerald-500/20 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]" 
-                      : "text-on-surface-variant hover:text-on-surface hover:bg-emerald-500/10"
-                  )}
+            {(!activeTrack || activeTrack === 'marketing') && (
+              <>
+                <button 
+                  onClick={() => handleSelectTrack(activeTrack === 'marketing' ? null : 'marketing', MARKETING_PHASES[0].id)}
+                  className="w-full text-left px-4 py-2 mt-4 mb-1 border-t border-outline-variant/10 pt-4 flex items-center justify-between rounded-lg hover:bg-emerald-500/10 transition-colors group"
                 >
-                  <div className="flex items-center gap-3 truncate">
-                    <span className="font-mono text-[10px] opacity-50 shrink-0">M {phase.number}</span>
-                    <span className="text-sm font-medium truncate">{phase.title}</span>
-                  </div>
-                  {phaseProgress > 0 && (
-                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
-                      {phaseProgress === 100 ? (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                      ) : (
-                        <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
-                      )}
-                    </div>
-                  )}
+                  <h4 className={cn(
+                    "text-[10px] font-bold uppercase tracking-widest transition-colors",
+                    activeTrack === 'marketing' ? "text-emerald-500" : "text-on-surface-variant group-hover:text-emerald-500"
+                  )}>
+                    Track 3: Digital Marketing
+                  </h4>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500">12 Modules</span>
                 </button>
-              );
-            })}
+                {MARKETING_PHASES.map((phase) => {
+                  const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
+                  const phaseTotalTasks = phase.tasks.length;
+                  const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
+
+                  return (
+                    <button
+                      key={phase.id}
+                      onClick={() => handleSelectPhase(phase.id, 'marketing')}
+                      className={cn(
+                        "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
+                        activePhaseId === phase.id 
+                          ? "bg-emerald-500/20 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]" 
+                          : "text-on-surface-variant hover:text-on-surface hover:bg-emerald-500/10"
+                      )}
+                    >
+                      <div className="flex items-center gap-3 truncate">
+                        <span className="font-mono text-[10px] opacity-50 shrink-0">M {phase.number}</span>
+                        <span className="text-sm font-medium truncate">{phase.title}</span>
+                      </div>
+                      {phaseProgress > 0 && (
+                        <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                          {phaseProgress === 100 ? (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                          ) : (
+                            <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
+                          )}
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </>
+            )}
             <button
               onClick={() => {
                 setActivePhaseId('prompt-library');
@@ -599,8 +677,26 @@ export default function App() {
         </aside>
 
       <div className="flex relative z-10">
+        {/* Desktop Open Sidebar Button (visible on PC when side menu is closed) */}
+        {!isDesktopSidebarOpen && (
+          <button
+            id="open-desktop-sidebar-btn"
+            onClick={() => setIsDesktopSidebarOpen(true)}
+            className="hidden lg:flex items-center gap-2.5 fixed top-4 left-4 z-40 px-3.5 py-2 rounded-xl bg-surface-container-high/95 hover:bg-surface-container-highest border border-outline-variant/30 text-on-surface text-xs font-semibold shadow-xl backdrop-blur-md transition-all hover:scale-105 group btn-glow cursor-pointer"
+            title="Open side menu (Ctrl+B)"
+            aria-label="Open side menu"
+          >
+            <PanelLeftOpen className="w-4 h-4 text-primary group-hover:text-primary-light transition-colors" />
+            <span className="font-medium">Open Menu</span>
+            <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container border border-outline-variant/20 text-on-surface-variant opacity-70">Ctrl+B</kbd>
+          </button>
+        )}
+
         {/* Main Content */}
-        <main className="flex-1 min-w-0 w-full lg:ml-[260px] min-h-screen pt-20 lg:pt-0">
+        <main className={cn(
+          "flex-1 min-w-0 w-full min-h-screen pt-20 lg:pt-0 transition-[margin] duration-300",
+          isDesktopSidebarOpen ? "lg:ml-[260px]" : "lg:ml-0"
+        )}>
           <div id="phase-header-anchor" className="scroll-mt-24 pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-10">
             
@@ -854,6 +950,7 @@ export default function App() {
                             <Rocket className="w-6 h-6" />
                           </div>
                           <div>
+                            <span className="text-[10px] font-bold text-primary tracking-widest uppercase block mb-1">Track 1 • 19 Phases</span>
                             <h3 className={cn("text-xl font-bold mb-1 transition-colors", activeTrack === 'fullstack' ? "text-primary" : "text-on-surface group-hover:text-primary")}>Full-Stack AI Developer</h3>
                             <p className="text-sm text-on-surface-variant">Master AI-powered software development</p>
                           </div>
@@ -881,6 +978,7 @@ export default function App() {
                             <Play className="w-6 h-6" />
                           </div>
                           <div>
+                            <span className="text-[10px] font-bold text-amber-500 tracking-widest uppercase block mb-1">Track 2 • 12 Modules</span>
                             <h3 className={cn("text-xl font-bold mb-1 transition-colors", activeTrack === 'video' ? "text-amber-500" : "text-on-surface group-hover:text-amber-500")}>AI Video Animation</h3>
                             <p className="text-sm text-on-surface-variant">Master AI-powered video generation and storytelling</p>
                           </div>
@@ -908,6 +1006,7 @@ export default function App() {
                             <TrendingUp className="w-6 h-6" />
                           </div>
                           <div>
+                            <span className="text-[10px] font-bold text-emerald-500 tracking-widest uppercase block mb-1">Track 3 • 12 Modules</span>
                             <h3 className={cn("text-xl font-bold mb-1 transition-colors", activeTrack === 'marketing' ? "text-emerald-500" : "text-on-surface group-hover:text-emerald-500")}>Digital Marketing</h3>
                             <p className="text-sm text-on-surface-variant">Master AI-driven marketing and commerce</p>
                           </div>
@@ -945,7 +1044,11 @@ export default function App() {
                           }, [] as typeof PHASES).map((phase, i) => (
                             <div key={i} className="space-y-4">
                               <div className="flex items-center justify-between">
-                              <h4 className="font-bold text-sm text-primary uppercase tracking-widest flex items-center gap-2">
+                              <h4 
+                                onClick={() => handleSelectPhase(phase.id, 'fullstack')}
+                                className="font-bold text-sm text-primary uppercase tracking-widest flex items-center gap-2 cursor-pointer hover:underline group-hover:text-primary"
+                                title="Open module details"
+                              >
                                 <span className="w-2 h-2 rounded-full bg-primary" />
                                 {phase.title}
                               </h4>
@@ -1015,7 +1118,11 @@ export default function App() {
                           }, [] as typeof VIDEO_PHASES).map((phase, i) => (
                             <div key={i} className="space-y-4">
                               <div className="flex items-center justify-between">
-                              <h4 className="font-bold text-sm text-amber-500 uppercase tracking-widest flex items-center gap-2">
+                              <h4 
+                                onClick={() => handleSelectPhase(phase.id, 'video')}
+                                className="font-bold text-sm text-amber-500 uppercase tracking-widest flex items-center gap-2 cursor-pointer hover:underline group-hover:text-amber-500"
+                                title="Open module details"
+                              >
                                 <span className="w-2 h-2 rounded-full bg-amber-500" />
                                 {phase.title}
                               </h4>
@@ -1095,7 +1202,11 @@ export default function App() {
                           }, [] as typeof MARKETING_PHASES).map((phase, i) => (
                             <div key={i} className="space-y-4">
                               <div className="flex items-center justify-between">
-                              <h4 className="font-bold text-sm text-emerald-500 uppercase tracking-widest flex items-center gap-2">
+                              <h4 
+                                onClick={() => handleSelectPhase(phase.id, 'marketing')}
+                                className="font-bold text-sm text-emerald-500 uppercase tracking-widest flex items-center gap-2 cursor-pointer hover:underline group-hover:text-emerald-500"
+                                title="Open module details"
+                              >
                                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
                                 {phase.title}
                               </h4>
@@ -1484,8 +1595,19 @@ export default function App() {
                   <div id="phase-header" className="mb-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6 scroll-mt-24">
                     <div>
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-[10px] font-label text-secondary uppercase tracking-wider">
-                          Phase {activePhase.number}
+                        <span className={cn(
+                          "px-3 py-1 rounded-full text-[10px] font-label uppercase tracking-wider border font-bold",
+                          activePhase.id.startsWith('v-p') 
+                            ? "bg-amber-500/10 border-amber-500/30 text-amber-500" 
+                            : activePhase.id.startsWith('marketing-p') 
+                            ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-500" 
+                            : "bg-secondary/10 border-secondary/20 text-secondary"
+                        )}>
+                          {activePhase.id.startsWith('v-p') 
+                            ? `Track 2: Animation • Module ${activePhase.number}` 
+                            : activePhase.id.startsWith('marketing-p') 
+                            ? `Track 3: Marketing • Module ${activePhase.number}` 
+                            : `Track 1: Full-Stack • Phase ${activePhase.number}`}
                         </span>
                         <span className="text-on-surface-variant font-label text-xs tracking-widest uppercase">{activePhase.badge}</span>
                       </div>
@@ -1832,7 +1954,7 @@ export default function App() {
                       </p>
                       <div className="flex justify-center gap-4">
                         <a 
-                          href={`https://twitter.com/intent/tweet?text=I'm%20currently%20working%20on%20Phase%20${activePhase.number}:%20${encodeURIComponent(activePhase.title)}%20in%20the%20TechOptyx%20AI%20Full-stack%20Mastery%20Roadmap!%20%23TechOptyx%20%23AI%20%23FullStack`}
+                          href={`https://twitter.com/intent/tweet?text=I'm%20currently%20working%20on%20${activePhase.id.startsWith('v-p') ? 'Track%202%20(Animation)%20Module%20' : activePhase.id.startsWith('marketing-p') ? 'Track%203%20(Marketing)%20Module%20' : 'Phase%20'}${activePhase.number}:%20${encodeURIComponent(activePhase.title)}%20in%20the%20TechOptyx%20Mastery%20Roadmap!%20%23TechOptyx`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-4 py-2 rounded-lg bg-[#1DA1F2] text-white text-sm font-bold hover:bg-[#1a91da] transition-colors flex items-center gap-2 btn-glow"
@@ -1854,14 +1976,18 @@ export default function App() {
                       {prevPhase ? (
                         <button 
                           onClick={() => {
-                            handleSelectPhase(prevPhase.id);
+                            handleSelectPhase(prevPhase.id, prevPhase.id.startsWith('v-p') ? 'video' : prevPhase.id.startsWith('marketing-p') ? 'marketing' : 'fullstack');
                           }}
                           className="px-6 py-3 rounded-xl border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex items-center gap-2 btn-glow"
                         >
                           <ChevronLeft className="w-4 h-4" />
                           <div className="text-left">
-                            <div className="text-[10px] font-label uppercase tracking-wider opacity-50">Previous</div>
-                            <div className="text-sm font-bold">Phase {prevPhase.number}</div>
+                            <div className="text-[10px] font-label uppercase tracking-wider opacity-50">
+                              {prevPhase.id.startsWith('v-p') ? 'Track 2: Animation' : prevPhase.id.startsWith('marketing-p') ? 'Track 3: Marketing' : 'Track 1: Full-Stack'}
+                            </div>
+                            <div className="text-sm font-bold">
+                              {prevPhase.id.startsWith('p') ? `Phase ${prevPhase.number}` : `Module ${prevPhase.number}`}
+                            </div>
                           </div>
                         </button>
                       ) : (
@@ -1871,13 +1997,24 @@ export default function App() {
                       {nextPhase && (
                         <button 
                           onClick={() => {
-                            handleSelectPhase(nextPhase.id);
+                            handleSelectPhase(nextPhase.id, nextPhase.id.startsWith('v-p') ? 'video' : nextPhase.id.startsWith('marketing-p') ? 'marketing' : 'fullstack');
                           }}
-                          className="px-6 py-3 rounded-xl bg-primary-container text-white hover:bg-primary-container/80 flex items-center gap-2 text-right shadow-[0_5px_15px_-3px_rgba(108,59,255,0.3)] btn-glow"
+                          className={cn(
+                            "px-6 py-3 rounded-xl text-white flex items-center gap-2 text-right btn-glow",
+                            nextPhase.id.startsWith('v-p') 
+                              ? "bg-amber-500 hover:bg-amber-600 shadow-[0_5px_15px_-3px_rgba(245,158,11,0.3)]" 
+                              : nextPhase.id.startsWith('marketing-p') 
+                              ? "bg-emerald-500 hover:bg-emerald-600 shadow-[0_5px_15px_-3px_rgba(16,185,129,0.3)]" 
+                              : "bg-primary-container hover:bg-primary-container/80 shadow-[0_5px_15px_-3px_rgba(108,59,255,0.3)]"
+                          )}
                         >
                           <div>
-                            <div className="text-[10px] font-label uppercase tracking-wider opacity-70">Next</div>
-                            <div className="text-sm font-bold">Phase {nextPhase.number}</div>
+                            <div className="text-[10px] font-label uppercase tracking-wider opacity-70">
+                              {nextPhase.id.startsWith('v-p') ? 'Track 2: Animation' : nextPhase.id.startsWith('marketing-p') ? 'Track 3: Marketing' : 'Track 1: Full-Stack'}
+                            </div>
+                            <div className="text-sm font-bold">
+                              {nextPhase.id.startsWith('p') ? `Phase ${nextPhase.number}` : `Module ${nextPhase.number}`}
+                            </div>
                           </div>
                           <ChevronRight className="w-4 h-4" />
                         </button>

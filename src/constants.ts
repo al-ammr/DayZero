@@ -4947,33 +4947,28 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p1",
     "number": "01",
     "title": "Digital Marketing Landscape & Brand Strategy",
-    "badge": "STRATEGY",
-    "weeks": "Week 1",
-    "objective": "Dive deep into the foundational architecture of the modern digital landscape. You will learn to construct robust brand positioning, define psychographic buyer personas, and architect a comprehensive go-to-market strategy that cuts through the noise of the 2026 algorithmic era.",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 1",
+    "objective": "Dive deep into the foundational architecture of the modern digital marketing landscape. Learn to construct robust brand positioning, define psychographic buyer personas, and architect a comprehensive go-to-market strategy that cuts through the noise of the 2026 algorithmic era.",
     "resources": [
       {
-        "title": "Digital Marketing 101 - Full Course for Beginners",
-        "url": "https://www.youtube.com/watch?v=bixR-KIJKYM",
+        "title": "2026 Digital Marketing Landscape (Full Course)",
+        "url": "https://www.youtube.com/watch?v=Opq_H5zHh9w",
         "type": "yt"
       },
       {
-        "title": "How to Create an Unbeatable Marketing Strategy in 2026",
-        "url": "https://www.youtube.com/watch?v=kYv_8E1_c6s",
+        "title": "Brand Strategy & Positioning Blueprint",
+        "url": "https://www.youtube.com/watch?v=cPOuOqpjHi4",
         "type": "yt"
       },
       {
-        "title": "Brand Strategy Blueprint: Brand Positioning & USP",
-        "url": "https://www.youtube.com/watch?v=G3z7oG9W5f4",
+        "title": "Free Logo & Brand Design Tools",
+        "url": "https://www.youtube.com/watch?v=Xrz0fr7Kz9o",
         "type": "yt"
       },
       {
-        "title": "Go-To-Market (GTM) Strategy Masterclass",
-        "url": "https://www.youtube.com/watch?v=P21r759rZg0",
-        "type": "yt"
-      },
-      {
-        "title": "How to Define Your Ideal Customer Profile & Personas",
-        "url": "https://www.youtube.com/watch?v=aG47WkM99eI",
+        "title": "Free AI Assistants Comparison for Marketers",
+        "url": "https://www.youtube.com/watch?v=3GSydCmqJ2c",
         "type": "yt"
       },
       {
@@ -5008,7 +5003,7 @@ export const MARKETING_PHASES: Phase[] = [
     "followAlongProjects": [
       {
         "title": "Brand Strategy & Positioning Masterclass",
-        "url": "https://www.youtube.com/watch?v=NPqEdQDraho",
+        "url": "https://www.youtube.com/watch?v=cPOuOqpjHi4",
         "outcome": "A completed Miro/Notion brand strategy playbook with 4-quadrant positioning matrix and detailed psychographic customer avatar.",
         "steps": [
           "Plot 4 key market competitors on X/Y value axis",
@@ -5026,6 +5021,10 @@ export const MARKETING_PHASES: Phase[] = [
       {
         "name": "Notion",
         "url": "https://notion.so/"
+      },
+      {
+        "name": "Fix Finity",
+        "url": "https://www.fixfinity.com/"
       }
     ],
     "tasks": [
@@ -5047,7 +5046,7 @@ export const MARKETING_PHASES: Phase[] = [
     ],
     "project": {
       "title": "Complete Brand Go-to-Market Strategy",
-      "description": "You will build a full-scale Go-to-Market (GTM) brand playbook. This involves synthesizing market research into a cohesive 15-page strategy document detailing your brand's unique positioning, hyper-targeted audience segments, primary acquisition channels, and core messaging pillars designed to penetrate saturated markets.",
+      "description": "Build a full-scale Go-to-Market (GTM) brand playbook synthesizing market research into a cohesive strategy document detailing unique positioning, hyper-targeted audience segments, primary acquisition channels, and core messaging pillars.",
       "deliverables": [
         "Brand Positioning Map",
         "Competitor Matrix",
@@ -5070,74 +5069,72 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p2",
     "number": "02",
     "title": "Content Marketing & Social Media Strategy",
-    "badge": "SOCIAL",
-    "weeks": "Week 2",
-    "objective": "Master the psychology of attention capture and algorithmic amplification across platforms like TikTok, Instagram Reels, and LinkedIn. Learn to architect a scalable content machine, construct high-retention hooks, and map formats directly to the customer journey funnel.",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 2",
+    "objective": "Master high-retention content creation across TikTok, Instagram, LinkedIn, and YouTube. Understand the underlying algorithms that drive viral distribution, craft irresistible hooks, and build an automated multi-channel publishing engine.",
     "resources": [
       {
-        "title": "Content Marketing Full Course - Strategy & Distribution",
-        "url": "https://www.youtube.com/watch?v=gS60bL1s738",
+        "title": "Content Hooks & Attention Retention",
+        "url": "https://www.youtube.com/watch?v=Cu_4M9vxruM",
         "type": "yt"
       },
       {
-        "title": "Short-Form Video Masterclass: TikTok, Reels & Shorts",
-        "url": "https://www.youtube.com/watch?v=7Y9L3y8Zk7M",
+        "title": "TikTok Marketing Mastery for Growth",
+        "url": "https://www.youtube.com/watch?v=-9UjSttphdo",
         "type": "yt"
       },
       {
-        "title": "How to Write Viral Hooks That Retain Attention",
-        "url": "https://www.youtube.com/watch?v=cQ3L8R0V8pM",
+        "title": "Instagram Marketing Strategy & Reels Algorithm",
+        "url": "https://www.youtube.com/watch?v=jzO3T2AiX_I",
         "type": "yt"
       },
       {
-        "title": "Content Repurposing Framework: 1 Core Asset to 10 Micro-Posts",
-        "url": "https://www.youtube.com/watch?v=5V2yW4Z31r4",
+        "title": "LinkedIn Marketing Strategy for B2B Growth",
+        "url": "https://www.youtube.com/watch?v=Eeke2jhaN1o",
         "type": "yt"
       },
       {
-        "title": "Organic LinkedIn Growth Strategy for 2026",
-        "url": "https://www.youtube.com/watch?v=E7yF4j8V6dY",
+        "title": "Content Marketing Strategy: Ideation to Distribution",
+        "url": "https://www.youtube.com/watch?v=rZV5ozvP4eE",
         "type": "yt"
       },
       {
-        "title": "Social Media Algorithm Secrets Explained",
-        "url": "https://www.youtube.com/watch?v=f2wXpL1s74k",
+        "title": "Free Social Media Scheduling Tools",
+        "url": "https://www.youtube.com/watch?v=_tt42iOYN88",
+        "type": "yt"
+      },
+      {
+        "title": "Zero-Click Content Strategy for High Reach",
+        "url": "https://www.youtube.com/watch?v=4OtbzltZQzA",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "Meta Social Media Marketing Professional Certificate",
-        "url": "https://www.coursera.org/professional-certificates/meta-social-media-marketing",
-        "type": "certification",
-        "provider": "Meta",
-        "description": "Learn to build a social media strategy, create content, and analyze campaigns."
-      },
-      {
         "title": "HubSpot Content Marketing Certification",
         "url": "https://academy.hubspot.com/courses/content-marketing",
         "type": "certification",
         "provider": "HubSpot",
-        "description": "Master the art of storytelling, content creation, repurposing, and promotion."
+        "description": "Learn how to build a content creation framework that drives organic business growth."
       },
       {
-        "title": "TikTok Creator Academy",
-        "url": "https://creator.tiktok.com/",
-        "type": "guide",
-        "provider": "TikTok",
-        "description": "Deep dive into TikTok's algorithm, short-form storytelling, and community building."
+        "title": "Meta Certified Digital Marketing Associate",
+        "url": "https://www.facebook.com/business/learn/certification",
+        "type": "certification",
+        "provider": "Meta Blueprint",
+        "description": "Foundational understanding of advertising and organic social strategies on Facebook and Instagram."
       }
     ],
     "followAlongProjects": [
       {
         "title": "Content Marketing Strategy & Calendar Execution",
-        "url": "https://www.youtube.com/watch?v=0R_3iarc8IA",
-        "outcome": "A fully scheduled Notion content calendar with 30 posts categorized into 4 core pillars and 10 viral hook templates.",
+        "url": "https://www.youtube.com/watch?v=rZV5ozvP4eE",
+        "outcome": "A 30-day multi-channel content calendar with 10 high-retention video hooks and cross-platform distribution workflow.",
         "steps": [
-          "Define 4 distinct content pillars (Authority, Story, Proof, Promo)",
-          "Draft 10 viral hook variations using curiosity gaps",
-          "Build 1-to-10 repurposing pipeline SOP",
-          "Schedule 30 cross-platform posts in Buffer"
+          "Brainstorm 30 content angles based on customer questions",
+          "Script 10 short-form video hooks with 3-second pattern interrupts",
+          "Set up automated scheduling workflow with Buffer or Enji",
+          "Establish performance tracking metrics (CTR, Watch Time, Shares)"
         ]
       }
     ],
@@ -5147,42 +5144,47 @@ export const MARKETING_PHASES: Phase[] = [
         "url": "https://buffer.com/"
       },
       {
+        "name": "Enji",
+        "url": "https://enji.co/"
+      },
+      {
         "name": "CapCut",
-        "url": "https://www.capcut.com/"
+        "url": "https://capcut.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t4",
-        "label": "Develop a 30-day cross-platform content calendar with distinct content pillars.",
-        "type": "writing"
-      },
-      {
-        "id": "m-t5",
-        "label": "Script 5 high-retention short-form video hooks leveraging curiosity gaps.",
+        "label": "Script and record 3 short-form videos utilizing viral 3-second hook frameworks.",
         "type": "video"
       },
       {
+        "id": "m-t5",
+        "label": "Construct a 30-day multi-channel social media content calendar.",
+        "type": "planning"
+      },
+      {
         "id": "m-t6",
-        "label": "Design a content repurposing workflow to turn 1 core asset into 10 micro-assets.",
-        "type": "system"
+        "label": "Draft a zero-click LinkedIn carousel post optimized for high algorithmic distribution.",
+        "type": "writing"
       }
     ],
     "project": {
-      "title": "Omnichannel Content Ecosystem",
-      "description": "You will construct a scalable content engine. This includes a strategic content calendar mapped to the buyer's journey, a repository of hook templates, and a documented Standard Operating Procedure (SOP) for repurposing hero content (like a podcast or blog) into dozens of social-native posts.",
+      "title": "Viral Multi-Platform Content Engine",
+      "description": "Build an automated content repurposing workflow. Take one 10-minute long-form core asset and transform it into 5 short-form TikTok/Reels, 3 LinkedIn carousels, and 2 Twitter/X threads.",
       "deliverables": [
-        "30-Day Content Calendar",
-        "Hook & Script Repository",
-        "Content Repurposing SOP"
+        "1 Long-form core asset transcript & breakdown",
+        "5 Edited Short-form video scripts & captioned cuts",
+        "3 High-contrast LinkedIn carousel slide decks",
+        "30-day automated distribution calendar"
       ],
       "sellingStrategy": {
-        "pitch": "Pitch this as a 'Content Engine Architecture'. Businesses struggle with consistency; you are selling them a predictable system for omni-channel presence.",
-        "pricing": "$800 - $2,000/month retainer",
+        "pitch": "Offer an end-to-end 'Content Repurposing Retainer' for founders and executives who record podcasts or webinars but lack time to post daily.",
+        "pricing": "$1,500 - $3,500 / month",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Podcast Hosts",
+          "B2B SaaS Founders",
+          "LinkedIn Executives"
         ]
       }
     },
@@ -5192,119 +5194,117 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p3",
     "number": "03",
     "title": "Search Engine Optimization (SEO) & AI Search",
-    "badge": "SEO",
-    "weeks": "Week 3",
-    "objective": "Navigate the shift from traditional keyword search to AI-assisted generative engines (SGE, Perplexity, ChatGPT). Master technical SEO, semantic content structuring, schema markup implementation, and the exact entity-based signals required to become an AI-cited authority in your niche.",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 3",
+    "objective": "Demystify search in the Generative AI era. Master traditional technical and on-page SEO alongside Generative Engine Optimization (GEO) to ensure your brand is cited and recommended by ChatGPT, Google AI Overviews, Perplexity, and Claude.",
     "resources": [
       {
-        "title": "SEO for Beginners: Rank #1 on Google (Full Course)",
-        "url": "https://www.youtube.com/watch?v=xsVTqzratPs",
+        "title": "SEO & Hybrid SEO for 2026 (Rank #1 on Google)",
+        "url": "https://www.youtube.com/watch?v=tiW6xRYSXmM",
         "type": "yt"
       },
       {
-        "title": "Generative Engine Optimization (GEO): Ranking in ChatGPT & AI Search",
-        "url": "https://www.youtube.com/watch?v=yYyH4h5g7gE",
+        "title": "AI Search Optimization (GEO for SGE & Perplexity)",
+        "url": "https://www.youtube.com/watch?v=CFAecA3k82o",
         "type": "yt"
       },
       {
-        "title": "Technical SEO Audit Masterclass (Step-by-Step)",
-        "url": "https://www.youtube.com/watch?v=o5F_c8-5C-o",
+        "title": "YouTube Marketing & Video SEO Strategy",
+        "url": "https://www.youtube.com/watch?v=HPxmXC1ItOU",
         "type": "yt"
       },
       {
-        "title": "Keyword Research & Semantic Topic Clusters Tutorial",
-        "url": "https://www.youtube.com/watch?v=GkP_Y0q8hXU",
+        "title": "AI-Cited Authority & Content Optimization",
+        "url": "https://www.youtube.com/watch?v=5OccF4g0UKI",
         "type": "yt"
       },
       {
-        "title": "Schema Markup & JSON-LD Structured Data Guide",
-        "url": "https://www.youtube.com/watch?v=vV0f4F5f9uM",
+        "title": "Structured Data & Schema Markup for AI Engines",
+        "url": "https://www.youtube.com/watch?v=r0bI0yLp_ps",
         "type": "yt"
       },
       {
-        "title": "On-Page SEO Checklist for Highest CTR",
-        "url": "https://www.youtube.com/watch?v=4uP2L1K4jJw",
+        "title": "Free SEO Tools to Rank Without Paid Subscriptions",
+        "url": "https://www.youtube.com/watch?v=3SE2YdU1ZaI",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "Semrush SEO Crash Course",
-        "url": "https://www.semrush.com/academy/courses/seo-crash-course/",
+        "title": "HubSpot SEO Certification",
+        "url": "https://academy.hubspot.com/courses/seo-training",
         "type": "certification",
-        "provider": "Semrush",
-        "description": "Learn the fundamentals of SEO, keyword research, and on-page optimization."
+        "provider": "HubSpot",
+        "description": "Learn everything from search engine algorithms and link building to technical website audits."
       },
       {
-        "title": "Ahrefs Academy: SEO Training Course",
-        "url": "https://ahrefs.com/academy/seo-training-course",
-        "type": "course",
-        "provider": "Ahrefs",
-        "description": "Actionable tutorials on link building, keyword research, and technical SEO audits."
-      },
-      {
-        "title": "Google Search Console Training",
-        "url": "https://www.youtube.com/playlist?list=PLKoqnv2vTMUQQ5NDcb3u1h-q2qD-T-z8O",
+        "title": "Google Search Central SEO Starter Guide",
+        "url": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
         "type": "guide",
         "provider": "Google",
-        "description": "Official Google video series on diagnosing and optimizing search performance."
+        "description": "Official documentation from Google engineers explaining how search indexing and ranking truly operate."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Semantic Topic Cluster & JSON-LD Schema Build",
-        "url": "https://www.youtube.com/watch?v=xsVTqzratPs",
-        "outcome": "A live semantic SEO pillar page architecture with keyword difficulty data and validated FAQ/Organization JSON-LD schema.",
+        "title": "Hybrid SEO & AI Search Topic Cluster Build",
+        "url": "https://www.youtube.com/watch?v=tiW6xRYSXmM",
+        "outcome": "Complete keyword map, JSON-LD schema markup, and AI-optimized pillar page ready for indexing.",
         "steps": [
-          "Conduct keyword research for pillar topic and 6 sub-topics",
-          "Map internal linking hierarchy from sub-pages to pillar",
-          "Write custom JSON-LD schema markup",
-          "Validate schema using Google Rich Results Test"
+          "Audit target keyword search intent and query modifiers",
+          "Design a semantic pillar-and-cluster site architecture",
+          "Write an in-depth 2,500-word authority pillar guide",
+          "Generate and validate custom JSON-LD schema markup"
         ]
       }
     ],
     "tools": [
       {
-        "name": "Semrush",
-        "url": "https://semrush.com"
-      },
-      {
         "name": "Google Search Console",
         "url": "https://search.google.com/search-console"
+      },
+      {
+        "name": "Ahrefs Webmaster Tools",
+        "url": "https://ahrefs.com/webmaster-tools"
+      },
+      {
+        "name": "Schema Markup Generator",
+        "url": "https://technicalseo.com/tools/schema-markup-generator/"
       }
     ],
     "tasks": [
       {
         "id": "m-t7",
-        "label": "Perform a comprehensive technical SEO site audit identifying crawl errors and speed bottlenecks.",
-        "type": "code"
+        "label": "Execute a full technical SEO site audit identifying crawl errors and slow Core Web Vitals.",
+        "type": "technical"
       },
       {
         "id": "m-t8",
-        "label": "Develop a semantic keyword cluster mapped to informational and transactional intent.",
+        "label": "Build a semantic topic cluster map targeting high-intent long-tail search terms.",
         "type": "research"
       },
       {
         "id": "m-t9",
-        "label": "Implement JSON-LD Schema markup for local business or article entities.",
+        "label": "Deploy schema markup (Article, Organization, FAQ) and verify with Google Rich Results Test.",
         "type": "code"
       }
     ],
     "project": {
-      "title": "AI-Ready Semantic SEO Audit & Strategy",
-      "description": "You will produce a highly technical, comprehensive SEO audit and roadmap. Unlike traditional audits, this will focus on Semantic SEO—structuring content in entity clusters, optimizing for natural language processing, and mapping out a backlink strategy to establish topical authority.",
+      "title": "Comprehensive SEO & GEO Audit with Topic Architecture",
+      "description": "Produce a production-grade 20-page SEO Audit and AI Optimization Strategy for an existing business, identifying technical pitfalls, keyword expansion opportunities, and direct GEO citation strategies.",
       "deliverables": [
-        "Technical SEO Audit Report",
-        "Entity & Keyword Cluster Map",
-        "On-Page Optimization Checklist"
+        "Technical Health & Core Web Vitals Scorecard",
+        "Keyword Opportunity & Semantic Gap Matrix",
+        "Pillar & Topic Cluster Blueprint",
+        "AI Search Optimization (GEO) Action Plan"
       ],
       "sellingStrategy": {
-        "pitch": "Sell this as an 'AI Search Readiness Audit'. Frame it around the fear of losing traffic to AI overviews, offering a solution to future-proof their organic visibility.",
-        "pricing": "$1,000 - $3,500",
+        "pitch": "Sell this as a 'Search Readiness & AI Search Audit' to modern brands worried their search visibility is disappearing to Perplexity and ChatGPT.",
+        "pricing": "$750 - $2,500",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Local Professional Services",
+          "E-commerce Stores",
+          "SaaS Companies"
         ]
       }
     },
@@ -5314,38 +5314,28 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p4",
     "number": "04",
     "title": "Paid Advertising & AI Bidding",
-    "badge": "PPC",
-    "weeks": "Week 4",
-    "objective": "Construct high-ROI paid acquisition funnels using algorithmic bidding strategies. You will master campaign architecture across Google Ads and Meta Ads, learning how to feed AI algorithms with the right conversion signals and first-party data to autonomously optimize your CPA and ROAS.",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 4",
+    "objective": "Harness algorithmic paid media across Meta (Facebook & Instagram), Google Ads, and TikTok. Master AI bid strategies, Performance Max (PMax), Advantage+ campaigns, and creative testing systems that deliver consistent positive ROAS.",
     "resources": [
       {
-        "title": "Meta Ads (Facebook & Instagram) Masterclass",
+        "title": "Paid Advertising with AI & Modern Ad Systems",
+        "url": "https://www.youtube.com/watch?v=wKp8lEICwZQ",
+        "type": "yt"
+      },
+      {
+        "title": "AI Bid Strategies, Smart Bidding & Targeting",
+        "url": "https://www.youtube.com/watch?v=PCXzwgch0dU",
+        "type": "yt"
+      },
+      {
+        "title": "Meta Ads & Advantage+ Campaign Masterclass",
         "url": "https://www.youtube.com/watch?v=eYkCqgMhKUk",
         "type": "yt"
       },
       {
-        "title": "Google Ads Search & Performance Max (PMax) Full Course",
+        "title": "Google Performance Max (PMax) Architecture",
         "url": "https://www.youtube.com/watch?v=r3E9E2_J6_0",
-        "type": "yt"
-      },
-      {
-        "title": "High-ROAS Ad Creative Testing Strategy",
-        "url": "https://www.youtube.com/watch?v=b0V7mN4sB3Y",
-        "type": "yt"
-      },
-      {
-        "title": "Direct Response Copywriting for Paid Social Ads",
-        "url": "https://www.youtube.com/watch?v=Kz6E1E4sB7M",
-        "type": "yt"
-      },
-      {
-        "title": "Meta Conversions API (CAPI) & Server-Side Tracking",
-        "url": "https://www.youtube.com/watch?v=r1W6F8G2q8A",
-        "type": "yt"
-      },
-      {
-        "title": "Paid Media Budget Allocation & Bidding Algorithms",
-        "url": "https://www.youtube.com/watch?v=yQv7qXyF5b4",
         "type": "yt"
       }
     ],
@@ -5354,79 +5344,77 @@ export const MARKETING_PHASES: Phase[] = [
         "title": "Google Ads Search Certification",
         "url": "https://skillshop.exceedlms.com/student/path/18128-google-ads-search-certification",
         "type": "certification",
-        "provider": "Google",
-        "description": "Validate your expertise in building and optimizing Google Search campaigns."
+        "provider": "Google Skillshop",
+        "description": "Demonstrate mastery of building and optimizing Google Search campaigns and automated Smart Bidding."
       },
       {
-        "title": "Meta Blueprint: Digital Marketing Associate",
-        "url": "https://www.facebook.com/business/learn/certification",
+        "title": "Google Ads Display Certification",
+        "url": "https://skillshop.exceedlms.com/student/path/18061-google-ads-display-certification",
         "type": "certification",
-        "provider": "Meta",
-        "description": "Core understanding of value-driven advertising on Facebook and Instagram."
-      },
-      {
-        "title": "WordStream PPC University",
-        "url": "https://www.wordstream.com/learn",
-        "type": "guide",
-        "provider": "WordStream",
-        "description": "Deep dive into cost-per-click bidding, Quality Score optimization, and ad copy."
+        "provider": "Google Skillshop",
+        "description": "Validate expertise in delivering effective display advertising and performance marketing."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Meta Ads Full-Funnel Campaign Setup",
-        "url": "https://www.youtube.com/watch?v=t-6c16BH-0U",
-        "outcome": "A complete campaign build in Meta Ads Manager with Prospecting (TOF), Retargeting (MOF), and Purchase Retargeting (BOF) ad sets.",
+        "title": "Full-Funnel AI Paid Ad Campaign Setup",
+        "url": "https://www.youtube.com/watch?v=wKp8lEICwZQ",
+        "outcome": "Configured Google PMax or Meta Advantage+ campaign structure with automated bidding and audience signal layers.",
         "steps": [
-          "Configure Advantage+ campaign budget allocation",
-          "Draft 3 angles of direct-response ad copy",
-          "Setup custom and lookalike audiences",
-          "Verify pixel and Conversions API (CAPI) event fires"
+          "Define target CPA and ROAS thresholds mathematically",
+          "Construct creative variations with distinct psychological hooks",
+          "Set up custom audience signals and first-party customer lists",
+          "Deploy automated ad testing rules with budget cutoffs"
         ]
       }
     ],
     "tools": [
       {
+        "name": "Meta Ads Manager",
+        "url": "https://adsmanager.facebook.com/"
+      },
+      {
         "name": "Google Ads",
         "url": "https://ads.google.com/"
       },
       {
-        "name": "Meta Ads Manager",
-        "url": "https://business.facebook.com/"
+        "name": "TikTok Ads Manager",
+        "url": "https://ads.tiktok.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t10",
-        "label": "Design a full-funnel Meta Ads account structure (Top, Middle, Bottom of Funnel).",
-        "type": "system"
+        "label": "Design a 3:2:2 dynamic creative testing matrix for Meta Advantage+ campaigns.",
+        "type": "design"
       },
       {
         "id": "m-t11",
-        "label": "Write high-converting ad copy variations utilizing psychological triggers.",
-        "type": "writing"
+        "label": "Configure a Google Performance Max asset group with audience signals and negative keywords.",
+        "type": "technical"
       },
       {
         "id": "m-t12",
-        "label": "Configure server-side conversion tracking via Facebook Conversions API (CAPI).",
-        "type": "code"
+        "label": "Audit ad account attribution windows and calculate true Blended MER (Marketing Efficiency Ratio).",
+        "type": "analytics"
       }
     ],
     "project": {
-      "title": "Performance Media Buying Architecture",
-      "description": "You will build out a complete, ready-to-launch media buying framework. This includes drafting the campaign structures, defining audience targeting parameters, writing direct-response ad copy, and documenting the pixel and server-side tracking setup required for algorithmic optimization.",
+      "title": "Full-Funnel Paid Advertising Campaign Architecture",
+      "description": "Architect a complete paid media media-plan and ad-account restructuring for a $5,000 - $20,000/mo budget, including creative matrices, audience segmentation, budget pacing, and tracking infrastructure.",
       "deliverables": [
-        "Campaign Structure Map",
-        "Ad Copy & Creative Briefs",
-        "Conversion Tracking Implementation Guide"
+        "Budget Pacing & Allocation Sheet",
+        "Dynamic Creative Testing (DCT) Matrix",
+        "Audience Signal & Pixel Setup Documentation",
+        "Weekly Optimization & Scaling Protocol"
       ],
       "sellingStrategy": {
-        "pitch": "Position as a 'Performance Growth Framework'. Focus strictly on ROI and ROAS, shifting the conversation from 'running ads' to 'buying customers at a profit.'",
-        "pricing": "$1,500 setup + 10-15% ad spend",
+        "pitch": "Pitch paid media management on a base retainer plus percentage of ad spend or performance bonus on profitable ROAS.",
+        "pricing": "$1,500 - $3,500 / mo base + 10% spend",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "E-commerce Brands",
+          "Lead-Gen Companies",
+          "B2B SaaS"
         ]
       }
     },
@@ -5436,119 +5424,117 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p5",
     "number": "05",
     "title": "E-commerce & Conversion Rate Optimization (CRO)",
-    "badge": "CRO",
-    "weeks": "Week 5",
-    "objective": "Master the psychology of digital storefront optimization. You will learn to dissect consumer friction points, build high-velocity A/B testing programs, design irresistible product detail pages (PDPs), and engineer upsell and cross-sell funnels to elevate Average Order Value (AOV).",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 5",
+    "objective": "Transform traffic into paying customers. Master e-commerce storefront architecture, behavioral psychology, friction elimination, high-converting product detail pages, and rigorous A/B testing methodologies.",
     "resources": [
       {
-        "title": "Complete E-commerce & Shopify Store Growth Course",
-        "url": "https://www.youtube.com/watch?v=gT8wN4m5X7U",
+        "title": "E-commerce Store Setup & Optimization",
+        "url": "https://www.youtube.com/watch?v=2y71Lc3bB1k",
         "type": "yt"
       },
       {
         "title": "Conversion Rate Optimization (CRO) Masterclass",
-        "url": "https://www.youtube.com/watch?v=0hK4mP6v3Bw",
+        "url": "https://www.youtube.com/watch?v=E7ChpMEPI40",
         "type": "yt"
       },
       {
-        "title": "How to Build High-Converting Product Pages (5%+ CVR)",
-        "url": "https://www.youtube.com/watch?v=K_N0_9d7m2E",
+        "title": "Conversion Psychology & Persuasion Principles",
+        "url": "https://www.youtube.com/watch?v=Ac4cR34N_9o",
         "type": "yt"
       },
       {
-        "title": "A/B Testing Framework for Modern E-commerce Stores",
-        "url": "https://www.youtube.com/watch?v=x9qK6rW2e5M",
+        "title": "Free E-commerce Platforms (WooCommerce Tutorial)",
+        "url": "https://www.youtube.com/watch?v=5Q_9ClYMMbk",
         "type": "yt"
       },
       {
-        "title": "How to Maximize Average Order Value (AOV) with Upsells",
-        "url": "https://www.youtube.com/watch?v=m7N3xL1b4Jw",
+        "title": "Free CRO & Heatmap Tools (Microsoft Clarity Tutorial)",
+        "url": "https://www.youtube.com/watch?v=TmUyGeMnECA",
         "type": "yt"
       },
       {
-        "title": "Checkout Friction Audit & Cart Abandonment Fixes",
-        "url": "https://www.youtube.com/watch?v=v3W5pT8k4yE",
+        "title": "A/B Testing & High-Conversion Product Pages",
+        "url": "https://www.youtube.com/watch?v=QFDKT6h_0BI",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "Shopify Partner Academy: Store Operations",
-        "url": "https://www.shopify.com/partners/academy",
+        "title": "Google Analytics 4 for E-commerce",
+        "url": "https://skillshop.exceedlms.com/student/path/18330-google-analytics-individual-qualification",
         "type": "certification",
+        "provider": "Google Skillshop",
+        "description": "Master tracking monetization, user behavior, and checkout funnel drop-offs in GA4."
+      },
+      {
+        "title": "Shopify Academy Courses",
+        "url": "https://www.shopify.com/learn",
+        "type": "course",
         "provider": "Shopify",
-        "description": "Learn the fundamentals of managing, growing, and optimizing a Shopify storefront."
-      },
-      {
-        "title": "Google Analytics 4 (GA4) for E-commerce",
-        "url": "https://skillshop.exceedlms.com/",
-        "type": "certification",
-        "provider": "Google",
-        "description": "Master tracking monetization, user behavior, and funnel drop-offs in GA4."
-      },
-      {
-        "title": "VWO Conversion Optimization Guide",
-        "url": "https://vwo.com/conversion-rate-optimization/",
-        "type": "guide",
-        "provider": "VWO",
-        "description": "Extensive guide on A/B testing methodologies and psychological conversion triggers."
+        "description": "Comprehensive lessons on store design, product merchandising, and order management."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Shopify Store Conversion Rate Optimization (CRO)",
-        "url": "https://www.youtube.com/watch?v=kLneJKAqRtk",
-        "outcome": "A wireframed and live-tested e-commerce product page featuring dynamic sticky add-to-cart, trust badges, and post-purchase upsell logic.",
+        "title": "E-commerce CRO Audit & Store Optimization",
+        "url": "https://www.youtube.com/watch?v=2y71Lc3bB1k",
+        "outcome": "A high-converting product page audit with friction points highlighted and Microsoft Clarity heatmap tracking installed.",
         "steps": [
-          "Conduct heuristic UX review to pinpoint drop-off friction",
-          "Design high-converting above-the-fold hero section",
-          "Add customer review social proof widgets",
-          "Configure 1-click upsell offer in checkout flow"
+          "Install Microsoft Clarity tracking code on an e-commerce store",
+          "Analyze 50 user session recordings for checkout drop-off friction",
+          "Redesign the product page fold with social proof and risk reversal",
+          "Formulate an A/B test hypothesis matrix ranked by PIE framework"
         ]
       }
     ],
     "tools": [
       {
-        "name": "Shopify",
-        "url": "https://shopify.com"
+        "name": "Microsoft Clarity",
+        "url": "https://clarity.microsoft.com/"
       },
       {
-        "name": "Hotjar",
-        "url": "https://hotjar.com"
+        "name": "Shopify",
+        "url": "https://shopify.com/"
+      },
+      {
+        "name": "WooCommerce",
+        "url": "https://woocommerce.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t13",
-        "label": "Conduct a heuristic UX audit on an e-commerce product page to identify friction points.",
-        "type": "research"
+        "label": "Deploy Microsoft Clarity and inspect rage clicks and checkout drop-off points.",
+        "type": "analytics"
       },
       {
         "id": "m-t14",
-        "label": "Design an A/B test hypothesis matrix aimed at increasing Add-To-Cart rates.",
+        "label": "Redesign a product page above-the-fold layout following psychological persuasion principles.",
         "type": "design"
       },
       {
         "id": "m-t15",
-        "label": "Map out an upsell and cross-sell logic flow to maximize Average Order Value.",
-        "type": "system"
+        "label": "Draft a prioritized A/B testing roadmap scored via the PIE (Potential, Importance, Ease) model.",
+        "type": "planning"
       }
     ],
     "project": {
-      "title": "Storefront CRO & Funnel Optimization Blueprint",
-      "description": "You will conduct an exhaustive conversion optimization overhaul for an online brand. You will identify critical drop-off stages in the user checkout funnel, wireframe an optimized Product Detail Page (PDP), and outline a 90-day testing roadmap backed by behavioral analytics.",
+      "title": "High-Converting E-commerce Store & CRO Blueprint",
+      "description": "Conduct an exhaustive conversion rate audit on an active or mock e-commerce store, proposing visual wireframes, copy overhauls, and post-purchase upsell funnels engineered to increase Average Order Value (AOV).",
       "deliverables": [
-        "Heuristic UX Audit Dossier",
-        "Optimized PDP Wireframes",
-        "A/B Testing Roadmap"
+        "Heuristic CRO Teardown Document",
+        "Figma Wireframe of Optimized Product Page (PDP)",
+        "Post-Purchase Upsell & Cross-Sell Architecture",
+        "90-Day A/B Experimentation Calendar"
       ],
       "sellingStrategy": {
-        "pitch": "Sell 'Revenue Unlocking'. Show store owners how a 1% lift in conversion rate doubles net margins without spending an additional dime on ad traffic.",
-        "pricing": "$1,500 - $4,000",
+        "pitch": "Sell CRO audits to e-commerce store owners doing at least $20k/mo. Increasing CVR from 1.5% to 2.5% immediately boosts their bottom-line without spending an extra dollar on ads.",
+        "pricing": "$1,000 - $3,000 per audit",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Shopify App Store Forums",
+          "Twitter Ecom Community",
+          "Direct Outreach"
         ]
       }
     },
@@ -5558,119 +5544,107 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p6",
     "number": "06",
     "title": "Email, SMS & Conversational Marketing",
-    "badge": "RETENTION",
-    "weeks": "Week 6",
-    "objective": "Harness the power of owned media to build zero-marginal-cost revenue engines. You will architect hyper-segmented automated flows in Klaviyo, craft direct-response copy that evades spam filters, design high-converting SMS campaigns, and deploy conversational DM funnels.",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 6",
+    "objective": "Build automated revenue machines that generate sales on autopilot. Master lifecycle email segmentation, SMS retention strategies, high-converting copywriting, and AI-powered conversational chatbots.",
     "resources": [
       {
-        "title": "Klaviyo Email Marketing Full Course for E-commerce",
-        "url": "https://www.youtube.com/watch?v=Kz9M6xW5q8E",
+        "title": "Email Marketing Automation Full Course",
+        "url": "https://www.youtube.com/watch?v=ZTZjpA0FL9E",
         "type": "yt"
       },
       {
-        "title": "The 5 Core Automated Email Flows (Welcome, Cart, Winback)",
-        "url": "https://www.youtube.com/watch?v=4m6P8bL1s5E",
+        "title": "SMS Marketing Strategy for High Retention",
+        "url": "https://www.youtube.com/watch?v=F8PYut37rJ8",
         "type": "yt"
       },
       {
-        "title": "Email Copywriting Formulas That Drive Immediate Revenue",
-        "url": "https://www.youtube.com/watch?v=r7N8xW4sK2Y",
+        "title": "Conversational Marketing & AI Chatbots",
+        "url": "https://www.youtube.com/watch?v=S6hfIxkdlRc",
         "type": "yt"
       },
       {
-        "title": "SMS Marketing Playbook: Compliant High-Urgency Campaigns",
-        "url": "https://www.youtube.com/watch?v=p4M7bV9k2Ew",
-        "type": "yt"
-      },
-      {
-        "title": "Instagram DM Funnel & ManyChat Automation Setup",
-        "url": "https://www.youtube.com/watch?v=y3W6qP8m5Bw",
-        "type": "yt"
-      },
-      {
-        "title": "Customer Retention & Lifecycle Email Sequences",
-        "url": "https://www.youtube.com/watch?v=m6R2xL8b4Nw",
+        "title": "Free Email Marketing Setup (MailerLite Guide)",
+        "url": "https://www.youtube.com/watch?v=D-zykxVXQDY",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "Klaviyo Product Certificate",
-        "url": "https://academy.klaviyo.com/",
-        "type": "certification",
-        "provider": "Klaviyo",
-        "description": "Master list growth, segmentation, and automated flow architecture in Klaviyo."
-      },
-      {
         "title": "HubSpot Email Marketing Certification",
         "url": "https://academy.hubspot.com/courses/email-marketing",
         "type": "certification",
         "provider": "HubSpot",
-        "description": "Deep dive into email deliverability, A/B testing, and lifecycle marketing."
+        "description": "Master lifecycle marketing, list segmentation, email deliverability, and testing strategies."
       },
       {
-        "title": "ManyChat Course",
-        "url": "https://course.manychat.com/",
-        "type": "course",
-        "provider": "ManyChat",
-        "description": "Learn to build automated Instagram and Facebook Messenger conversational flows."
+        "title": "Klaviyo Product Certification",
+        "url": "https://academy.klaviyo.com/",
+        "type": "certification",
+        "provider": "Klaviyo Academy",
+        "description": "Industry-standard credential for automated e-commerce email flows and behavioral triggers."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Klaviyo Automated Email Marketing Flows",
-        "url": "https://www.youtube.com/watch?v=X8sH2h8jASE",
-        "outcome": "A live automated Klaviyo email flow with dynamic discount logic, personalized product recommendations, and SMS abandon cart triggers.",
+        "title": "Automated Email & SMS Flow Deployment",
+        "url": "https://www.youtube.com/watch?v=ZTZjpA0FL9E",
+        "outcome": "Live welcome, abandoned checkout, and post-purchase nurture automation flows deployed in MailerLite/Klaviyo.",
         "steps": [
-          "Create conditional customer segmentation triggers",
-          "Design branded responsive HTML email templates",
-          "Write high-converting urgency copy and subject lines",
-          "Test flow delivery and inbox placement"
+          "Create a high-converting lead magnet opt-in form",
+          "Script a 4-part Welcome Nurture sequence with story-driven copy",
+          "Build an Abandoned Checkout automation with dynamic urgency hooks",
+          "Integrate SMS compliance safeguards (TCPA / GDPR)"
         ]
       }
     ],
     "tools": [
       {
+        "name": "MailerLite",
+        "url": "https://mailerlite.com/"
+      },
+      {
         "name": "Klaviyo",
-        "url": "https://klaviyo.com"
+        "url": "https://klaviyo.com/"
       },
       {
         "name": "ManyChat",
-        "url": "https://manychat.com"
+        "url": "https://manychat.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t16",
-        "label": "Architect a 5-part dynamic email Welcome Series based on subscriber behavior.",
-        "type": "system"
-      },
-      {
-        "id": "m-t17",
-        "label": "Write compelling, high-urgency SMS copy for an abandoned cart sequence.",
+        "label": "Write a 5-part Story-Led Welcome Series applying open-loop copywriting techniques.",
         "type": "writing"
       },
       {
+        "id": "m-t17",
+        "label": "Build an Abandoned Checkout & Browse Abandonment automated trigger flow.",
+        "type": "technical"
+      },
+      {
         "id": "m-t18",
-        "label": "Build an automated Instagram DM funnel for lead qualification using ManyChat.",
-        "type": "code"
+        "label": "Configure an automated Instagram DM comment-to-lead chatbot in ManyChat.",
+        "type": "automation"
       }
     ],
     "project": {
-      "title": "Automated Lifecycle Revenue Machine",
-      "description": "You will build an end-to-end retention and conversational marketing system. This includes fully mapped flow logic diagrams for Welcome, Abandoned Checkout, and Win-Back series, high-converting HTML/Figma templates, dynamic segmentation rules, and compliant SMS triggers.",
+      "title": "Automated Retention & Lifecycle Marketing Engine",
+      "description": "Design, write, and configure the 5 core automated revenue flows for an online business (Welcome Series, Abandoned Cart, Post-Purchase Nurture, Customer Winback, and VIP Appreciation).",
       "deliverables": [
-        "Lifecycle Flow Logic Map",
-        "Full Copy Deck (Email + SMS)",
-        "ManyChat Interactive DM Funnel"
+        "Complete Copy Deck for 15 Automated Emails & 5 SMS Texts",
+        "Visual Flow Diagram with Trigger & Split Logic",
+        "Deliverability Audit (DKIM, SPF, DMARC Setup Guide)",
+        "Segment Strategy (Engaged 30d, 60d, VIP LTV)"
       ],
       "sellingStrategy": {
-        "pitch": "Pitch this as 'Instant Backend Cash Flow'. Explain that owned channels like Email and SMS often account for 30-40% of total revenue with zero ad spend.",
-        "pricing": "$1,200 setup + performance fee",
+        "pitch": "Sell a 'Klaviyo/MailerLite Revenue Flow Setup' package to store owners who only send manual email blasts. Automated flows reliably add 15-30% to monthly revenue without ad spend.",
+        "pricing": "$1,500 - $4,000 one-time setup",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Direct to Consumer Brands",
+          "Info-product Creators",
+          "Coaches"
         ]
       }
     },
@@ -5679,75 +5653,58 @@ export const MARKETING_PHASES: Phase[] = [
   {
     "id": "marketing-p7",
     "number": "07",
-    "title": "Data Analytics & Attribution",
-    "badge": "ANALYTICS",
-    "weeks": "Week 7",
-    "objective": "Eliminate marketing guesswork through rigorous data instrumentation. You will master Google Analytics 4 (GA4), set up sophisticated tracking containers in Google Tag Manager (GTM), understand complex attribution models, and build real-time visual client reporting dashboards in Looker Studio.",
+    "title": "Data Analytics & Attribution Models",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 7",
+    "objective": "Transform raw numbers into strategic marketing decisions. Master Google Analytics 4 (GA4), PostHog, custom event tracking, first-party data privacy compliance, and multi-touch marketing attribution models.",
     "resources": [
       {
-        "title": "Google Analytics 4 (GA4) Masterclass for Digital Marketers",
-        "url": "https://www.youtube.com/watch?v=7h7kQ8x4M7U",
+        "title": "Google Analytics 4 (GA4) Complete Tutorial",
+        "url": "https://www.youtube.com/watch?v=hsIP4iH25Wg",
         "type": "yt"
       },
       {
-        "title": "Google Tag Manager (GTM) Beginner to Advanced Tutorial",
-        "url": "https://www.youtube.com/watch?v=o0B7xL1m4Jw",
+        "title": "Marketing Attribution Models Explained",
+        "url": "https://www.youtube.com/watch?v=o_6QjH3OfIA",
         "type": "yt"
       },
       {
-        "title": "Building Executive Marketing Dashboards in Looker Studio",
-        "url": "https://www.youtube.com/watch?v=x5N7qP8m2Ew",
+        "title": "First-Party Data Strategy & Privacy Compliance",
+        "url": "https://www.youtube.com/watch?v=0ocPGOwnDB4",
         "type": "yt"
       },
       {
-        "title": "Marketing Attribution Models: Multi-Touch & Data-Driven",
-        "url": "https://www.youtube.com/watch?v=k4M9xW7sB2E",
-        "type": "yt"
-      },
-      {
-        "title": "Strict UTM Taxonomy & Campaign URL Architecture",
-        "url": "https://www.youtube.com/watch?v=b7N2xL9m4Kw",
-        "type": "yt"
-      },
-      {
-        "title": "Cookieless Measurement & Server-Side Tagging Guide",
-        "url": "https://www.youtube.com/watch?v=m5P8xW2k7Bw",
+        "title": "Free Analytics Tools (PostHog Masterclass)",
+        "url": "https://www.youtube.com/watch?v=l1Hh0eY3BMw",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
         "title": "Google Analytics Certification",
-        "url": "https://skillshop.exceedlms.com/student/path/508845-google-analytics-certification",
+        "url": "https://skillshop.exceedlms.com/student/path/18330-google-analytics-individual-qualification",
         "type": "certification",
-        "provider": "Google",
+        "provider": "Google Skillshop",
         "description": "Official certification for configuring GA4 properties, tracking events, and analyzing reports."
       },
       {
         "title": "Google Tag Manager Fundamentals",
         "url": "https://analytics.google.com/analytics/academy/course/5",
         "type": "course",
-        "provider": "Google",
-        "description": "Learn to deploy tags, triggers, and variables without hardcoding scripts on your site."
-      },
-      {
-        "title": "Looker Studio Tutorials",
-        "url": "https://support.google.com/looker-studio/answer/6283323",
-        "type": "guide",
-        "provider": "Google",
-        "description": "Guides on connecting data sources and building interactive visual dashboards."
+        "provider": "Google Analytics Academy",
+        "description": "Master tag deployment, data layers, triggers, and custom event variables."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Looker Studio & GA4 Executive Growth Dashboard",
-        "url": "https://www.youtube.com/watch?v=2IeVO5WT_Ok",
-        "outcome": "An interactive executive reporting dashboard connecting GA4, Meta Ads, and Google Ads data with blended ROAS scorecards.",
+        "title": "GA4 Custom Tracking & Executive Dashboard Build",
+        "url": "https://www.youtube.com/watch?v=hsIP4iH25Wg",
+        "outcome": "Full GA4 event tracking configuration with custom dimensions and real-time conversion funnel monitoring.",
         "steps": [
-          "Connect GA4 and Google Ads data sources in Looker Studio",
-          "Configure custom metrics for Customer Acquisition Cost (CAC) and Blended ROAS",
-          "Build interactive date filters and channel breakdown charts",
-          "Publish automated weekly PDF report schedule"
+          "Install and configure Google Tag Manager container",
+          "Set up standard and custom recommended e-commerce events",
+          "Build an interactive Looker Studio executive dashboard",
+          "Configure conversion attribution modeling comparisons"
         ]
       }
     ],
@@ -5761,6 +5718,10 @@ export const MARKETING_PHASES: Phase[] = [
         "url": "https://tagmanager.google.com/"
       },
       {
+        "name": "PostHog",
+        "url": "https://posthog.com/"
+      },
+      {
         "name": "Looker Studio",
         "url": "https://lookerstudio.google.com/"
       }
@@ -5768,35 +5729,36 @@ export const MARKETING_PHASES: Phase[] = [
     "tasks": [
       {
         "id": "m-t19",
-        "label": "Configure a custom event tracking plan in GTM for scroll depth and button clicks.",
-        "type": "system"
+        "label": "Set up a unified Google Tag Manager container with enhanced measurement events.",
+        "type": "technical"
       },
       {
         "id": "m-t20",
-        "label": "Establish a strict UTM tagging taxonomy for all incoming traffic campaigns.",
-        "type": "writing"
+        "label": "Construct an executive performance dashboard in Looker Studio tracking Blended ROAS and CPA.",
+        "type": "analytics"
       },
       {
         "id": "m-t21",
-        "label": "Build a real-time Looker Studio dashboard connecting GA4 and Google Ads data.",
-        "type": "design"
+        "label": "Implement strict UTM parameter taxonomy across all marketing channels.",
+        "type": "planning"
       }
     ],
     "project": {
-      "title": "Executive Business Intelligence Dashboard",
-      "description": "You will design and deploy an automated data intelligence system. You will connect multiple disparate data sources (Google Ads, Meta Ads, GA4) into an automated Looker Studio dashboard, complete with KPI scorecards, Blended ROAS calculations, and customer journey attribution matrices.",
+      "title": "Executive Marketing Analytics & Attribution Suite",
+      "description": "Deploy a bulletproof analytics tracking infrastructure for a client, complete with server-side GTM, GA4 custom conversion events, and an automated Looker Studio executive dashboard.",
       "deliverables": [
-        "Interactive Looker Studio Dashboard",
-        "GTM Tracking Architecture Document",
-        "UTM Governance Protocol"
+        "Complete Tagging & Tracking Architecture Plan",
+        "GA4 Custom Events & Conversion Setup",
+        "Interactive Looker Studio KPI Dashboard",
+        "Attribution Modeling Comparison Report"
       ],
       "sellingStrategy": {
-        "pitch": "Position this as 'Executive Clarity'. High-growth founders waste countless hours stitching together spreadsheets; you give them single-pane-of-glass truth.",
-        "pricing": "$1,000 - $2,500",
+        "pitch": "Sell 'Analytics & Attribution Infrastructure Setup' to mid-sized marketing teams struggling to understand which ad channels are actually producing profitable sales.",
+        "pricing": "$1,200 - $3,000 setup",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Fast-growing Startups",
+          "Ad Agencies needing tracking experts",
+          "LinkedIn"
         ]
       }
     },
@@ -5806,119 +5768,111 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p8",
     "number": "08",
     "title": "Advanced AI Marketing & Agentic AI",
-    "badge": "AI AUTOMATION",
-    "weeks": "Week 8",
-    "objective": "Transform marketing operations using autonomous AI agents and programmatic pipelines. You will build no-code workflows connecting LLMs to live marketing channels, execute programmatic SEO campaigns, train custom AI assistants on brand tone, and deploy agentic customer feedback collectors.",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 8",
+    "objective": "Operate at the frontier of marketing technology. Learn to deploy autonomous AI agents, multi-agent research pipelines, programmatic SEO generators, and LLM-powered market intelligence workflows.",
     "resources": [
       {
-        "title": "Automating Marketing Pipelines with Make.com & AI",
-        "url": "https://www.youtube.com/watch?v=v8N2xL1m5Kw",
+        "title": "Agentic AI Marketing & Autonomous Workflows",
+        "url": "https://www.youtube.com/watch?v=BGKyBkJ2eA8",
         "type": "yt"
       },
       {
-        "title": "Programmatic SEO with AI: Generating 1,000s of High-Value Pages",
-        "url": "https://www.youtube.com/watch?v=p7M4bW8k2Ew",
+        "title": "Free Copywriting AI Tools & Prompt Systems",
+        "url": "https://www.youtube.com/watch?v=s0BbYfsf6CA",
         "type": "yt"
       },
       {
-        "title": "Building Autonomous AI Marketing Agents for Outreach",
-        "url": "https://www.youtube.com/watch?v=y5W8qP2m7Bw",
+        "title": "Zero-Click Content Strategy for Search & AI",
+        "url": "https://www.youtube.com/watch?v=4OtbzltZQzA",
         "type": "yt"
       },
       {
-        "title": "Using Claude & Gemini for Deep Market Research & Copy",
-        "url": "https://www.youtube.com/watch?v=x7N3xL8b4Jw",
-        "type": "yt"
-      },
-      {
-        "title": "Training Custom GPTs & Agents on Brand Voice Guidelines",
-        "url": "https://www.youtube.com/watch?v=k8N9xW5sB2E",
-        "type": "yt"
-      },
-      {
-        "title": "AI Competitor Scraping & Real-Time Alert Workflows",
-        "url": "https://www.youtube.com/watch?v=m9P4xW7k2Bw",
+        "title": "AI-Cited Authority & Optimization Secrets",
+        "url": "https://www.youtube.com/watch?v=5OccF4g0UKI",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "IBM AI Foundations for Business",
-        "url": "https://www.coursera.org/specializations/ibm-ai-foundations-for-business",
+        "title": "Google AI Essentials",
+        "url": "https://www.coursera.org/learn/google-ai-essentials",
         "type": "course",
-        "provider": "IBM",
-        "description": "Understand how AI is transforming business operations, marketing, and decision-making."
+        "provider": "Google / Coursera",
+        "description": "Learn to use generative AI tools effectively to boost daily productivity and business execution."
       },
       {
-        "title": "Google Cloud Generative AI Learning Path",
-        "url": "https://www.cloudskillsboost.google/journeys/118",
-        "type": "course",
-        "provider": "Google",
-        "description": "Deep dive into Large Language Models (LLMs) and generative AI applications."
-      },
-      {
-        "title": "Zapier AI Automation Guide",
-        "url": "https://zapier.com/blog/ai-automation-guide/",
+        "title": "Anthropic Prompt Engineering Interactive Tutorial",
+        "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
         "type": "guide",
-        "provider": "Zapier",
-        "description": "Practical guides on connecting AI models (like OpenAI) to thousands of marketing apps."
+        "provider": "Anthropic",
+        "description": "Master advanced prompting techniques, XML tagging, and few-shot calibration for Claude."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Autonomous Marketing Automation with Make.com",
-        "url": "https://www.youtube.com/watch?v=JSA2oezQWOU",
-        "outcome": "An automated Make.com workflow that monitors industry RSS feeds, generates on-brand LinkedIn drafts via Gemini API, and stages posts in Airtable.",
+        "title": "Autonomous Agentic AI Marketing System",
+        "url": "https://www.youtube.com/watch?v=BGKyBkJ2eA8",
+        "outcome": "Multi-agent autonomous pipeline that scrapes competitor keywords, drafts personalized angles, and schedules content.",
         "steps": [
-          "Configure RSS webhook trigger in Make.com",
-          "Construct Gemini API prompt with strict brand voice guidelines",
-          "Format structured JSON output for social copy and hashtags",
-          "Send draft post to Airtable review board with Slack alert"
+          "Set up Make.com or n8n workflow connecting LLM APIs",
+          "Feed brand voice guideline docs as few-shot examples",
+          "Automate competitor ad scraper and transcription pipeline",
+          "Generate personalized outreach drafts and publish to CMS"
         ]
       }
     ],
     "tools": [
       {
         "name": "Make.com",
-        "url": "https://make.com"
+        "url": "https://make.com/"
+      },
+      {
+        "name": "n8n",
+        "url": "https://n8n.io/"
+      },
+      {
+        "name": "Claude",
+        "url": "https://claude.ai/"
       },
       {
         "name": "OpenAI Platform",
-        "url": "https://platform.openai.com"
+        "url": "https://platform.openai.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t22",
-        "label": "Map out an AI agent workflow that monitors competitor pricing and sends alerts.",
-        "type": "system"
+        "label": "Build an automated competitor ad monitor that summarizes weekly creative strategies.",
+        "type": "automation"
       },
       {
         "id": "m-t23",
-        "label": "Build an automated programmatic SEO pipeline using Make.com and the Gemini API.",
-        "type": "code"
+        "label": "Craft a calibrated Brand Voice system prompt producing zero-edit marketing copy.",
+        "type": "prompting"
       },
       {
         "id": "m-t24",
-        "label": "Train a custom GPT/Agent on a brand's tone of voice and historical ad copy.",
-        "type": "research"
+        "label": "Deploy a programmatic content generation workflow via Make.com and Google Sheets.",
+        "type": "technical"
       }
     ],
     "project": {
-      "title": "Autonomous AI Marketing Engine",
-      "description": "You will build a fully functioning, autonomous marketing automation engine. Using Make.com or n8n coupled with LLM APIs, you will build an automated pipeline that ingests RSS feeds or news alerts, drafts on-brand social commentary, generates image assets, and stages posts for review.",
+      "title": "Autonomous AI Marketing Engine & Prompt Operating System",
+      "description": "Build an end-to-end AI marketing engine that automatically monitors industry news, generates on-brand thought leadership posts, creates carousel outlines, and drafts newsletters on a recurring schedule.",
       "deliverables": [
-        "Make.com Automation Blueprint",
-        "Custom GPT System Prompt Dossier",
-        "Programmatic SEO Spreadsheet Schema"
+        "Custom Calibrated System Prompts & Brand Voice Guide",
+        "Automated Make.com / n8n Scenario JSON Export",
+        "Programmatic Content Pipeline with Human-in-the-Loop Review",
+        "AI Content Performance Tracking Template"
       ],
       "sellingStrategy": {
-        "pitch": "Sell '10x Marketing Leverage'. Pitch companies on cutting agency content costs by 80% while scaling output 5x using your proprietary agentic workflows.",
-        "pricing": "$2,000 - $5,000",
+        "pitch": "Sell 'AI Marketing Automation Systems' to busy CEOs and marketing directors looking to 5x their content output without hiring a 5-person creative team.",
+        "pricing": "$2,500 - $6,000 implementation",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Funded Tech Startups",
+          "Solopreneurs",
+          "Consultancies"
         ]
       }
     },
@@ -5927,120 +5881,103 @@ export const MARKETING_PHASES: Phase[] = [
   {
     "id": "marketing-p9",
     "number": "09",
-    "title": "Emerging Tech & Omnichannel",
-    "badge": "OMNICHANNEL",
-    "weeks": "Week 9",
-    "objective": "Future-proof brands against platform volatility by implementing frictionless omnichannel architectures. You will map seamless 360-degree customer journeys across physical and digital touchpoints, explore headless CMS decoupling, and design interactive AR activations for product try-ons.",
+    "title": "Emerging Tech & Omnichannel Strategy",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 9",
+    "objective": "Connect disjointed channels into a synchronized omnichannel ecosystem. Master AR/VR spatial marketing, first-party data privacy strategies, and headless customer experiences that future-proof your growth engine.",
     "resources": [
       {
-        "title": "Omnichannel Marketing Strategy & Unified Customer Journey",
-        "url": "https://www.youtube.com/watch?v=x4N8qP2m7Bw",
+        "title": "AR/VR Marketing Strategy & Spatial Commerce",
+        "url": "https://www.youtube.com/watch?v=Yv9UWZEHd9c",
         "type": "yt"
       },
       {
-        "title": "Headless CMS & Decoupled Architecture for Omnichannel",
-        "url": "https://www.youtube.com/watch?v=v7N2xL9m4Kw",
+        "title": "First-Party Data Strategy & Cookieless Tracking",
+        "url": "https://www.youtube.com/watch?v=0ocPGOwnDB4",
         "type": "yt"
       },
       {
-        "title": "Augmented Reality (AR) in Social Commerce & Brand Filters",
-        "url": "https://www.youtube.com/watch?v=p5M8bW2k7Ew",
-        "type": "yt"
-      },
-      {
-        "title": "Community-Led Growth: Turning Users into Brand Evangelists",
-        "url": "https://www.youtube.com/watch?v=y8W6qP9m5Bw",
-        "type": "yt"
-      },
-      {
-        "title": "Voice Search & Conversational AI Commerce Readiness",
-        "url": "https://www.youtube.com/watch?v=m4R7xL8b2Nw",
-        "type": "yt"
-      },
-      {
-        "title": "Customer Data Platforms (CDP) & Real-Time Personalization",
-        "url": "https://www.youtube.com/watch?v=k7N8xW4sB2E",
+        "title": "Agentic AI & Future Omnichannel Architectures",
+        "url": "https://www.youtube.com/watch?v=BGKyBkJ2eA8",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "Hootsuite Platform Certification",
-        "url": "https://education.hootsuite.com/courses/platform-certification",
-        "type": "certification",
-        "provider": "Hootsuite",
-        "description": "Validate your ability to manage complex, multi-channel social media strategies."
-      },
-      {
-        "title": "HubSpot Frictionless Sales",
-        "url": "https://academy.hubspot.com/courses/frictionless-sales",
+        "title": "Meta Spark AR Creator Foundations",
+        "url": "https://spark.meta.com/learn/",
         "type": "course",
-        "provider": "HubSpot",
-        "description": "Learn how to align marketing, sales, and service for a unified customer experience."
+        "provider": "Meta Spark",
+        "description": "Learn to design and publish augmented reality filters for Instagram and Facebook."
       },
       {
-        "title": "Contentful Headless CMS Guide",
-        "url": "https://www.contentful.com/resources/what-is-headless-cms/",
+        "title": "Google Privacy Sandbox Fundamentals",
+        "url": "https://privacysandbox.com/",
         "type": "guide",
-        "provider": "Contentful",
-        "description": "Understand the architecture of decoupling content creation from multi-device presentation."
+        "provider": "Google",
+        "description": "Understand the future of web advertising and measurement without third-party cookies."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Omnichannel Customer Journey Architecture",
-        "url": "https://www.youtube.com/watch?v=SrG6Pbyuwrs",
-        "outcome": "A comprehensive customer journey map connecting physical in-store QR scans to automated email triggers and personalized mobile app experiences.",
+        "title": "Omnichannel Customer Journey Map",
+        "url": "https://www.youtube.com/watch?v=Yv9UWZEHd9c",
+        "outcome": "Visual Miro/FigJam map of all touchpoints connecting social ads, web, email, SMS, and post-purchase loops.",
         "steps": [
-          "Map out 5 distinct customer touchpoints across journey",
-          "Model unified customer profile schema (CDP integration)",
-          "Create interactive prototype demonstrating cross-channel handoff",
-          "Document retention uplift metrics"
+          "Identify all consumer touchpoints across the entire lifecycle",
+          "Design unified customer data triggers between ad platforms and CRM",
+          "Build an interactive AR product preview or visual filter concept",
+          "Draft privacy-first consent flows complying with modern standards"
         ]
       }
     ],
     "tools": [
       {
-        "name": "Contentful",
-        "url": "https://contentful.com"
+        "name": "Meta Spark Studio",
+        "url": "https://spark.meta.com/"
       },
       {
-        "name": "Spark AR",
-        "url": "https://sparkar.facebook.com"
+        "name": "FigJam",
+        "url": "https://figma.com/figjam"
+      },
+      {
+        "name": "Segment / Twilio",
+        "url": "https://segment.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t25",
-        "label": "Map out a 360-degree customer journey across 5 different digital and physical touchpoints.",
-        "type": "research"
+        "label": "Map a complete omnichannel customer journey architecture with unified customer IDs.",
+        "type": "planning"
       },
       {
         "id": "m-t26",
-        "label": "Design a conceptual AR filter activation for a retail or consumer goods brand.",
+        "label": "Design a branded AR filter concept or interactive virtual product try-on experience.",
         "type": "design"
       },
       {
         "id": "m-t27",
-        "label": "Structure a headless content model to serve identical data to an app and website.",
-        "type": "system"
+        "label": "Audit cookie compliance and transition tracking to a server-side first-party data framework.",
+        "type": "technical"
       }
     ],
     "project": {
-      "title": "Omnichannel Customer Experience (CX) Architecture",
-      "description": "You will architect an unified customer journey roadmap. You will audit an existing retail or D2C brand, uncover fractured touchpoints between app, web, social, and email, and design a unified data model ensuring seamless customer recognition across channels.",
+      "title": "Unified Omnichannel Blueprint & Experience Architecture",
+      "description": "Architect a holistic omnichannel roadmap for an enterprise retail or D2C brand, integrating paid media, social commerce, headless web, SMS, email, and experiential retail.",
       "deliverables": [
-        "360-Degree Journey Ecosystem Map",
-        "Headless Content Schema",
-        "Interactive AR Concept Deck"
+        "Comprehensive Omnichannel Experience Map",
+        "First-Party Data Strategy Document",
+        "AR Social Commerce Prototype Plan",
+        "Cross-Channel Communication Rules Matrix"
       ],
       "sellingStrategy": {
-        "pitch": "Target mid-market brands with disconnected systems. Offer an 'Omnichannel Integration Roadmap' that stops customers from leaking between channel silos.",
-        "pricing": "$2,500 - $6,000",
+        "pitch": "Consult growing mid-market brands on modernizing their fragmented marketing stack into an integrated customer experience.",
+        "pricing": "$2,000 - $5,000",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Mid-market D2C Brands",
+          "Enterprise Retail",
+          "LinkedIn"
         ]
       }
     },
@@ -6049,120 +5986,108 @@ export const MARKETING_PHASES: Phase[] = [
   {
     "id": "marketing-p10",
     "number": "10",
-    "title": "Creative Production & Design",
-    "badge": "CREATIVE",
-    "weeks": "Week 10",
-    "objective": "Master the intersection of direct-response psychology and high-end aesthetic execution. You will utilize cutting-edge generative image models (Midjourney, Flux) to produce commercial-grade ad creatives, design design systems in Figma, and write direct-response advertorials that captivate audiences.",
+    "title": "Creative Production & Design Systems",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 10",
+    "objective": "Produce high-converting direct-response creative assets at scale. Master AI image generation, DaVinci Resolve video editing, text-to-speech voiceovers, and visual ad frameworks engineered to stop the scroll.",
     "resources": [
       {
-        "title": "Midjourney for Marketing: Photorealistic Ad Creatives",
-        "url": "https://www.youtube.com/watch?v=v9N4xL2m7Kw",
+        "title": "Content Production & Workflow for Direct Response",
+        "url": "https://www.youtube.com/watch?v=2K_r5fyzPbk",
         "type": "yt"
       },
       {
-        "title": "Figma for Marketers: Ad Creatives & Social Assets Rapidly",
-        "url": "https://www.youtube.com/watch?v=p8M5bW9k2Ew",
+        "title": "Free Image Generation Tools for Ad Creatives",
+        "url": "https://www.youtube.com/watch?v=uBOdGtaLooc",
         "type": "yt"
       },
       {
-        "title": "Direct Response Creative Strategy: Visual Hooks & Angles",
-        "url": "https://www.youtube.com/watch?v=y7W9qP4m5Bw",
+        "title": "Free Video Editing with DaVinci Resolve",
+        "url": "https://www.youtube.com/watch?v=hefQAtOHqEw",
         "type": "yt"
       },
       {
-        "title": "Designing High-Converting Advertorials & Editorial Pages",
-        "url": "https://www.youtube.com/watch?v=m5R9xL8b4Nw",
-        "type": "yt"
-      },
-      {
-        "title": "CapCut & Premiere Pro for Direct-Response Video Ads",
-        "url": "https://www.youtube.com/watch?v=k9N4xW7sB2E",
-        "type": "yt"
-      },
-      {
-        "title": "Brand Style Guides in Figma: Color Palettes, Fonts & Layouts",
-        "url": "https://www.youtube.com/watch?v=x6N9qP2m7Bw",
+        "title": "Free Voiceover Tools (TTS Alternatives)",
+        "url": "https://www.youtube.com/watch?v=yXH1dQLyVNY",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
+        "title": "Blackmagic DaVinci Resolve Training",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "course",
+        "provider": "Blackmagic Design",
+        "description": "Official masterclasses on professional video editing, color grading, and audio post-production."
+      },
+      {
         "title": "Canva Design School",
         "url": "https://www.canva.com/designschool/",
         "type": "course",
         "provider": "Canva",
-        "description": "Comprehensive tutorials on graphic design principles, branding, and rapid asset creation."
-      },
-      {
-        "title": "Adobe Express Fundamentals",
-        "url": "https://helpx.adobe.com/express/tutorials.html",
-        "type": "guide",
-        "provider": "Adobe",
-        "description": "Official guides for creating stunning social graphics and short videos."
-      },
-      {
-        "title": "Figma UI/UX Crash Course",
-        "url": "https://help.figma.com/hc/en-us/categories/360002051613-Tutorials-and-videos",
-        "type": "course",
-        "provider": "Figma",
-        "description": "Learn the basics of layout, typography, and interface design in Figma."
+        "description": "Learn typography, hierarchy, color psychology, and direct-response social ad design."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "High-Converting Social Ad Creative Generator in Figma",
-        "url": "https://www.youtube.com/watch?v=i5THkTJ-j6k",
-        "outcome": "A scalable Figma design system containing 10 high-performing ad creative templates (Split Screen, Testimonial Card, Us vs Them, Press Feature).",
+        "title": "High-Converting Direct Response Ad Creative Suite",
+        "url": "https://www.youtube.com/watch?v=2K_r5fyzPbk",
+        "outcome": "A complete asset pack with 3 video hook variations, thumbnail designs, and synthesized high-clarity voiceover.",
         "steps": [
-          "Build typography and color styles conforming to brand kit",
-          "Create reusable auto-layout ad component frames (1:1 and 9:16)",
-          "Generate photorealistic product backgrounds via Midjourney",
-          "Export production-ready PNGs and SVGs"
+          "Generate realistic product mockups using free AI image tools",
+          "Record or synthesize voiceover using high-fidelity TTS",
+          "Assemble and color-grade video creatives in DaVinci Resolve",
+          "Export in optimal 9:16 and 1:1 aspect ratios for ad platforms"
         ]
       }
     ],
     "tools": [
       {
-        "name": "Figma",
-        "url": "https://figma.com"
+        "name": "DaVinci Resolve",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve"
       },
       {
-        "name": "Midjourney",
-        "url": "https://midjourney.com"
+        "name": "Figma",
+        "url": "https://figma.com/"
+      },
+      {
+        "name": "CapCut",
+        "url": "https://capcut.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t28",
-        "label": "Generate a batch of 10 photorealistic ad creative concepts using Midjourney.",
+        "label": "Design 5 static high-CTR advertorial banner variations in Figma.",
         "type": "design"
       },
       {
         "id": "m-t29",
-        "label": "Design a comprehensive brand style guide (Typography, Color Palette, UI Elements) in Figma.",
-        "type": "design"
+        "label": "Edit a 30-second high-energy direct-response video ad in DaVinci Resolve with dynamic captions.",
+        "type": "video"
       },
       {
         "id": "m-t30",
-        "label": "Write 3 direct-response long-form advertorials optimized for Facebook traffic.",
-        "type": "writing"
+        "label": "Generate synthetic voiceover tracks using free TTS tools and sync with visual pacing.",
+        "type": "audio"
       }
     ],
     "project": {
-      "title": "Direct-Response Creative Asset Pack",
-      "description": "You will build a high-converting creative arsenal for a commercial brand. This includes 20 static ad variations generated via Midjourney, 3 video ad storyboards with hook variations, and a 1,500-word persuasive advertorial designed to pre-sell high-friction offers.",
+      "title": "High-Converting Paid Ad Creative Suite",
+      "description": "Produce a comprehensive creative asset pack for an ad campaign, featuring 3 distinct video hooks, 5 static banner variations, and 3 motion-graphic story formats with high-converting typography.",
       "deliverables": [
-        "20 Direct-Response Ad Creatives (Figma)",
-        "3 Video Hook Storyboards",
-        "1 Long-Form Advertorial Deck"
+        "3 Edited High-Resolution MP4 Ad Videos (9:16 format)",
+        "5 Static Ad Creatives (1:1 & 4:5 ratios)",
+        "Figma Direct-Response Ad Design System",
+        "Hook Variation Performance Scorecard"
       ],
       "sellingStrategy": {
-        "pitch": "Sell 'Creative Fatigue Immunity'. Paid ad performance degrades without fresh creative; offer brands an ongoing monthly 'Creative Refresh' package.",
-        "pricing": "$1,200 - $3,000/month",
+        "pitch": "Sell 'Ad Creative Refresh Packs' to performance advertisers facing creative fatigue. Ad fatigue is the #1 reason ROAS declines over time.",
+        "pricing": "$1,000 - $2,500 per creative batch",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Performance Marketing Agencies",
+          "E-commerce Brands",
+          "Twitter Ads Community"
         ]
       }
     },
@@ -6172,119 +6097,106 @@ export const MARKETING_PHASES: Phase[] = [
     "id": "marketing-p11",
     "number": "11",
     "title": "Marketing Infrastructure & Landing Pages",
-    "badge": "DEV / CRO",
-    "weeks": "Week 11",
-    "objective": "Construct lightning-fast, high-converting digital storefronts and landing pages without writing complex server code. You will learn visual site development in Framer and Webflow, analyze visitor friction through Microsoft Clarity session replays, and engineer friction-free lead capture funnels.",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 11",
+    "objective": "Build lightning-fast, high-converting marketing landing pages without writing complex code. Master modern landing page builders, conversion-focused wireframing, lead capture funnels, and schema markup integration.",
     "resources": [
       {
-        "title": "Framer Tutorial for Beginners: Build High-Converting Pages Fast",
-        "url": "https://www.youtube.com/watch?v=v6N7xL2m4Kw",
+        "title": "Free Landing Page Builders Comparison & Build",
+        "url": "https://www.youtube.com/watch?v=-dqF9P2qf_8",
         "type": "yt"
       },
       {
-        "title": "Webflow Complete Course for Marketing Infrastructure",
-        "url": "https://www.youtube.com/watch?v=p9M6bW2k7Ew",
+        "title": "Structured Data & Schema Markup for High Click-Through",
+        "url": "https://www.youtube.com/watch?v=r0bI0yLp_ps",
         "type": "yt"
       },
       {
-        "title": "Landing Page Design Formula: Above-the-Fold & Call to Actions",
-        "url": "https://www.youtube.com/watch?v=y9W4qP8m5Bw",
-        "type": "yt"
-      },
-      {
-        "title": "Microsoft Clarity Heatmaps & Session Recording Analysis",
-        "url": "https://www.youtube.com/watch?v=m7R4xL9b2Nw",
-        "type": "yt"
-      },
-      {
-        "title": "Page Speed & Core Web Vitals Optimization for Landing Pages",
-        "url": "https://www.youtube.com/watch?v=k6N8xW5sB2E",
-        "type": "yt"
-      },
-      {
-        "title": "Lead Magnet Funnel Architecture & High-Converting Forms",
-        "url": "https://www.youtube.com/watch?v=x8N7qP4m7Bw",
+        "title": "Free CRO & Heatmap Analysis (Microsoft Clarity)",
+        "url": "https://www.youtube.com/watch?v=TmUyGeMnECA",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "Webflow University 101",
+        "title": "Webflow University 101 Crash Course",
         "url": "https://university.webflow.com/courses/webflow-101-crash-course",
         "type": "course",
         "provider": "Webflow",
-        "description": "Master responsive web design, CSS grid, and flexbox using Webflow's visual editor."
+        "description": "Learn visual web development, responsive CSS layouts, and modern CMS structure."
       },
       {
-        "title": "Framer Academy: The Fundamentals",
+        "title": "Framer Academy",
         "url": "https://www.framer.com/academy/",
         "type": "course",
         "provider": "Framer",
-        "description": "Learn how to build, publish, and animate high-performance websites in Framer."
-      },
-      {
-        "title": "Microsoft Clarity Documentation",
-        "url": "https://clarity.microsoft.com/",
-        "type": "guide",
-        "provider": "Microsoft",
-        "description": "Guides on configuring heatmaps, tracking click dead zones, and watching user session replays."
+        "description": "Master designing and publishing interactive, high-fidelity marketing pages rapidly."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "High-Converting Landing Page Build in Framer",
-        "url": "https://www.youtube.com/watch?v=DpxDXr7-jBY",
-        "outcome": "A deployed Framer landing page with 95+ Mobile Google PageSpeed score, interactive FAQ accordions, and integrated Microsoft Clarity tracking.",
+        "title": "High-Converting Landing Page Infrastructure Build",
+        "url": "https://www.youtube.com/watch?v=-dqF9P2qf_8",
+        "outcome": "Responsive, high-converting landing page with lead magnet capture form and schema markup ready for deployment.",
         "steps": [
-          "Wireframe responsive layout (Desktop, Tablet, Mobile)",
-          "Build micro-interactions and smooth scroll animations",
-          "Integrate Microsoft Clarity script tag in page header",
-          "Publish to custom domain and run speed performance audit"
+          "Wireframe above-the-fold value proposition and primary CTA",
+          "Assemble responsive landing page layout in Framer / Webflow",
+          "Connect form submissions to email marketing automation via webhook",
+          "Verify sub-second load times via Google PageSpeed Insights"
         ]
       }
     ],
     "tools": [
       {
         "name": "Framer",
-        "url": "https://framer.com"
+        "url": "https://framer.com/"
       },
       {
-        "name": "Microsoft Clarity",
-        "url": "https://clarity.microsoft.com"
+        "name": "Webflow",
+        "url": "https://webflow.com/"
+      },
+      {
+        "name": "Carrd",
+        "url": "https://carrd.co/"
+      },
+      {
+        "name": "PageSpeed Insights",
+        "url": "https://pagespeed.web.dev/"
       }
     ],
     "tasks": [
       {
         "id": "m-t31",
-        "label": "Wireframe a direct-response landing page focusing on the 'Above the Fold' hero section.",
+        "label": "Design and publish a mobile-responsive direct-response landing page in Framer or Webflow.",
         "type": "design"
       },
       {
         "id": "m-t32",
-        "label": "Develop and publish a pixel-perfect, mobile-responsive landing page in Webflow or Framer.",
-        "type": "code"
+        "label": "Achieve a 90+ mobile performance score on Google PageSpeed Insights for your landing page.",
+        "type": "technical"
       },
       {
         "id": "m-t33",
-        "label": "Integrate Microsoft Clarity to record sessions and generate heatmaps of user behavior.",
-        "type": "system"
+        "label": "Integrate lead capture form with automated webhook delivery to your CRM.",
+        "type": "automation"
       }
     ],
     "project": {
-      "title": "High-Performance Direct-Response Landing Page",
-      "description": "You will build and deploy a production-ready, ultra-fast landing page in Framer or Webflow. The page must achieve a 90+ Google PageSpeed score, feature an above-the-fold value hook, leverage social proof widgets, and include integrated session recording instrumentation.",
+      "title": "High-Converting Direct Response Landing Page & Funnel",
+      "description": "Build and publish a bespoke, production-ready landing page for a product or lead magnet, complete with persuasive copywriting, dynamic social proof, lead capture forms, and sub-second load speeds.",
       "deliverables": [
-        "Published Framer/Webflow Landing Page",
-        "Speed Optimization Audit (90+ Score)",
-        "Clarity Tracking Integration"
+        "Live Production Landing Page URL",
+        "Figma Design & Responsive Layout File",
+        "Google PageSpeed 90+ Optimization Audit",
+        "Form Webhook & CRM Integration Confirmation"
       ],
       "sellingStrategy": {
-        "pitch": "Pitch 'Speed to Market'. Companies wait weeks for developers to launch landing pages; show them you can design, build, and deploy one in 48 hours.",
-        "pricing": "$1,500 - $3,500",
+        "pitch": "Sell high-converting landing page builds to businesses paying for ad clicks that land on slow, cluttered homepages.",
+        "pricing": "$1,000 - $3,500 per landing page",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Local Service Providers",
+          "SaaS Founders",
+          "Course Creators"
         ]
       }
     },
@@ -6293,120 +6205,98 @@ export const MARKETING_PHASES: Phase[] = [
   {
     "id": "marketing-p12",
     "number": "12",
-    "title": "Scaling & Agency Building",
-    "badge": "SCALE",
-    "weeks": "Week 12",
-    "objective": "Transition from a practitioner to a business owner. You will architect standardized service delivery workflows, construct high-ticket client acquisition funnels, master pricing psychology, and build an operational ecosystem capable of scaling a digital marketing agency.",
+    "title": "Scaling a Digital Marketing Agency & Offers",
+    "badge": "Digital Marketing",
+    "weeks": "MODULE 12",
+    "objective": "Transition from individual execution to a high-ticket agency owner. Master Grand Slam Offer architecture, value-based pricing models, automated B2B client acquisition pipelines, and streamlined operations.",
     "resources": [
+      {
+        "title": "Scaling a Digital Marketing Agency from $0 to 6 Figures",
+        "url": "https://www.youtube.com/watch?v=vYIx9kc7CEo",
+        "type": "yt"
+      },
       {
         "title": "Crafting Irresistible Grand Slam Offers Masterclass",
         "url": "https://www.youtube.com/watch?v=2fOCe9O2dLE",
-        "type": "yt"
-      },
-      {
-        "title": "How to Start and Scale a Marketing Agency from $0 in 2026",
-        "url": "https://www.youtube.com/watch?v=v8N9xL4m2Kw",
-        "type": "yt"
-      },
-      {
-        "title": "B2B Outbound Prospecting: Cold Email & LinkedIn Lead Systems",
-        "url": "https://www.youtube.com/watch?v=p4M8bW7k2Ew",
-        "type": "yt"
-      },
-      {
-        "title": "Automated Client Onboarding System with Notion & Zapier",
-        "url": "https://www.youtube.com/watch?v=y6W8qP4m9Bw",
-        "type": "yt"
-      },
-      {
-        "title": "How to Price Marketing Services: Value-Based Retainers",
-        "url": "https://www.youtube.com/watch?v=m8R5xL2b4Nw",
-        "type": "yt"
-      },
-      {
-        "title": "Agency Operations & Hiring: Scaling Beyond Solopreneurship",
-        "url": "https://www.youtube.com/watch?v=k5N7xW9sB2E",
         "type": "yt"
       }
     ],
     "freeResources": [
       {
-        "title": "HubSpot Agency Partner Training",
-        "url": "https://academy.hubspot.com/courses/agency-partner-certification",
-        "type": "certification",
-        "provider": "HubSpot",
-        "description": "Learn how to price, package, and sell high-margin retainer marketing services."
-      },
-      {
-        "title": "Y Combinator Startup School",
-        "url": "https://www.startupschool.org/",
+        "title": "Acquisition.com $100M Offers Free Training",
+        "url": "https://www.acquisition.com/training/offers",
         "type": "course",
-        "provider": "Y Combinator",
-        "description": "Foundational guidance on sales, customer discovery, pricing, and rapid iteration."
+        "provider": "Alex Hormozi / Acquisition.com",
+        "description": "Master creating irresistible offers, value equations, pricing psychology, and risk reversals."
       },
       {
-        "title": "Notion for Agencies Guide",
-        "url": "https://www.notion.so/templates/category/agencies",
-        "type": "guide",
-        "provider": "Notion",
-        "description": "Templates and best practices for managing clients, projects, and deliverables."
+        "title": "HubSpot Agency Operations & Scaling Course",
+        "url": "https://academy.hubspot.com/courses/client-management",
+        "type": "course",
+        "provider": "HubSpot Academy",
+        "description": "Learn client onboarding, retention systems, and scaling agency delivery operations."
       }
     ],
     "followAlongProjects": [
       {
-        "title": "Client Acquisition & Grand Slam Offer Funnel",
-        "url": "https://www.youtube.com/watch?v=w6zEwLMV5Rg",
-        "outcome": "A turnkey agency client acquisition funnel: $100M Grand Slam Offer deck, automated contract & invoice flow, and client Notion portal.",
+        "title": "Agency Client Acquisition & Offer Funnel",
+        "url": "https://www.youtube.com/watch?v=vYIx9kc7CEo",
+        "outcome": "Irresistible Grand Slam Offer document, value proposition deck, and cold outbound pipeline ready to close clients.",
         "steps": [
-          "Draft irresistible value proposition and risk-reversal guarantee",
-          "Configure Zapier automation linking Stripe payment to Notion client hub",
-          "Set up automated welcome email sequence and kickoff Loom recording",
-          "Execute 20 personalized outbound prospect outreaches"
+          "Define your hyper-specific niche and high-ticket service offering",
+          "Formulate an irresistible value equation with ironclad guarantee",
+          "Draft a 4-touchpoint personalized LinkedIn & cold email outreach sequence",
+          "Build an automated client onboarding portal in Notion"
         ]
       }
     ],
     "tools": [
       {
-        "name": "Pipedrive / HubSpot CRM",
-        "url": "https://hubspot.com"
+        "name": "Notion",
+        "url": "https://notion.so/"
       },
       {
         "name": "Loom",
-        "url": "https://loom.com"
+        "url": "https://loom.com/"
+      },
+      {
+        "name": "Stripe",
+        "url": "https://stripe.com/"
       }
     ],
     "tasks": [
       {
         "id": "m-t34",
-        "label": "Draft a high-ticket 'Grand Slam Offer' addressing a specific niche market pain point.",
+        "label": "Write an irresistible Grand Slam Offer document applying Alex Hormozi's Value Equation.",
         "type": "writing"
       },
       {
         "id": "m-t35",
-        "label": "Build an automated client onboarding workflow using forms, contracts, and Zapier.",
-        "type": "system"
+        "label": "Build a standardized Client Onboarding Notion portal with intake forms and roadmap templates.",
+        "type": "operations"
       },
       {
         "id": "m-t36",
-        "label": "Map out an outbound lead generation sequence (Cold Email/LinkedIn) to acquire first clients.",
-        "type": "research"
+        "label": "Launch a cold outbound campaign to 50 vetted ideal client prospects using personalized Loom audits.",
+        "type": "sales"
       }
     ],
     "project": {
-      "title": "Agency Growth & Client Acquisition Engine",
-      "description": "You will construct a complete operational agency infrastructure. This includes an irresistible niche-specific offer deck, an automated client onboarding funnel (connecting Stripe, Pandadoc, and Notion), a standardized service delivery SOP, and an outbound cold prospect sequence.",
+      "title": "Complete Agency Operating System & Client Acquisition Engine",
+      "description": "Build out your complete agency operational infrastructure: a flagship Grand Slam Offer, pricing calculator, client onboarding Notion portal, sales presentation slide deck, and cold outreach protocol.",
       "deliverables": [
-        "Niche 'Grand Slam Offer' Deck",
-        "Automated Client Onboarding Pipeline",
-        "Outbound Prospecting Script & Sequence"
+        "Flagship Grand Slam Offer Document & Pricing Model",
+        "Client Onboarding Notion Portal Template",
+        "10-Slide High-Converting Pitch Deck",
+        "Multi-Touch Cold Outreach Playbook & Script"
       ],
       "sellingStrategy": {
-        "pitch": "This is your launchpad. Use this exact system to sign your first 3 high-ticket retainers and build predictable monthly recurring revenue.",
-        "pricing": "$3,000 - $10,000/month agency revenue goal",
+        "pitch": "This is your own business launchpad: package the skills learned across all 12 modules into high-ticket recurring retainers ($2,500 - $5,000/mo) and land your first 3 retainer clients.",
+        "pricing": "$2,500 - $5,000 / month recurring retainers",
         "whereToFind": [
-          "Upwork",
-          "LinkedIn",
-          "Local Businesses"
+          "Direct Outreach",
+          "Personal Brand",
+          "Referral Networks"
         ]
       }
     },
