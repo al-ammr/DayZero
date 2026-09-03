@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   CheckCircle2, 
   Circle, 
-  ExternalLink, 
+  ExternalLink,
+  Info, 
   Play, 
   BookOpen, 
   Award, 
@@ -14,7 +15,11 @@ import {
   LayoutDashboard,
   Rocket,
   DollarSign,
+  Flag,
+  Search,
   Menu,
+  Pin,
+  PinOff,
   X,
   ArrowRight,
   Bot,
@@ -32,14 +37,15 @@ import {
   Medal,
   Star
 } from 'lucide-react';
-import { PHASES, Phase, Task, PROMPTS } from './constants';
+import { PHASES, VIDEO_PHASES, MARKETING_PHASES, Phase, Task, PROMPTS } from './constants';
 import { cn } from './lib/utils';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
-import { GoogleGenAI } from "@google/genai";
 import AboutUs from './components/AboutUs';
+import CertificationsPage from './components/CertificationsPage';
 import PromptLibrary from './components/PromptLibrary';
 import PremiumVideoPlayer from './components/PremiumVideoPlayer';
+import AiPathAssistant from './components/AiPathAssistant';
 import { isYouTubeUrl, getVideoId } from './lib/youtube';
 import { 
   BarChart, 
@@ -53,16 +59,49 @@ import {
   Area
 } from 'recharts';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
-
 export default function App() {
-  const [activePhaseId, setActivePhaseId] = useState<string | 'dashboard' | 'about' | 'prompt-library'>('dashboard');
+  const ALL_PHASES = [...PHASES, ...VIDEO_PHASES, ...MARKETING_PHASES];
+  const [activePhaseId, setActivePhaseId] = useState<string | 'dashboard' | 'about' | 'prompt-library' | 'certifications'>('dashboard');
   const [completedTasks, setCompletedTasks] = useState<string[]>([]);
+  const [flaggedVideos, setFlaggedVideos] = useState<string[]>(() => {
+    const saved = localStorage.getItem('flaggedVideos');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [pinnedModules, setPinnedModules] = useState<string[]>(() => {
+    const saved = localStorage.getItem('pinnedModules');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [pinnedVideos, setPinnedVideos] = useState<string[]>(() => {
+    const saved = localStorage.getItem('pinnedVideos');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('pinnedModules', JSON.stringify(pinnedModules));
+  }, [pinnedModules]);
+
+  useEffect(() => {
+    localStorage.setItem('pinnedVideos', JSON.stringify(pinnedVideos));
+  }, [pinnedVideos]);
+
+  const togglePinModule = (e: React.MouseEvent, moduleId: string) => {
+    e.stopPropagation();
+    setPinnedModules(prev => 
+      prev.includes(moduleId) ? prev.filter(id => id !== moduleId) : [...prev, moduleId]
+    );
+  };
+
+  const togglePinVideo = (e: React.MouseEvent, url: string) => {
+    e.stopPropagation();
+    setPinnedVideos(prev => 
+      prev.includes(url) ? prev.filter(v => v !== url) : [...prev, url]
+    );
+  };
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAiOpen, setIsAiOpen] = useState(false);
-  const [aiMessage, setAiMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'ai', text: string }[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [activeTrack, setActiveTrack] = useState<'fullstack' | 'video' | 'marketing' | null>('fullstack');
+  const [trackSearchQuery, setTrackSearchQuery] = useState("");
   const [lastCopiedPromptId, setLastCopiedPromptId] = useState<string | null>(null);
   const [videoPlayerState, setVideoPlayerState] = useState<{isOpen: boolean, url: string | null}>({isOpen: false, url: null});
   const [playingProjectId, setPlayingProjectId] = useState<string | null>(null);
@@ -74,7 +113,6 @@ export default function App() {
     const saved = localStorage.getItem('lastPlayedVideo');
     return saved ? JSON.parse(saved) : null;
   });
-  const chatEndRef = useRef<HTMLDivElement>(null);
   const { width, height } = useWindowSize();
 
   // Handle mouse move for card glow effect
@@ -107,10 +145,6 @@ export default function App() {
   }, [activePhaseId]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatHistory]);
-
-  useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
     localStorage.setItem('theme', theme);
   }, [theme]);
@@ -132,6 +166,15 @@ export default function App() {
     return () => window.removeEventListener('lastPlayedVideoUpdated', handleUpdate);
   }, []);
 
+  const toggleFlagVideo = (e: React.MouseEvent, url: string) => {
+    e.stopPropagation();
+    const newFlagged = flaggedVideos.includes(url)
+      ? flaggedVideos.filter(id => id !== url)
+      : [...flaggedVideos, url];
+    setFlaggedVideos(newFlagged);
+    localStorage.setItem('flaggedVideos', JSON.stringify(newFlagged));
+  };
+
   const toggleTask = (taskId: string) => {
     const newCompleted = completedTasks.includes(taskId)
       ? completedTasks.filter(id => id !== taskId)
@@ -140,46 +183,72 @@ export default function App() {
     localStorage.setItem('completedTasks', JSON.stringify(newCompleted));
   };
 
-  const handleAiChat = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!aiMessage.trim()) return;
-
-    const userMsg = aiMessage;
-    setAiMessage("");
-    setChatHistory(prev => [...prev, { role: 'user', text: userMsg }]);
-    setIsTyping(true);
-
-    try {
-      const activePhase = PHASES.find(p => p.id === activePhaseId);
-      const prompt = `You are the AI Assistant for the "Full Stack AI Builder Path". 
-      The user is currently in Phase ${activePhase?.number}: ${activePhase?.title}.
-      Objective: ${activePhase?.objective}.
-      User question: ${userMsg}
-      Provide actionable, concise advice to help them complete their tasks or projects. 
-      Focus on execution and real-world outcomes.`;
-
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt,
-      });
-
-      setChatHistory(prev => [...prev, { role: 'ai', text: response.text || "I'm sorry, I couldn't process that." }]);
-    } catch (error) {
-      console.error(error);
-      setChatHistory(prev => [...prev, { role: 'ai', text: "Error connecting to AI. Please check your API key." }]);
-    } finally {
-      setIsTyping(false);
+  const scrollToTop = () => {
+    // Primary window and container scroll
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    if (typeof document !== 'undefined') {
+      document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      document.body.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      const headerEl = document.getElementById('phase-header') || document.getElementById('phase-header-anchor');
+      if (headerEl) {
+        headerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
+
+    // Double check on next animation frame and after layout rendering
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      const headerEl = document.getElementById('phase-header') || document.getElementById('phase-header-anchor');
+      if (headerEl) {
+        headerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 120);
   };
 
-  const activePhase = PHASES.find(p => p.id === activePhaseId) || PHASES[0];
+  useEffect(() => {
+    scrollToTop();
+  }, [activePhaseId, activeTrack]);
+
+  const handleSelectPhase = (phaseId: string, track?: 'fullstack' | 'video' | 'marketing') => {
+    setActivePhaseId(phaseId);
+    if (track) {
+      setActiveTrack(track);
+    } else {
+      if (phaseId.startsWith('v-p')) setActiveTrack('video');
+      else if (phaseId.startsWith('marketing-p')) setActiveTrack('marketing');
+      else if (phaseId.startsWith('p')) setActiveTrack('fullstack');
+    }
+    setIsSidebarOpen(false);
+    scrollToTop();
+  };
+
+  const handleSelectTrack = (track: 'fullstack' | 'video' | 'marketing' | null, defaultPhaseId?: string) => {
+    setActiveTrack(track);
+    if (track && defaultPhaseId) {
+      const isCurrentInTrack = 
+        (track === 'fullstack' && activePhaseId.startsWith('p')) ||
+        (track === 'video' && activePhaseId.startsWith('v-p')) ||
+        (track === 'marketing' && activePhaseId.startsWith('marketing-p'));
+      
+      if (!isCurrentInTrack && activePhaseId !== 'dashboard') {
+        setActivePhaseId(defaultPhaseId);
+      }
+    }
+    setIsSidebarOpen(false);
+    scrollToTop();
+  };
+
+  const activePhase = ALL_PHASES.find(p => p.id === activePhaseId) || ALL_PHASES[0];
   
-  const totalTasks = PHASES.reduce((acc, p) => acc + p.tasks.length, 0);
+  const totalTasks = ALL_PHASES.reduce((acc, p) => acc + p.tasks.length, 0);
   const progress = Math.round((completedTasks.length / totalTasks) * 100);
 
-  const currentPhaseIndex = PHASES.findIndex(p => p.id === activePhaseId);
-  const nextPhase = currentPhaseIndex >= 0 && currentPhaseIndex < PHASES.length - 1 ? PHASES[currentPhaseIndex + 1] : null;
-  const prevPhase = currentPhaseIndex > 0 ? PHASES[currentPhaseIndex - 1] : null;
+  const currentPhaseIndex = ALL_PHASES.findIndex(p => p.id === activePhaseId);
+  const nextPhase = currentPhaseIndex >= 0 && currentPhaseIndex < ALL_PHASES.length - 1 ? ALL_PHASES[currentPhaseIndex + 1] : null;
+  const prevPhase = currentPhaseIndex > 0 ? ALL_PHASES[currentPhaseIndex - 1] : null;
 
   const phaseTasks = activePhase.tasks;
   const completedPhaseTasks = phaseTasks.filter(t => completedTasks.includes(t.id));
@@ -202,7 +271,7 @@ export default function App() {
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 glass-panel z-50 flex items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-2 min-w-0 pr-4">
           <h2 className="font-headline font-black text-lg sm:text-xl tracking-wider text-on-surface truncate">
-            TechOptyx <span className="text-primary text-xs sm:text-sm hidden sm:inline">AI Full-stack Mastery</span>
+            TechOptyx
           </h2>
         </div>
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 shrink-0">
@@ -229,86 +298,259 @@ export default function App() {
               onClick={() => {
                 setActivePhaseId('dashboard');
                 setIsSidebarOpen(false);
+                scrollToTop();
               }}
-                className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mb-2",
-                  activePhaseId === 'dashboard'
-                    ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
-                    : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
-                )}
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                <span className="text-sm font-medium">Dashboard</span>
-              </button>
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mb-2",
+                activePhaseId === 'dashboard'
+                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
+              )}
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              <span className="text-sm font-medium">Dashboard</span>
+            </button>
 
-              {PHASES.map((phase) => {
-                const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
-                const phaseTotalTasks = phase.tasks.length;
-                const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
-
-                return (
-                  <button
-                    key={phase.id}
-                    onClick={() => {
-                      setActivePhaseId(phase.id);
-                      setIsSidebarOpen(false);
-                    }}
-                    className={cn(
-                      "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
-                      activePhaseId === phase.id 
-                        ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]" 
-                        : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
-                    )}
+            {/* Track Switcher */}
+            <div className="px-1 py-1.5 mb-2">
+              <div className="flex items-center justify-between px-2 mb-1.5">
+                <span className="text-[10px] font-bold text-on-surface-variant/70 uppercase tracking-widest">Tracks</span>
+                {activeTrack && (
+                  <button 
+                    onClick={() => handleSelectTrack(null)}
+                    className="text-[9px] text-primary hover:underline font-medium"
                   >
-                    <div className="flex items-center gap-3 truncate">
-                      <span className="font-mono text-[10px] opacity-50 shrink-0">PH {phase.number}</span>
-                      <span className="text-sm font-medium truncate">{phase.title}</span>
-                    </div>
-                    {phaseProgress > 0 && (
-                      <div className="flex items-center gap-1.5 shrink-0 ml-2">
-                        {phaseProgress === 100 ? (
-                          <CheckCircle2 className="w-3.5 h-3.5 text-secondary" />
-                        ) : (
-                          <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
-                        )}
-                      </div>
-                    )}
+                    All Tracks
                   </button>
-                );
-              })}
-
-              <button
-                onClick={() => {
-                  setActivePhaseId('prompt-library');
-                  setIsSidebarOpen(false);
-                }}
-                className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-4 border-t border-outline-variant/10 pt-4",
-                  activePhaseId === 'prompt-library'
-                    ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
-                    : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
                 )}
-              >
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-medium">Prompt Library</span>
-              </button>
+              </div>
+              <div className="grid grid-cols-3 gap-1 bg-surface-container p-1 rounded-xl border border-outline-variant/10">
+                <button
+                  onClick={() => handleSelectTrack('fullstack', PHASES[0].id)}
+                  className={cn(
+                    "px-1.5 py-1.5 rounded-lg text-[10px] font-medium transition-all text-center truncate",
+                    activeTrack === 'fullstack'
+                      ? "bg-primary text-white shadow-sm font-bold"
+                      : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
+                  )}
+                  title="Full-Stack AI Developer"
+                >
+                  Full-Stack
+                </button>
+                <button
+                  onClick={() => handleSelectTrack('video', VIDEO_PHASES[0].id)}
+                  className={cn(
+                    "px-1.5 py-1.5 rounded-lg text-[10px] font-medium transition-all text-center truncate",
+                    activeTrack === 'video'
+                      ? "bg-amber-500 text-white shadow-sm font-bold"
+                      : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
+                  )}
+                  title="AI Video Animation"
+                >
+                  Video AI
+                </button>
+                <button
+                  onClick={() => handleSelectTrack('marketing', MARKETING_PHASES[0].id)}
+                  className={cn(
+                    "px-1.5 py-1.5 rounded-lg text-[10px] font-medium transition-all text-center truncate",
+                    activeTrack === 'marketing'
+                      ? "bg-emerald-500 text-white shadow-sm font-bold"
+                      : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
+                  )}
+                  title="Digital Marketing"
+                >
+                  Marketing
+                </button>
+              </div>
+            </div>
 
-              <button
-                onClick={() => {
-                  setActivePhaseId('about');
-                  setIsSidebarOpen(false);
-                }}
-                className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-2",
-                  activePhaseId === 'about'
-                    ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
-                    : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
-                )}
-              >
-                <Briefcase className="w-4 h-4" />
-                <span className="text-sm font-medium">About Us</span>
-              </button>
-            </nav>
+            {/* Track 1: Full-Stack AI Mastery */}
+            <button 
+              onClick={() => handleSelectTrack('fullstack', PHASES[0].id)}
+              className="w-full text-left px-4 py-2 mt-2 mb-1 flex items-center justify-between rounded-lg hover:bg-primary-container/10 transition-colors group"
+            >
+              <h4 className={cn(
+                "text-[10px] font-bold uppercase tracking-widest transition-colors",
+                activeTrack === 'fullstack' ? "text-primary" : "text-on-surface-variant group-hover:text-primary"
+              )}>
+                Full-Stack AI Mastery
+              </h4>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary">19 Phases</span>
+            </button>
+            {PHASES.map((phase) => {
+              const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
+              const phaseTotalTasks = phase.tasks.length;
+              const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
+
+              return (
+                <button
+                  key={phase.id}
+                  onClick={() => handleSelectPhase(phase.id, 'fullstack')}
+                  className={cn(
+                    "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
+                    activePhaseId === phase.id 
+                      ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]" 
+                      : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
+                  )}
+                >
+                  <div className="flex items-center gap-3 truncate">
+                    <span className="font-mono text-[10px] opacity-50 shrink-0">PH {phase.number}</span>
+                    <span className="text-sm font-medium truncate">{phase.title}</span>
+                  </div>
+                  {phaseProgress > 0 && (
+                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                      {phaseProgress === 100 ? (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-secondary" />
+                      ) : (
+                        <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
+                      )}
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+
+            {/* Track 2: AI Video Animation */}
+            <button 
+              onClick={() => handleSelectTrack('video', VIDEO_PHASES[0].id)}
+              className="w-full text-left px-4 py-2 mt-4 mb-1 border-t border-outline-variant/10 pt-4 flex items-center justify-between rounded-lg hover:bg-amber-500/10 transition-colors group"
+            >
+              <h4 className={cn(
+                "text-[10px] font-bold uppercase tracking-widest transition-colors",
+                activeTrack === 'video' ? "text-amber-500" : "text-on-surface-variant group-hover:text-amber-500"
+              )}>
+                AI Video Animation
+              </h4>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500">12 Modules</span>
+            </button>
+            {VIDEO_PHASES.map((phase) => {
+              const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
+              const phaseTotalTasks = phase.tasks.length;
+              const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
+
+              return (
+                <button
+                  key={phase.id}
+                  onClick={() => handleSelectPhase(phase.id, 'video')}
+                  className={cn(
+                    "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
+                    activePhaseId === phase.id 
+                      ? "bg-amber-500/20 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" 
+                      : "text-on-surface-variant hover:text-on-surface hover:bg-amber-500/10"
+                  )}
+                >
+                  <div className="flex items-center gap-3 truncate">
+                    <span className="font-mono text-[10px] opacity-50 shrink-0">M {phase.number}</span>
+                    <span className="text-sm font-medium truncate">{phase.title}</span>
+                  </div>
+                  {phaseProgress > 0 && (
+                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                      {phaseProgress === 100 ? (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
+                      ) : (
+                        <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
+                      )}
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+
+            {/* Track 3: Digital Marketing */}
+            <button 
+              onClick={() => handleSelectTrack('marketing', MARKETING_PHASES[0].id)}
+              className="w-full text-left px-4 py-2 mt-4 mb-1 border-t border-outline-variant/10 pt-4 flex items-center justify-between rounded-lg hover:bg-emerald-500/10 transition-colors group"
+            >
+              <h4 className={cn(
+                "text-[10px] font-bold uppercase tracking-widest transition-colors",
+                activeTrack === 'marketing' ? "text-emerald-500" : "text-on-surface-variant group-hover:text-emerald-500"
+              )}>
+                Digital Marketing
+              </h4>
+              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500">12 Modules</span>
+            </button>
+            {MARKETING_PHASES.map((phase) => {
+              const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id)).length;
+              const phaseTotalTasks = phase.tasks.length;
+              const phaseProgress = phaseTotalTasks > 0 ? Math.round((phaseCompletedTasks / phaseTotalTasks) * 100) : 0;
+
+              return (
+                <button
+                  key={phase.id}
+                  onClick={() => handleSelectPhase(phase.id, 'marketing')}
+                  className={cn(
+                    "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
+                    activePhaseId === phase.id 
+                      ? "bg-emerald-500/20 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]" 
+                      : "text-on-surface-variant hover:text-on-surface hover:bg-emerald-500/10"
+                  )}
+                >
+                  <div className="flex items-center gap-3 truncate">
+                    <span className="font-mono text-[10px] opacity-50 shrink-0">M {phase.number}</span>
+                    <span className="text-sm font-medium truncate">{phase.title}</span>
+                  </div>
+                  {phaseProgress > 0 && (
+                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                      {phaseProgress === 100 ? (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                      ) : (
+                        <span className="text-[9px] font-mono text-on-surface-variant/70">{phaseProgress}%</span>
+                      )}
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => {
+                setActivePhaseId('prompt-library');
+                setIsSidebarOpen(false);
+                scrollToTop();
+              }}
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-4 border-t border-outline-variant/10 pt-4",
+                activePhaseId === 'prompt-library'
+                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
+              )}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span className="text-sm font-medium">Prompt Library</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setActivePhaseId('about');
+                setIsSidebarOpen(false);
+                scrollToTop();
+              }}
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-2",
+                activePhaseId === 'about'
+                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
+              )}
+            >
+              <Briefcase className="w-4 h-4" />
+              <span className="text-sm font-medium">About Us</span>
+            </button>
+            <button
+              onClick={() => {
+                setActivePhaseId('certifications');
+                setIsSidebarOpen(false);
+                scrollToTop();
+              }}
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-2",
+                activePhaseId === 'certifications'
+                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
+              )}
+            >
+              <Award className="w-4 h-4" />
+              <span className="text-sm font-medium">Certifications</span>
+            </button>
+          </nav>
 
             <div className="mt-auto pt-4 border-t border-outline-variant/20">
               <div className="p-4 rounded-xl bg-surface-container border border-outline-variant/20">
@@ -359,6 +601,7 @@ export default function App() {
       <div className="flex relative z-10">
         {/* Main Content */}
         <main className="flex-1 min-w-0 w-full lg:ml-[260px] min-h-screen pt-20 lg:pt-0">
+          <div id="phase-header-anchor" className="scroll-mt-24 pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-10">
             
             <AnimatePresence mode="wait">
@@ -397,7 +640,7 @@ export default function App() {
                         <p>No theory. No wasted time.<br/>Just practical systems that turn your skills into real-world revenue.</p>
                       </div>
                       <button 
-                        onClick={() => setActivePhaseId(PHASES[0].id)}
+                        onClick={() => handleSelectPhase(ALL_PHASES[0].id)}
                         className="px-8 py-4 rounded-xl bg-primary-container text-white font-bold hover:translate-y-[-2px] transition-all shadow-[0_15px_30px_-5px_rgba(108,59,255,0.3)] flex items-center gap-2 text-lg"
                       >
                         <Rocket className="w-6 h-6" />
@@ -503,12 +746,419 @@ export default function App() {
                     <div className="absolute bottom-0 left-0 w-48 h-48 bg-secondary/5 rounded-full blur-[80px] -ml-24 -mb-24 group-hover:bg-secondary/10 transition-colors" />
                   </div>
 
+                                    {/* Pinned Items Section */}
+                  {(pinnedModules.length > 0 || pinnedVideos.length > 0) && (
+                    <div className="space-y-6 mb-12">
+                      <div className="flex items-center gap-2">
+                        <Pin className="w-5 h-5 text-primary" />
+                        <h2 className="text-2xl font-bold text-on-surface">Pinned Items</h2>
+                      </div>
+                      
+                      {pinnedModules.length > 0 && (
+                        <div className="space-y-4">
+                          <h3 className="text-sm font-bold text-on-surface-variant uppercase tracking-widest">Modules</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {ALL_PHASES.filter(p => pinnedModules.includes(p.id)).map((phase, i) => (
+                               <div 
+                                  key={i} 
+                                  onClick={() => handleSelectPhase(phase.id)}
+                                  className="cursor-pointer group p-5 rounded-2xl border border-outline-variant/20 bg-surface-container hover:bg-surface-container-high transition-all relative overflow-hidden"
+                               >
+                                  <div className="flex justify-between items-start mb-2 relative z-10">
+                                    <span className="text-[10px] font-label text-primary uppercase tracking-widest">Phase {phase.number}</span>
+                                    <button 
+                                      onClick={(e) => togglePinModule(e, phase.id)}
+                                      className="text-primary hover:text-primary/70 transition-colors"
+                                      title="Unpin module"
+                                    >
+                                      <PinOff className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                  <h4 className="font-bold text-sm text-on-surface line-clamp-2 relative z-10">{phase.title}</h4>
+                               </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {pinnedVideos.length > 0 && (
+                        <div className="space-y-4">
+                          <h3 className="text-sm font-bold text-on-surface-variant uppercase tracking-widest">Videos</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {ALL_PHASES.flatMap(p => p.resources).filter(r => r.type === 'yt' && pinnedVideos.includes(r.url)).filter((r, i, arr) => arr.findIndex(t => t.url === r.url) === i).map((res, j) => (
+                                  <div
+                                    key={j}
+                                    onClick={() => setVideoPlayerState({ isOpen: true, url: res.url })}
+                                    className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                  >
+                                    <div className="p-2 rounded-lg bg-secondary/10 text-secondary shrink-0 group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+                                      <Play className="w-4 h-4 fill-current" />
+                                    </div>
+                                    <span className="text-sm font-medium text-on-surface-variant group-hover:text-on-surface line-clamp-2 pr-12 leading-tight">{res.title}</span>
+                                    <div className="absolute right-3 top-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <button 
+                                        onClick={(e) => togglePinVideo(e, res.url)}
+                                        className="text-primary hover:text-primary/70 transition-colors"
+                                        title="Unpin video"
+                                      >
+                                        <PinOff className="w-4 h-4" />
+                                      </button>
+                                      <button 
+                                        onClick={(e) => toggleFlagVideo(e, res.url)}
+                                      >
+                                        <Flag className={cn("w-4 h-4", flaggedVideos.includes(res.url) ? "text-primary fill-current" : "text-on-surface-variant hover:text-primary")} />
+                                      </button>
+                                    </div>
+                                  </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {/* Curriculum Tracks */}
+                  <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-on-surface">Curriculum Tracks</h2>
+                    
+                    {/* Track Search Bar */}
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Search className="h-5 w-5 text-on-surface-variant/50" />
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Search modules and videos..."
+                        value={trackSearchQuery}
+                        onChange={(e) => setTrackSearchQuery(e.target.value)}
+                        className="w-full pl-11 pr-4 py-3 bg-surface-container rounded-2xl border border-outline-variant/20 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all text-on-surface placeholder:text-on-surface-variant/50"
+                      />
+                    </div>
+                    
+                    {/* Track Selection Tabs */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {/* Full-Stack AI Developer Tab */}
+                      <button 
+                        onClick={() => setActiveTrack(activeTrack === 'fullstack' ? null : 'fullstack')}
+                        className={cn(
+                          "p-6 rounded-3xl border transition-all text-left group overflow-hidden relative",
+                          activeTrack === 'fullstack' 
+                            ? "bg-primary-container/20 border-primary/40 shadow-[0_0_20px_rgba(108,59,255,0.15)]" 
+                            : "bg-surface-container border-outline-variant/20 hover:bg-surface-container-high"
+                        )}
+                      >
+                        <div className="relative z-10 flex flex-col gap-3">
+                          <div className={cn(
+                            "p-3 rounded-xl w-12 h-12 flex items-center justify-center transition-colors",
+                            activeTrack === 'fullstack' ? "bg-primary text-white shadow-[0_0_15px_rgba(108,59,255,0.5)]" : "bg-primary/20 text-primary group-hover:bg-primary/30"
+                          )}>
+                            <Rocket className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <h3 className={cn("text-xl font-bold mb-1 transition-colors", activeTrack === 'fullstack' ? "text-primary" : "text-on-surface group-hover:text-primary")}>Full-Stack AI Developer</h3>
+                            <p className="text-sm text-on-surface-variant">Master AI-powered software development</p>
+                          </div>
+                        </div>
+                        {activeTrack === 'fullstack' && (
+                           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-[50px] -mr-10 -mt-10" />
+                        )}
+                      </button>
+
+                      {/* AI Video Animation Tab */}
+                      <button 
+                        onClick={() => setActiveTrack(activeTrack === 'video' ? null : 'video')}
+                        className={cn(
+                          "p-6 rounded-3xl border transition-all text-left group overflow-hidden relative",
+                          activeTrack === 'video' 
+                            ? "bg-amber-500/10 border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.15)]" 
+                            : "bg-surface-container border-outline-variant/20 hover:bg-surface-container-high"
+                        )}
+                      >
+                        <div className="relative z-10 flex flex-col gap-3">
+                          <div className={cn(
+                            "p-3 rounded-xl w-12 h-12 flex items-center justify-center transition-colors",
+                            activeTrack === 'video' ? "bg-amber-500 text-white shadow-[0_0_15px_rgba(245,158,11,0.5)]" : "bg-amber-500/20 text-amber-500 group-hover:bg-amber-500/30"
+                          )}>
+                            <Play className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <h3 className={cn("text-xl font-bold mb-1 transition-colors", activeTrack === 'video' ? "text-amber-500" : "text-on-surface group-hover:text-amber-500")}>AI Video Animation</h3>
+                            <p className="text-sm text-on-surface-variant">Master AI-powered video generation and storytelling</p>
+                          </div>
+                        </div>
+                        {activeTrack === 'video' && (
+                           <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/20 rounded-full blur-[50px] -mr-10 -mt-10" />
+                        )}
+                      </button>
+
+                      {/* Digital Marketing and Commerce Tab */}
+                      <button 
+                        onClick={() => setActiveTrack(activeTrack === 'marketing' ? null : 'marketing')}
+                        className={cn(
+                          "p-6 rounded-3xl border transition-all text-left group overflow-hidden relative",
+                          activeTrack === 'marketing' 
+                            ? "bg-emerald-500/10 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.15)]" 
+                            : "bg-surface-container border-outline-variant/20 hover:bg-surface-container-high"
+                        )}
+                      >
+                        <div className="relative z-10 flex flex-col gap-3">
+                          <div className={cn(
+                            "p-3 rounded-xl w-12 h-12 flex items-center justify-center transition-colors",
+                            activeTrack === 'marketing' ? "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)]" : "bg-emerald-500/20 text-emerald-500 group-hover:bg-emerald-500/30"
+                          )}>
+                            <TrendingUp className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <h3 className={cn("text-xl font-bold mb-1 transition-colors", activeTrack === 'marketing' ? "text-emerald-500" : "text-on-surface group-hover:text-emerald-500")}>Digital Marketing</h3>
+                            <p className="text-sm text-on-surface-variant">Master AI-driven marketing and commerce</p>
+                          </div>
+                        </div>
+                        {activeTrack === 'marketing' && (
+                           <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full blur-[50px] -mr-10 -mt-10" />
+                        )}
+                      </button>
+                    </div>
+
+
+                    {/* Active Track Content */}
+                    <AnimatePresence mode="wait">
+                      {activeTrack === 'fullstack' && (
+                        <motion.div 
+                          key="fullstack"
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="p-6 md:p-8 rounded-3xl border border-outline-variant/20 bg-surface-container-low space-y-8"
+                        >
+                          {PHASES.reduce((acc, phase) => {
+                            const query = trackSearchQuery.toLowerCase();
+                            const matchesPhase = phase.title.toLowerCase().includes(query);
+                            const matchingRes = phase.resources.filter(r => r.title.toLowerCase().includes(query));
+                            
+                            if (query && !matchesPhase && matchingRes.length === 0) return acc;
+                            
+                            const filteredPhase = query && !matchesPhase 
+                              ? { ...phase, resources: matchingRes }
+                              : phase;
+                              
+                            acc.push(filteredPhase);
+                            return acc;
+                          }, [] as typeof PHASES).map((phase, i) => (
+                            <div key={i} className="space-y-4">
+                              <div className="flex items-center justify-between">
+                              <h4 className="font-bold text-sm text-primary uppercase tracking-widest flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-primary" />
+                                {phase.title}
+                              </h4>
+                              <button 
+                                onClick={(e) => togglePinModule(e, phase.id)}
+                                className={cn(
+                                  "p-1.5 rounded-md transition-colors",
+                                  pinnedModules.includes(phase.id) ? "bg-primary/20 text-primary" : "text-on-surface-variant hover:bg-surface hover:text-primary"
+                                )}
+                                title={pinnedModules.includes(phase.id) ? "Unpin module" : "Pin module"}
+                              >
+                                {pinnedModules.includes(phase.id) ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
+                              </button>
+                            </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                {phase.resources.filter(r => r.type === 'yt').map((res, j) => (
+                                  <div
+                                    key={j}
+                                    onClick={() => setVideoPlayerState({ isOpen: true, url: res.url })}
+                                    className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                  >
+                                    <div className="p-2 rounded-lg bg-secondary/10 text-secondary shrink-0 group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+                                      <Play className="w-4 h-4 fill-current" />
+                                    </div>
+                                    <span className="text-sm font-medium text-on-surface-variant group-hover:text-on-surface line-clamp-2 pr-6 leading-tight">{res.title}</span>
+                                    <button 
+                                      onClick={(e) => toggleFlagVideo(e, res.url)}
+                                      className={cn(
+                                        "absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity",
+                                        flaggedVideos.includes(res.url) && "opacity-100"
+                                      )}
+                                    >
+                                      <Flag className={cn("w-4 h-4", flaggedVideos.includes(res.url) ? "text-primary fill-current" : "text-on-surface-variant hover:text-primary")} />
+                                    </button>
+                                  </div>
+                                ))} 
+                                {phase.resources.filter(r => r.type === 'yt').length === 0 && (
+                                  <span className="text-sm text-on-surface-variant italic p-4">No videos in this module yet.</span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                      
+                      {activeTrack === 'video' && (
+                        <motion.div
+                          key="video"
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="p-6 md:p-8 rounded-3xl border border-outline-variant/20 bg-surface-container-low space-y-8"
+                        >
+                          {VIDEO_PHASES.reduce((acc, phase) => {
+                            const query = trackSearchQuery.toLowerCase();
+                            const matchesPhase = phase.title.toLowerCase().includes(query);
+                            const matchingRes = phase.resources.filter(r => r.title.toLowerCase().includes(query));
+                            
+                            if (query && !matchesPhase && matchingRes.length === 0) return acc;
+                            
+                            const filteredPhase = query && !matchesPhase 
+                              ? { ...phase, resources: matchingRes }
+                              : phase;
+                              
+                            acc.push(filteredPhase);
+                            return acc;
+                          }, [] as typeof VIDEO_PHASES).map((phase, i) => (
+                            <div key={i} className="space-y-4">
+                              <div className="flex items-center justify-between">
+                              <h4 className="font-bold text-sm text-amber-500 uppercase tracking-widest flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-amber-500" />
+                                {phase.title}
+                              </h4>
+                              <button 
+                                onClick={(e) => togglePinModule(e, phase.id)}
+                                className={cn(
+                                  "p-1.5 rounded-md transition-colors",
+                                  pinnedModules.includes(phase.id) ? "bg-amber-500/20 text-amber-500" : "text-on-surface-variant hover:bg-surface hover:text-amber-500"
+                                )}
+                                title={pinnedModules.includes(phase.id) ? "Unpin module" : "Pin module"}
+                              >
+                                {pinnedModules.includes(phase.id) ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
+                              </button>
+                            </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                {phase.resources.map((res, j) => {
+                                  const isYt = res.type === 'yt';
+                                  return (
+                                    <div
+                                      key={j}
+                                      onClick={() => isYt ? setVideoPlayerState({ isOpen: true, url: res.url }) : window.open(res.url, '_blank')}
+                                      className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                    >
+                                      <div className={cn("p-2 rounded-lg shrink-0 transition-colors", 
+                                        isYt ? "bg-amber-500/10 text-amber-500 group-hover:bg-amber-500 group-hover:text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"
+                                      )}>
+                                        {isYt ? <Play className="w-4 h-4 fill-current" /> : <ExternalLink className="w-4 h-4" />}
+                                      </div>
+                                      <div className="flex flex-col min-w-0 pr-6">
+                                        <span className="text-[10px] font-label text-on-surface-variant uppercase tracking-wider mb-1">{res.type}</span>
+                                        <span className="text-sm font-medium text-on-surface-variant group-hover:text-on-surface line-clamp-2 leading-tight">{res.title}</span>
+                                      </div>
+                                      {isYt && (
+                                        <button 
+                                          onClick={(e) => { e.stopPropagation(); toggleFlagVideo(e, res.url); }}
+                                          className={cn(
+                                            "absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity z-10",
+                                            flaggedVideos.includes(res.url) && "opacity-100"
+                                          )}
+                                        >
+                                          <Flag className={cn("w-4 h-4", flaggedVideos.includes(res.url) ? "text-amber-500 fill-current" : "text-on-surface-variant hover:text-amber-500")} />
+                                        </button>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                                {phase.resources.length === 0 && (
+                                  <span className="text-sm text-on-surface-variant italic p-4">No resources in this module yet.</span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+
+                      {activeTrack === 'marketing' && (
+                        <motion.div
+                          key="marketing"
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="p-6 md:p-8 rounded-3xl border border-outline-variant/20 bg-surface-container-low space-y-8"
+                        >
+                          {MARKETING_PHASES.reduce((acc, phase) => {
+                            const query = trackSearchQuery.toLowerCase();
+                            const matchesPhase = phase.title.toLowerCase().includes(query);
+                            const matchingRes = phase.resources.filter(r => r.title.toLowerCase().includes(query));
+                            
+                            if (query && !matchesPhase && matchingRes.length === 0) return acc;
+                            
+                            const filteredPhase = query && !matchesPhase 
+                              ? { ...phase, resources: matchingRes }
+                              : phase;
+                              
+                            acc.push(filteredPhase);
+                            return acc;
+                          }, [] as typeof MARKETING_PHASES).map((phase, i) => (
+                            <div key={i} className="space-y-4">
+                              <div className="flex items-center justify-between">
+                              <h4 className="font-bold text-sm text-emerald-500 uppercase tracking-widest flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                                {phase.title}
+                              </h4>
+                              <button 
+                                onClick={(e) => togglePinModule(e, phase.id)}
+                                className={cn(
+                                  "p-1.5 rounded-md transition-colors",
+                                  pinnedModules.includes(phase.id) ? "bg-emerald-500/20 text-emerald-500" : "text-on-surface-variant hover:bg-surface hover:text-emerald-500"
+                                )}
+                                title={pinnedModules.includes(phase.id) ? "Unpin module" : "Pin module"}
+                              >
+                                {pinnedModules.includes(phase.id) ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
+                              </button>
+                            </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                {phase.resources.map((res, j) => {
+                                  const isYt = res.type === 'yt';
+                                  return (
+                                    <div
+                                      key={j}
+                                      onClick={() => isYt ? setVideoPlayerState({ isOpen: true, url: res.url }) : window.open(res.url, '_blank')}
+                                      className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                    >
+                                      <div className={cn("p-2 rounded-lg shrink-0 transition-colors", 
+                                        isYt ? "bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"
+                                      )}>
+                                        {isYt ? <Play className="w-4 h-4 fill-current" /> : <ExternalLink className="w-4 h-4" />}
+                                      </div>
+                                      <div className="flex flex-col min-w-0 pr-6">
+                                        <span className="text-[10px] font-label text-on-surface-variant uppercase tracking-wider mb-1">{res.type}</span>
+                                        <span className="text-sm font-medium text-on-surface-variant group-hover:text-on-surface line-clamp-2 leading-tight">{res.title}</span>
+                                      </div>
+                                      {isYt && (
+                                        <button 
+                                          onClick={(e) => { e.stopPropagation(); toggleFlagVideo(e, res.url); }}
+                                          className={cn(
+                                            "absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity z-10",
+                                            flaggedVideos.includes(res.url) && "opacity-100"
+                                          )}
+                                        >
+                                          <Flag className={cn("w-4 h-4", flaggedVideos.includes(res.url) ? "text-emerald-500 fill-current" : "text-on-surface-variant hover:text-emerald-500")} />
+                                        </button>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                                {phase.resources.length === 0 && (
+                                  <span className="text-sm text-on-surface-variant italic p-4">No resources in this module yet.</span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
                   {/* Stats Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
                       { label: "Overall Progress", value: `${progress}%`, icon: Target, color: "text-secondary" },
                       { label: "Tasks Completed", value: completedTasks.length, icon: CheckCircle2, color: "text-primary" },
-                      { label: "Active Phase", value: `Phase ${PHASES.find(p => p.tasks.some(t => !completedTasks.includes(t.id)))?.number || PHASES[PHASES.length - 1].number}`, icon: Zap, color: "text-amber-400" },
+                      { label: "Active Phase", value: `Phase ${ALL_PHASES.find(p => p.tasks.some(t => !completedTasks.includes(t.id)))?.number || ALL_PHASES[ALL_PHASES.length - 1].number}`, icon: Zap, color: "text-amber-400" },
                       { label: "Potential Value", value: "₦2.5M+", icon: DollarSign, color: "text-emerald-400" }
                     ].map((stat, i) => (
                       <div key={i} className="p-6 rounded-3xl bg-surface-container border border-outline-variant/10 relative overflow-hidden group hover:border-secondary/30 card-glow interactive-glow">
@@ -543,7 +1193,7 @@ export default function App() {
                       </div>
                       <div className="h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
-                          <AreaChart data={PHASES.map(p => ({
+                          <AreaChart data={ALL_PHASES.map(p => ({
                             name: `PH ${p.number}`,
                             completed: p.tasks.filter(t => completedTasks.includes(t.id)).length,
                             total: p.tasks.length
@@ -603,7 +1253,7 @@ export default function App() {
                             <p className="text-xs text-on-surface-variant italic">No tasks completed yet.</p>
                           ) : (
                             completedTasks.slice(-5).reverse().map((taskId, i) => {
-                              const phase = PHASES.find(p => p.tasks.some(t => t.id === taskId));
+                              const phase = ALL_PHASES.find(p => p.tasks.some(t => t.id === taskId));
                               const task = phase?.tasks.find(t => t.id === taskId);
                               return (
                                 <div key={i} className="flex items-start gap-4">
@@ -631,7 +1281,7 @@ export default function App() {
                           You've completed {completedTasks.length} tasks. Based on your progress, you're ready to start pitching for your next projects.
                         </p>
                         <button 
-                          onClick={() => setActivePhaseId(PHASES.find(p => p.tasks.some(t => !completedTasks.includes(t.id)))?.id || PHASES[PHASES.length - 1].id)}
+                          onClick={() => handleSelectPhase(ALL_PHASES.find(p => p.tasks.some(t => !completedTasks.includes(t.id)))?.id || ALL_PHASES[ALL_PHASES.length - 1].id)}
                           className="w-full py-3 rounded-xl bg-primary-container text-white text-[10px] font-bold uppercase tracking-wider hover:scale-[1.02] transition-transform relative z-10 shadow-[0_0_15px_rgba(108,59,255,0.3)] btn-glow"
                         >
                           View Selling Strategy
@@ -649,10 +1299,10 @@ export default function App() {
                       <span className="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Your Roadmap</span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      {PHASES.filter(p => p.tasks.some(t => !completedTasks.includes(t.id))).slice(0, 3).map((p, i) => (
+                      {ALL_PHASES.filter(p => p.tasks.some(t => !completedTasks.includes(t.id))).slice(0, 3).map((p, i) => (
                         <div 
                           key={i} 
-                          onClick={() => setActivePhaseId(p.id)}
+                          onClick={() => handleSelectPhase(p.id)}
                           className="p-6 rounded-3xl glass-card hover:border-secondary/30 transition-colors cursor-pointer group card-glow interactive-glow relative overflow-hidden"
                         >
                           <div className="flex items-center justify-between mb-4 relative z-10">
@@ -670,7 +1320,7 @@ export default function App() {
 
                   
                   {/* Achievements Grid */}
-                  {PHASES.filter(p => p.tasks.length > 0 && p.tasks.every(t => completedTasks.includes(t.id))).length > 0 && (
+                  {ALL_PHASES.filter(p => p.tasks.length > 0 && p.tasks.every(t => completedTasks.includes(t.id))).length > 0 && (
                     <div className="space-y-6 mt-12">
                       <div className="flex items-center justify-between">
                         <h3 className="text-xl font-bold flex items-center gap-2 text-on-surface">
@@ -680,7 +1330,7 @@ export default function App() {
                         <span className="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Unlocked Badges</span>
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                        {PHASES.filter(p => p.tasks.length > 0 && p.tasks.every(t => completedTasks.includes(t.id))).map((phase, i) => {
+                        {ALL_PHASES.filter(p => p.tasks.length > 0 && p.tasks.every(t => completedTasks.includes(t.id))).map((phase, i) => {
                           const ICONS = [Trophy, Shield, Medal, Star, Award, Zap];
                           const BadgeIcon = ICONS[(parseInt(phase.number) || 0) % ICONS.length];
                           
@@ -712,7 +1362,7 @@ export default function App() {
                         <span className="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Achievements</span>
                       </div>
                       <div className="grid grid-cols-1 gap-6">
-                        {PHASES.filter(p => p.tasks.some(t => completedTasks.includes(t.id))).map((phase, i) => {
+                        {ALL_PHASES.filter(p => p.tasks.some(t => completedTasks.includes(t.id))).map((phase, i) => {
                           const phaseCompletedTasks = phase.tasks.filter(t => completedTasks.includes(t.id));
                           const allTasksCompleted = phaseCompletedTasks.length === phase.tasks.length;
                           
@@ -740,7 +1390,7 @@ export default function App() {
                                         <div key={task.id} className="flex justify-between items-center p-3 rounded-xl bg-surface-container/50 border border-outline-variant/5">
                                           <div className="flex items-center gap-3">
                                             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                                            <span className="text-sm text-on-surface">{task.label}</span>
+                                            <span className="text-sm text-on-surface">{task.label || task.title}</span>
                                           </div>
                                           <span className="text-xs font-mono text-on-surface-variant whitespace-nowrap ml-4">Time: {timeSpent}</span>
                                         </div>
@@ -820,6 +1470,8 @@ export default function App() {
                 <AboutUs key="about" />
               ) : activePhaseId === 'prompt-library' ? (
                 <PromptLibrary key="prompt-library" />
+              ) : activePhaseId === 'certifications' ? (
+                <CertificationsPage key="certifications" />
               ) : (
                 <motion.div
                   key={activePhase.id}
@@ -829,7 +1481,7 @@ export default function App() {
                   transition={{ duration: 0.4 }}
                 >
                   {/* Phase Header */}
-                  <div className="mb-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                  <div id="phase-header" className="mb-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6 scroll-mt-24">
                     <div>
                       <div className="flex items-center gap-3 mb-4">
                         <span className="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-[10px] font-label text-secondary uppercase tracking-wider">
@@ -859,7 +1511,7 @@ export default function App() {
                           <h3 className="text-xl font-bold tracking-wide uppercase text-on-surface">Action Tasks</h3>
                         </div>
                         <div className="space-y-3">
-                          {activePhase.tasks.map((task) => (
+                          {(activePhase.tasks || []).map((task) => (
                             <button
                               key={task.id}
                               onClick={() => toggleTask(task.id)}
@@ -875,9 +1527,9 @@ export default function App() {
                               ) : (
                                 <Circle className="w-5 h-5 text-on-surface-variant/30 group-hover:text-secondary/50 shrink-0" />
                               )}
-                              <span className="text-sm font-medium">{task.label}</span>
+                              <span className="text-sm font-medium">{task.label || task.title}</span>
                             </button>
-                          ))}
+                                ))}  
                         </div>
                       </section>
 
@@ -888,7 +1540,10 @@ export default function App() {
                           <h3 className="text-xl font-bold tracking-wide uppercase text-on-surface">Learning Resources</h3>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {activePhase.resources.map((res, idx) => {
+                          {((activePhase.resources && activePhase.resources.length > 0)
+                            ? activePhase.resources
+                            : (activePhase.freeResources || []).map(fr => ({ title: `${fr.provider}: ${fr.title}`, url: fr.url, type: 'guide' }))
+                          ).map((res, idx) => {
                             const isYt = isYouTubeUrl(res.url);
                             const Component = isYt ? 'button' : 'a';
                             const props = isYt 
@@ -939,16 +1594,31 @@ export default function App() {
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-between p-5 rounded-xl bg-gradient-to-r from-surface-container to-surface-container-highest border border-outline-variant/10 hover:border-fuchsia-400/30 group card-glow interactive-glow relative overflow-hidden"
                               >
-                                <div className="flex items-center gap-4 min-w-0 relative z-10">
+                                <div className="flex items-center gap-4 min-w-0 relative z-10 w-full pr-12">
                                   <div className="w-10 h-10 rounded-lg bg-fuchsia-400/10 text-fuchsia-400 flex items-center justify-center shrink-0">
                                     <Award className="w-5 h-5" />
                                   </div>
-                                  <div className="flex flex-col min-w-0">
+                                  <div className="flex flex-col min-w-0 flex-1">
                                     <span className="text-[10px] font-label text-fuchsia-400 uppercase tracking-wider mb-1">{res.type} • {res.provider}</span>
-                                    <span className="text-sm font-medium truncate group-hover:text-fuchsia-400 transition-colors text-on-surface">{res.title}</span>
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <span className="text-sm font-medium truncate group-hover:text-fuchsia-400 transition-colors text-on-surface">{res.title}</span>
+                                      {res.description && (
+                                        <div 
+                                          className="relative group/tooltip inline-flex"
+                                          onClick={(e) => e.stopPropagation()} // Prevent link click if clicking icon
+                                        >
+                                          <Info className="w-4 h-4 text-on-surface-variant group-hover:text-fuchsia-400 shrink-0" />
+                                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 p-3 bg-surface border border-outline-variant/20 rounded-xl text-xs text-on-surface leading-relaxed shadow-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-50 pointer-events-none before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-surface">
+                                            {res.description}
+                                          </div>
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
-                                <ExternalLink className="w-4 h-4 text-on-surface-variant group-hover:text-fuchsia-400 shrink-0 ml-4 relative z-10" />
+                                <div className="absolute right-5 flex items-center shrink-0 z-10">
+                                  <ExternalLink className="w-4 h-4 text-on-surface-variant group-hover:text-fuchsia-400" />
+                                </div>
                               </a>
                             ))}
                           </div>
@@ -1069,9 +1739,9 @@ export default function App() {
                             <Award className="w-5 h-5 text-amber-400" />
                             <span className="font-label text-[10px] text-amber-400 tracking-widest uppercase">Deliverable</span>
                           </div>
-                          <h3 className="text-2xl font-bold mb-3 text-on-surface">{activePhase.project.title}</h3>
+                          <h3 className="text-2xl font-bold mb-3 text-on-surface">{activePhase.project?.title}</h3>
                           <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
-                            {activePhase.project.description}
+                            {activePhase.project?.description}
                           </p>
                           
                           <div className="space-y-4">
@@ -1080,13 +1750,13 @@ export default function App() {
                                 <DollarSign className="w-4 h-4 text-secondary" />
                                 <span className="font-label text-[10px] text-secondary">Market Value</span>
                               </div>
-                              <span className="text-sm font-bold text-on-surface">{activePhase.project.sellingStrategy.pricing}</span>
+                              <span className="text-sm font-bold text-on-surface">{activePhase.project?.sellingStrategy?.pricing}</span>
                             </div>
 
                             <div className="space-y-2">
                               <span className="font-label text-[10px] text-on-surface-variant uppercase">Outcome</span>
                               <ul className="space-y-2">
-                                {activePhase.project.deliverables.map((d, i) => (
+                                {(activePhase.project?.deliverables || []).map((d, i) => (
                                   <li key={i} className="flex items-center gap-2 text-xs text-on-surface-variant">
                                     <ChevronRight className="w-3 h-3 text-secondary" />
                                     {d}
@@ -1107,10 +1777,10 @@ export default function App() {
                           </div>
                           <h4 className="font-bold text-sm mb-4 text-on-surface">How to sell this skill:</h4>
                           <p className="text-xs text-on-surface-variant leading-relaxed mb-4">
-                            {activePhase.project.sellingStrategy.pitch}
+                            {activePhase.project?.sellingStrategy?.pitch}
                           </p>
                           <div className="flex flex-wrap gap-2">
-                            {activePhase.project.sellingStrategy.whereToFind.map((place, i) => (
+                            {(activePhase.project?.sellingStrategy?.whereToFind || []).map((place, i) => (
                               <span key={i} className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] text-primary uppercase tracking-wider">
                                 {place}
                               </span>
@@ -1127,7 +1797,7 @@ export default function App() {
                             <span className="font-label text-[10px] text-secondary tracking-widest uppercase">Stack</span>
                           </div>
                           <div className="flex flex-wrap gap-2">
-                            {activePhase.tools.map((tool, i) => (
+                            {(activePhase.tools || []).map((tool, i) => (
                               <a 
                                 key={i} 
                                 href={tool.url} 
@@ -1184,8 +1854,7 @@ export default function App() {
                       {prevPhase ? (
                         <button 
                           onClick={() => {
-                            setActivePhaseId(prevPhase.id);
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            handleSelectPhase(prevPhase.id);
                           }}
                           className="px-6 py-3 rounded-xl border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex items-center gap-2 btn-glow"
                         >
@@ -1202,8 +1871,7 @@ export default function App() {
                       {nextPhase && (
                         <button 
                           onClick={() => {
-                            setActivePhaseId(nextPhase.id);
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            handleSelectPhase(nextPhase.id);
                           }}
                           className="px-6 py-3 rounded-xl bg-primary-container text-white hover:bg-primary-container/80 flex items-center gap-2 text-right shadow-[0_5px_15px_-3px_rgba(108,59,255,0.3)] btn-glow"
                         >
@@ -1222,9 +1890,6 @@ export default function App() {
 
             {/* Footer */}
             <footer className="mt-20 pt-10 pb-6 border-t border-outline-variant/20 flex flex-col items-center gap-4">
-              <p className="font-mono text-[10px] text-on-surface-variant/60 tracking-[0.3em] uppercase text-center">
-                Built by Al Ammr • Powered by TechOptyx
-              </p>
               <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-xs text-on-surface-variant">
                 <span>&copy; {new Date().getFullYear()} TechOptyx. All rights reserved.</span>
                 <div className="flex items-center gap-4">
@@ -1237,91 +1902,39 @@ export default function App() {
         </main>
       </div>
 
-      {/* AI Assistant Modal */}
-      <AnimatePresence>
-        {isAiOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed bottom-24 right-8 w-96 h-[500px] glass-card border-outline-variant/20 rounded-3xl z-50 flex flex-col overflow-hidden shadow-2xl"
-          >
-            <div className="p-4 border-b border-outline-variant/10 flex items-center justify-between bg-secondary/5">
-              <div className="flex items-center gap-2">
-                <Bot className="w-5 h-5 text-secondary" />
-                <span className="font-bold text-sm tracking-wide uppercase text-on-surface">AI Path Assistant</span>
-              </div>
-              <button onClick={() => setIsAiOpen(false)} className="p-1 hover:bg-white/10 rounded text-on-surface-variant">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+      {/* AI Path Assistant */}
+      <AiPathAssistant 
+        isOpen={isAiOpen}
+        onClose={() => setIsAiOpen(false)}
+        activePhase={activePhaseId !== 'dashboard' && activePhaseId !== 'about' && activePhaseId !== 'prompt-library' && activePhaseId !== 'certifications'
+          ? ALL_PHASES.find(p => p.id === activePhaseId)
+          : undefined}
+        activeTrack={activeTrack}
+        completedTasksCount={completedTasks.length}
+        totalTasksCount={ALL_PHASES.reduce((acc, p) => acc + p.tasks.length, 0)}
+        onNavigatePhase={handleSelectPhase}
+      />
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
-              {chatHistory.length === 0 && (
-                <div className="text-center py-8">
-                  <Bot className="w-12 h-12 text-on-surface-variant/30 mx-auto mb-4" />
-                  <p className="text-sm text-on-surface-variant">
-                    Ask me anything about Phase {activePhase.number}. I'm here to help you build and monetize.
-                  </p>
-                </div>
-              )}
-              {chatHistory.map((msg, i) => (
-                <div key={i} className={cn(
-                  "flex flex-col max-w-[85%]",
-                  msg.role === 'user' ? "ml-auto items-end" : "items-start"
-                )}>
-                  <div className={cn(
-                    "p-3 rounded-2xl text-sm",
-                    msg.role === 'user' 
-                      ? "bg-secondary text-surface rounded-tr-none" 
-                      : "bg-surface-container-highest text-on-surface rounded-tl-none border border-outline-variant/10"
-                  )}>
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-              {isTyping && (
-                <div className="flex items-center gap-2 text-on-surface-variant">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="text-xs font-label">Thinking...</span>
-                </div>
-              )}
-              <div ref={chatEndRef} />
-            </div>
-
-            <form onSubmit={handleAiChat} className="p-4 border-t border-outline-variant/10 bg-surface-container/50">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={aiMessage}
-                  onChange={(e) => setAiMessage(e.target.value)}
-                  placeholder="Ask a question..."
-                  className="w-full bg-surface-container-highest border border-outline-variant/20 rounded-xl py-3 pl-4 pr-12 text-sm focus:outline-none focus:border-secondary/50 transition-all text-on-surface placeholder:text-on-surface-variant"
-                />
-                <button 
-                  type="submit"
-                  disabled={isTyping || !aiMessage.trim()}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-secondary disabled:opacity-30"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </div>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Floating AI Assistant Button */}
+      {/* Floating AI Assistant Trigger Button - fully responsive for mobile, tablet, and desktop */}
       <button 
         onClick={() => setIsAiOpen(!isAiOpen)}
+        aria-label="Toggle AI Path Assistant"
         className={cn(
-          "fixed bottom-8 right-8 w-14 h-14 rounded-full flex items-center justify-center group z-50 transition-transform duration-300 btn-glow",
+          "fixed bottom-5 right-4 sm:bottom-8 sm:right-8 z-50 flex items-center justify-center transition-all duration-300 shadow-2xl active:scale-95 group",
+          "w-12 h-12 sm:w-14 sm:h-14 rounded-2xl sm:rounded-full",
           isAiOpen 
-            ? "bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] rotate-90" 
-            : "bg-gradient-to-br from-secondary to-primary shadow-[0_0_20px_rgba(103,255,198,0.4)]"
+            ? "bg-surface-container-highest border border-outline-variant/30 text-on-surface hover:bg-surface-container-high" 
+            : "bg-primary-container text-white hover:scale-105 shadow-[0_0_25px_rgba(108,59,255,0.45)]"
         )}
       >
-        {isAiOpen ? <X className="w-6 h-6 text-white" /> : <Bot className="w-6 h-6 text-surface group-hover:scale-110 transition-transform" />}
+        {isAiOpen ? (
+          <X className="w-5 h-5 sm:w-6 sm:h-6" />
+        ) : (
+          <div className="relative flex items-center justify-center">
+            <Bot className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />
+            <span className="absolute -top-1.5 -right-1.5 w-2.5 h-2.5 bg-secondary rounded-full ring-2 ring-surface animate-pulse" />
+          </div>
+        )}
       </button>
 
       <PremiumVideoPlayer 

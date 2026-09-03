@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Play, Pause, SkipBack, SkipForward, Maximize, X, Volume2, VolumeX, ListVideo, ChevronRight, ChevronDown } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { PHASES } from '../constants';
+import { PHASES, VIDEO_PHASES, MARKETING_PHASES } from '../constants';
 import { getVideoId } from '../lib/youtube';
 
 interface VideoItem {
@@ -47,9 +47,10 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
   const shouldPlayOnReady = useRef(false);
 
   useEffect(() => {
-    // Extract all videos from PHASES
+    // Extract all videos from all phase tracks
     const allVideos: VideoItem[] = [];
-    PHASES.forEach(phase => {
+    const allPhaseTracks = [...PHASES, ...VIDEO_PHASES, ...MARKETING_PHASES];
+    allPhaseTracks.forEach(phase => {
       phase.resources.forEach((res, idx) => {
         const ytId = getVideoId(res.url);
         if (res.type === 'yt' && ytId) {

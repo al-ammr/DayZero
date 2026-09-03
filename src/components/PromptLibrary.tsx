@@ -321,7 +321,7 @@ export default function PromptLibrary() {
                 </div>
 
                 <div className="relative z-10 mt-6 flex flex-wrap gap-2">
-                  {p.tags.map(tag => (
+                  {(p.tags || []).map(tag => (
                     <span key={tag} className="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/60 bg-surface-container-low border border-outline-variant/10 px-2.5 py-1 rounded-lg backdrop-blur-sm">
                       #{tag}
                     </span>

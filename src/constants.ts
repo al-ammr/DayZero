@@ -7,6 +7,8 @@ export interface Resource {
 export interface Task {
   id: string;
   label: string;
+  title?: string;
+  type?: string;
 }
 
 export interface Project {
@@ -25,6 +27,7 @@ export interface FreeResource {
   url: string;
   type: 'certification' | 'course' | 'guide' | 'tool';
   provider: string;
+  description?: string;
 }
 
 export interface FollowAlongProject {
@@ -948,7 +951,8 @@ export const PHASES: Phase[] = [
         "title": "Google Digital Garage",
         "url": "https://learndigital.withgoogle.com/digitalgarage",
         "type": "certification",
-        "provider": "Google"
+        "provider": "Google",
+        "description": "A comprehensive foundational certification by Google covering the fundamentals of digital marketing, online presence, and basic digital strategy essential for any modern tech professional."
       },
       {
         "title": "Google Cloud Skills Boost",
@@ -1072,7 +1076,8 @@ export const PHASES: Phase[] = [
         "title": "Anthropic Prompt Engineering Guide",
         "url": "https://docs.anthropic.com",
         "type": "guide",
-        "provider": "Anthropic"
+        "provider": "Anthropic",
+        "description": "An in-depth, authoritative guide by Anthropic on constructing, refining, and optimizing prompts specifically tailored for complex reasoning and advanced LLM behavior."
       },
       {
         "title": "OpenAI Prompt Engineering Guide",
@@ -1084,7 +1089,8 @@ export const PHASES: Phase[] = [
         "title": "ChatGPT Prompt Engineering for Developers",
         "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers",
         "type": "course",
-        "provider": "DeepLearning.AI"
+        "provider": "DeepLearning.AI",
+        "description": "DeepLearning.AI course on using LLM APIs to build applications and automate tasks."
       }
     ],
     "followAlongProjects": [
@@ -1196,7 +1202,8 @@ export const PHASES: Phase[] = [
         "title": "Webflow Expert Certification",
         "url": "https://university.webflow.com/certifications",
         "type": "certification",
-        "provider": "Webflow"
+        "provider": "Webflow",
+        "description": "An industry-recognized credential proving advanced proficiency in building responsive, scalable, and visually complex websites visually without writing code."
       },
       {
         "title": "WordPress Learn",
@@ -1632,7 +1639,8 @@ export const PHASES: Phase[] = [
         "title": "Make Academy",
         "url": "https://academy.make.com",
         "type": "certification",
-        "provider": "Make"
+        "provider": "Make",
+        "description": "A deep dive into visual workflow automation, teaching you how to connect disparate APIs and services to build powerful, automated backend processes."
       }
     ],
     "followAlongProjects": [
@@ -1782,13 +1790,15 @@ export const PHASES: Phase[] = [
         "title": "LangChain Documentation",
         "url": "https://python.langchain.com",
         "type": "guide",
-        "provider": "LangChain"
+        "provider": "LangChain",
+        "description": "The definitive resource for integrating large language models with external data sources, memory, and tools to build robust, agentic AI applications."
       },
       {
         "title": "CrewAI Documentation",
         "url": "https://docs.crewai.com",
         "type": "guide",
-        "provider": "CrewAI"
+        "provider": "CrewAI",
+        "description": "Detailed instructions on designing and orchestrating autonomous AI agents that collaborate and execute complex multi-step tasks independently."
       }
     ],
     "followAlongProjects": [
@@ -1898,7 +1908,8 @@ export const PHASES: Phase[] = [
         "title": "GitHub Skills",
         "url": "https://skills.github.com",
         "type": "certification",
-        "provider": "GitHub"
+        "provider": "GitHub",
+        "description": "Interactive, hands-on tutorials hosted directly on GitHub that teach version control, collaborative workflows, and CI/CD pipelines using GitHub Actions."
       }
     ],
     "followAlongProjects": [
@@ -2011,7 +2022,8 @@ export const PHASES: Phase[] = [
         "title": "Hugging Face Course",
         "url": "https://huggingface.co/course",
         "type": "course",
-        "provider": "Hugging Face"
+        "provider": "Hugging Face",
+        "description": "An intensive, practical course on natural language processing, transformer models, and deploying open-source machine learning models using the Hugging Face ecosystem."
       }
     ],
     "followAlongProjects": [
@@ -2111,7 +2123,8 @@ export const PHASES: Phase[] = [
         "title": "Spline Community Tutorials",
         "url": "https://docs.spline.design",
         "type": "guide",
-        "provider": "Spline"
+        "provider": "Spline",
+        "description": "A comprehensive library of guides for creating immersive 3D web experiences, interactive scenes, and animations directly in the browser."
       }
     ],
     "followAlongProjects": [
@@ -2216,13 +2229,15 @@ export const PHASES: Phase[] = [
         "title": "Responsive Web Design",
         "url": "https://www.freecodecamp.org/learn/responsive-web-design",
         "type": "certification",
-        "provider": "freeCodeCamp"
+        "provider": "freeCodeCamp",
+        "description": "A rigorous certification from freeCodeCamp covering HTML, CSS, Flexbox, and CSS Grid to ensure applications are mobile-friendly and perfectly responsive."
       },
       {
         "title": "JavaScript Algorithms",
         "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8",
         "type": "certification",
-        "provider": "freeCodeCamp"
+        "provider": "freeCodeCamp",
+        "description": "An essential credential verifying a deep understanding of JavaScript fundamentals, complex data structures, and algorithmic problem-solving techniques."
       }
     ],
     "followAlongProjects": [
@@ -2326,7 +2341,8 @@ export const PHASES: Phase[] = [
         "title": "Three.js Journey (Free)",
         "url": "https://threejs-journey.com",
         "type": "course",
-        "provider": "Bruno Simon"
+        "provider": "Bruno Simon",
+        "description": "A curated selection of lessons by Bruno Simon detailing the fundamentals of WebGL and creating stunning 3D graphics and particles with Three.js."
       }
     ],
     "followAlongProjects": [
@@ -2432,7 +2448,8 @@ export const PHASES: Phase[] = [
         "title": "Back End Development",
         "url": "https://www.freecodecamp.org/learn/back-end-development-and-apis",
         "type": "certification",
-        "provider": "freeCodeCamp"
+        "provider": "freeCodeCamp",
+        "description": "A practical certification focused on writing robust server-side code, building RESTful APIs, and managing databases using Node.js and Express."
       }
     ],
     "followAlongProjects": [
@@ -2524,7 +2541,8 @@ export const PHASES: Phase[] = [
         "title": "Node.js Best Practices",
         "url": "https://github.com/goldbergyoni/nodebestpractices",
         "type": "guide",
-        "provider": "Community"
+        "provider": "Community",
+        "description": "A comprehensive, community-driven repository detailing architectural patterns, security guidelines, and performance optimization strategies for enterprise Node.js applications."
       }
     ],
     "followAlongProjects": [
@@ -2624,7 +2642,8 @@ export const PHASES: Phase[] = [
         "title": "Startup School",
         "url": "https://www.startupschool.org",
         "type": "course",
-        "provider": "Y Combinator"
+        "provider": "Y Combinator",
+        "description": "Y Combinator's authoritative curriculum covering product-market fit, user acquisition, metrics, and the fundamentals of scaling a technology startup."
       }
     ],
     "followAlongProjects": [
@@ -2714,7 +2733,8 @@ export const PHASES: Phase[] = [
         "title": "OpenAI Cookbook",
         "url": "https://cookbook.openai.com",
         "type": "guide",
-        "provider": "OpenAI"
+        "provider": "OpenAI",
+        "description": "A highly technical repository of code examples, architectural patterns, and best practices for integrating OpenAI's APIs into production applications."
       }
     ],
     "followAlongProjects": [
@@ -2815,7 +2835,8 @@ export const PHASES: Phase[] = [
         "title": "Google Search Central",
         "url": "https://developers.google.com/search",
         "type": "guide",
-        "provider": "Google"
+        "provider": "Google",
+        "description": "The official documentation from Google on SEO best practices, site indexing, and maximizing visibility in search engine results pages."
       }
     ],
     "followAlongProjects": [
@@ -2904,7 +2925,8 @@ export const PHASES: Phase[] = [
         "title": "HubSpot Sales Software Cert",
         "url": "https://academy.hubspot.com",
         "type": "certification",
-        "provider": "HubSpot"
+        "provider": "HubSpot",
+        "description": "A professional certification covering inbound sales methodologies, CRM management, and automating the sales pipeline to maximize conversion rates."
       }
     ],
     "followAlongProjects": [
@@ -3006,7 +3028,8 @@ export const PHASES: Phase[] = [
         "title": "Bubble Academy",
         "url": "https://bubble.io/academy",
         "type": "course",
-        "provider": "Bubble"
+        "provider": "Bubble",
+        "description": "Extensive tutorials and courses teaching you how to architect complex logic, databases, and responsive interfaces using the Bubble no-code platform."
       }
     ],
     "followAlongProjects": [
@@ -3061,5 +3084,3332 @@ export const PHASES: Phase[] = [
         "pitch": "I develop complex, scalable SaaS applications using advanced no-code platforms, delivering enterprise-grade solutions in a fraction of the time required for traditional development."
       }
     }
+  }
+];
+
+
+export const VIDEO_PHASES: Phase[] = [
+  {
+    "id": "v-p1",
+    "number": "01",
+    "title": "FOUNDATIONS OF AI VIDEO CREATION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 1",
+    "objective": "Master Foundations of AI Video Creation",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "Best AI Video Generators Right Now (2026)",
+        "url": "https://www.youtube.com/watch?v=vPqSgj8Ta3Y",
+        "type": "yt"
+      },
+      {
+        "title": "Generative AI in a Nutshell",
+        "url": "https://www.youtube.com/watch?v=2IK3DFHRFfw",
+        "type": "yt"
+      },
+      {
+        "title": "Diffusion Models Explained",
+        "url": "https://www.youtube.com/watch?v=TudVdrwbIuc",
+        "type": "yt"
+      },
+      {
+        "title": "How to build an Automated AI Video Production Pipeline",
+        "url": "https://www.youtube.com/watch?v=1iYH5EJUkC8",
+        "type": "yt"
+      },
+      {
+        "title": "AI Ethics & Responsible Use",
+        "url": "https://www.youtube.com/watch?v=4hQy69gCbN0",
+        "type": "yt"
+      },
+      {
+        "title": "How to Start Making AI Videos in 2026 - Full Course",
+        "url": "https://www.youtube.com/watch?v=gY9KTfMGauU",
+        "type": "yt"
+      },
+      {
+        "title": "How to Make Full Cartoon Animation Stories",
+        "url": "https://www.youtube.com/watch?v=T9dfP6bC2RY",
+        "type": "yt"
+      },
+      {
+        "title": "Wan 2.2 Animate: FREE AI Character Swap",
+        "url": "https://www.youtube.com/watch?v=woCP1Q_Htwo",
+        "type": "yt"
+      },
+      {
+        "title": "How to Create Videos with Pika Labs!",
+        "url": "https://www.youtube.com/watch?v=jEg4hQJjiZY",
+        "type": "yt"
+      },
+      {
+        "title": "Free AI Video Generator on Your PC",
+        "url": "https://www.youtube.com/watch?v=G2Ec3h5CfA8",
+        "type": "yt"
+      },
+      {
+        "title": "What Is Hugging Face and How To Use It",
+        "url": "https://www.youtube.com/watch?v=3kRB2TXewus",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Microsoft Generative AI for Beginners",
+        "url": "https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/",
+        "type": "course",
+        "provider": "Microsoft",
+        "description": "Covers the fundamentals of Generative AI, LLMs, and prompt engineering from Microsoft."
+      },
+      {
+        "title": "Microsoft companion GitHub lessons",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "guide",
+        "provider": "Microsoft",
+        "description": "Practical repository with code examples and notebooks for the Microsoft Generative AI course."
+      },
+      {
+        "title": "Google Skills: Introduction to Generative AI",
+        "url": "https://www.skills.google/course_templates/536",
+        "type": "course",
+        "provider": "Google",
+        "description": "Google's introductory guide covering AI basics, large language models, and responsible AI."
+      },
+      {
+        "title": "IBM SkillsBuild: AI Fundamentals",
+        "url": "https://skillsbuild.org/adult-learners/explore-learning/artificial-intelligence",
+        "type": "course",
+        "provider": "IBM",
+        "description": "Learn the basics of AI, machine learning, deep learning, and neural networks with IBM."
+      },
+      {
+        "title": "C2PA Content Credentials spec",
+        "url": "https://c2pa.org/specifications/specifications/2.2/index.html",
+        "type": "guide",
+        "provider": "C2PA",
+        "description": "The official standard for digital provenance, deepfake labeling, and media authenticity."
+      },
+      {
+        "title": "IBM SkillsBuild credentials",
+        "url": "https://skillsbuild.org/credentials",
+        "type": "certification",
+        "provider": "IBM",
+        "description": "Earned badge demonstrating foundational understanding of artificial intelligence concepts."
+      },
+      {
+        "title": "Google Cloud Skills Boost paths",
+        "url": "https://www.cloudskillsboost.google/paths",
+        "type": "certification",
+        "provider": "Google",
+        "description": "Learning paths for cloud architecture, data engineering, and generative AI on Google Cloud."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "AI Video Model Benchmark & Setup",
+        "url": "https://www.youtube.com/watch?v=vPqSgj8Ta3Y",
+        "outcome": "A 5-second comparative generation testing text-to-video prompt fidelity across two leading video models.",
+        "steps": [
+          "Select baseline prompt",
+          "Generate 4-second test clip",
+          "Adjust motion and camera parameters",
+          "Evaluate temporal consistency and export"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Hugging Face",
+        "url": "#"
+      },
+      {
+        "name": "Pika Labs",
+        "url": "#"
+      },
+      {
+        "name": "Wan 2.2",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "Conceptual AI Video Transformation",
+      "description": "Create a 30-second conceptual AI video showcasing a transformation from a text prompt to a fully rendered video scene using at least two different AI generators.",
+      "deliverables": [
+        "Understand the core concepts of Generative AI, diffusion models, and the ethical use of AI in video production."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦150,000 / $100 per conceptual video",
+        "whereToFind": [
+          "Local digital marketing agencies",
+          "Small business owners",
+          "Tech startups on LinkedIn"
+        ],
+        "pitch": "Hi [Name], I noticed [Company] is scaling its digital presence. I specialize in rapid AI video production, creating high-quality conceptual videos that cost a fraction of traditional shoots. I'd love to show you a 30-second sample I generated for your brand."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p1-t0",
+        "label": "Watch: Best AI Video Generators Right Now (2026)"
+      },
+      {
+        "id": "v-p1-t1",
+        "label": "Watch: Generative AI in a Nutshell"
+      },
+      {
+        "id": "v-p1-t2",
+        "label": "Watch: Diffusion Models Explained"
+      },
+      {
+        "id": "v-p1-t3",
+        "label": "Watch: How to build an Automated AI Video Production Pipeline"
+      },
+      {
+        "id": "v-p1-t4",
+        "label": "Watch: AI Ethics & Responsible Use"
+      },
+      {
+        "id": "v-p1-t5",
+        "label": "Watch: How to Start Making AI Videos in 2026 - Full Course"
+      },
+      {
+        "id": "v-p1-t6",
+        "label": "Watch: How to Make Full Cartoon Animation Stories"
+      },
+      {
+        "id": "v-p1-t7",
+        "label": "Watch: Wan 2.2 Animate: FREE AI Character Swap"
+      },
+      {
+        "id": "v-p1-t8",
+        "label": "Watch: How to Create Videos with Pika Labs!"
+      },
+      {
+        "id": "v-p1-t9",
+        "label": "Watch: Free AI Video Generator on Your PC"
+      },
+      {
+        "id": "v-p1-t10",
+        "label": "Watch: What Is Hugging Face and How To Use It"
+      }
+    ]
+  },
+  {
+    "id": "v-p2",
+    "number": "02",
+    "title": "PROMPT ENGINEERING FOR VIDEO GENERATION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 2",
+    "objective": "Master Prompt Engineering for Video Generation",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "How to Write PERFECT Prompts for AI Video",
+        "url": "https://www.youtube.com/watch?v=MlJ6zXOYrb0",
+        "type": "yt"
+      },
+      {
+        "title": "The ONLY 7 Prompts You Need to Create Any AI Video",
+        "url": "https://www.youtube.com/watch?v=zzBmvzR-URg",
+        "type": "yt"
+      },
+      {
+        "title": "AI prompting guide",
+        "url": "https://www.youtube.com/watch?v=2wSuJK0_G5g",
+        "type": "yt"
+      },
+      {
+        "title": "Why My AI Videos look Ultra Realistic",
+        "url": "https://www.youtube.com/watch?v=0B_xyflXrwc",
+        "type": "yt"
+      },
+      {
+        "title": "Iterative Refinement",
+        "url": "https://www.youtube.com/watch?v=jJklCOOsiHI",
+        "type": "yt"
+      },
+      {
+        "title": "How to Start Making AI Videos in 2026",
+        "url": "https://www.youtube.com/watch?v=59OsoZ3TxOM",
+        "type": "yt"
+      },
+      {
+        "title": "Build Your Prompt Library in Under 10 Minutes!",
+        "url": "https://www.youtube.com/watch?v=Zv_tUYPG2NA",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Microsoft prompt engineering fundamentals",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners/tree/main/04-prompt-engineering-fundamentals",
+        "type": "guide",
+        "provider": "Microsoft",
+        "description": "Learn how to write effective prompts to get desired outcomes from AI models."
+      },
+      {
+        "title": "Google Gemini prompting guide",
+        "url": "https://ai.google.dev/gemini-api/docs/prompting-intro",
+        "type": "guide",
+        "provider": "Google",
+        "description": "Official documentation on how to craft optimal prompts for Google's Gemini models."
+      },
+      {
+        "title": "OpenAI prompt engineering guide",
+        "url": "https://platform.openai.com/docs/guides/prompt-engineering",
+        "type": "guide",
+        "provider": "OpenAI",
+        "description": "Best practices for writing prompts for GPT models, including tactics for better reasoning."
+      },
+      {
+        "title": "ChatGPT Prompt Engineering for Developers",
+        "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/",
+        "type": "course",
+        "provider": "OpenAI",
+        "description": "DeepLearning.AI course on using LLM APIs to build applications and automate tasks."
+      },
+      {
+        "title": "IBM SkillsBuild generative AI learning",
+        "url": "https://skillsbuild.org/college-students/course-catalog/generative-ai",
+        "type": "certification",
+        "provider": "IBM",
+        "description": "Course covering how generative AI works, its applications, and ethical considerations."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Cinematic Lighting & Camera Move Suite",
+        "url": "https://www.youtube.com/watch?v=zkXonmqIBFg",
+        "outcome": "A sequence of video shots demonstrating dolly zoom, golden hour rim lighting, and drone orbit perspectives.",
+        "steps": [
+          "Write structured lighting and atmosphere prompt",
+          "Specify camera lens and movement attributes",
+          "Apply negative prompt constraints",
+          "Render sequential cinematic angle shots"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Midjourney",
+        "url": "#"
+      },
+      {
+        "name": "ChatGPT",
+        "url": "#"
+      },
+      {
+        "name": "Notion",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "Master Prompt Library & Showcase",
+      "description": "Compile a master library of 20 tested video prompts and use them to generate a 1-minute compilation video demonstrating diverse styles (realistic, anime, cinematic).",
+      "deliverables": [
+        "Master the art of crafting perfect text prompts and iterative refinement to get consistent, ultra-realistic video outputs."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦200,000 / $150 for a custom prompt library and short promotional video",
+        "whereToFind": [
+          "Content creators on YouTube",
+          "Independent filmmakers",
+          "Marketing teams on Upwork"
+        ],
+        "pitch": "Hi [Name], great visuals are key to engagement, but achieving the exact look you want can be time-consuming. I build custom AI prompt libraries and generate ultra-realistic video assets tailored to your brand's style. Let's save your team hours of trial and error."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p2-t0",
+        "label": "Watch: How to Write PERFECT Prompts for AI Video"
+      },
+      {
+        "id": "v-p2-t1",
+        "label": "Watch: The ONLY 7 Prompts You Need to Create Any AI Video"
+      },
+      {
+        "id": "v-p2-t2",
+        "label": "Watch: AI prompting guide"
+      },
+      {
+        "id": "v-p2-t3",
+        "label": "Watch: Why My AI Videos look Ultra Realistic"
+      },
+      {
+        "id": "v-p2-t4",
+        "label": "Watch: Iterative Refinement"
+      },
+      {
+        "id": "v-p2-t5",
+        "label": "Watch: How to Start Making AI Videos in 2026"
+      },
+      {
+        "id": "v-p2-t6",
+        "label": "Watch: Build Your Prompt Library in Under 10 Minutes!"
+      }
+    ]
+  },
+  {
+    "id": "v-p3",
+    "number": "03",
+    "title": "SCRIPTWRITING & STORY DEVELOPMENT",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 3",
+    "objective": "Master Scriptwriting & Story Development",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "Best LLM for Script Writing",
+        "url": "https://www.youtube.com/watch?v=lVB94xXjPCw",
+        "type": "yt"
+      },
+      {
+        "title": "EXACTLY How to Write INSANELY Good YouTube Scripts with AI",
+        "url": "https://www.youtube.com/watch?v=jaOIw-NiEPM",
+        "type": "yt"
+      },
+      {
+        "title": "Three Act Structure Explained",
+        "url": "https://www.youtube.com/watch?v=tvqjp1CxxD8",
+        "type": "yt"
+      },
+      {
+        "title": "Fiction Genres Explained",
+        "url": "https://www.youtube.com/watch?v=tnpgfCqR1UM",
+        "type": "yt"
+      },
+      {
+        "title": "How to Write a 30 Second Commercial Video Script",
+        "url": "https://www.youtube.com/watch?v=DDlUVbQTsso",
+        "type": "yt"
+      },
+      {
+        "title": "How to Write A Short Film Script",
+        "url": "https://www.youtube.com/watch?v=_9eaz0o-rk8",
+        "type": "yt"
+      },
+      {
+        "title": "how i write 6 figure ugc ad scripts",
+        "url": "https://www.youtube.com/watch?v=0kIpeoVsFX8",
+        "type": "yt"
+      },
+      {
+        "title": "How to Generate Realistic Dialogue Based AI Scripts",
+        "url": "https://www.youtube.com/watch?v=4uZuQxSChY8",
+        "type": "yt"
+      },
+      {
+        "title": "Google AI Studio Just DESTROYED ElevenLabs",
+        "url": "https://www.youtube.com/watch?v=pY6Yu64B310",
+        "type": "yt"
+      },
+      {
+        "title": "How To Get Started With Storyboarder.ai",
+        "url": "https://www.youtube.com/watch?v=JbgpeX8rMXQ",
+        "type": "yt"
+      },
+      {
+        "title": "Turn Any Script Into a Visual Storyboard With Google Flow Tool",
+        "url": "https://www.youtube.com/watch?v=553ZO8ur1vk",
+        "type": "yt"
+      },
+      {
+        "title": "The Exact Claude Project Setup For YouTube Script Writing",
+        "url": "https://www.youtube.com/watch?v=y2EN4rp2Zmk",
+        "type": "yt"
+      },
+      {
+        "title": "Write UGC Ad Scripts That SELL",
+        "url": "https://www.youtube.com/watch?v=ieXIQ89wb-E",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "StudioBinder screenwriting guide",
+        "url": "https://www.studiobinder.com/blog/screenwriting/",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Comprehensive guide on screenplay formatting, narrative structure, and storytelling."
+      },
+      {
+        "title": "BBC Academy writing skills",
+        "url": "https://www.bbc.co.uk/academy/en/skills/writing",
+        "type": "guide",
+        "provider": "BBC",
+        "description": "Expert advice on writing for television, radio, and digital media from the BBC."
+      },
+      {
+        "title": "Storyboard That storyboarding guide",
+        "url": "https://www.storyboardthat.com/articles/e/storyboarding",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Learn the basics of storyboarding, shot composition, and visual storytelling."
+      },
+      {
+        "title": "OpenAI prompt engineering guide for assisted writing",
+        "url": "https://platform.openai.com/docs/guides/prompt-engineering",
+        "type": "guide",
+        "provider": "OpenAI",
+        "description": "Tips on using AI to brainstorm, outline, and refine creative writing and scripts."
+      },
+      {
+        "title": "HubSpot Content Marketing Certification",
+        "url": "https://academy.hubspot.com/courses/content-marketing",
+        "type": "certification",
+        "provider": "HubSpot",
+        "description": "Certification covering content strategy, storytelling, content creation, and promotion."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "AI-Assisted Three-Act Sci-Fi Script",
+        "url": "https://www.youtube.com/watch?v=SNwqkdhv1HQ",
+        "outcome": "A complete 90-second formatted screenplay with scene numbers, visual prompt tags, and dialogue beats.",
+        "steps": [
+          "Outline three-act story structure and climax in Claude",
+          "Generate shot-by-shot visual camera descriptions",
+          "Format dialogue cues for ElevenLabs voiceover",
+          "Review scene pacing and visual beat timestamps"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Claude",
+        "url": "#"
+      },
+      {
+        "name": "Google AI Studio",
+        "url": "#"
+      },
+      {
+        "name": "Storyboarder.ai",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "AI Scripting & Storyboarding",
+      "description": "Write a complete 3-act short film script and a high-converting 30-second UGC ad script using an LLM, then break them down into visual storyboards.",
+      "deliverables": [
+        "Ability to generate engaging, human-like dialogue, compelling commercial scripts, and structured narratives using advanced AI models."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦100,000 / $75 per ad script; ₦300,000 / $250 per short film script",
+        "whereToFind": [
+          "E-commerce brands on Shopify",
+          "UGC creators",
+          "YouTube automation channels",
+          "Advertising agencies"
+        ],
+        "pitch": "Hi [Name], your product looks amazing, but the ad copy could drive even more conversions. I use advanced AI tools to write highly engaging, structured UGC scripts that hook viewers in the first 3 seconds. Would you be open to me sending over a free script idea?"
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p3-t0",
+        "label": "Watch: Best LLM for Script Writing"
+      },
+      {
+        "id": "v-p3-t1",
+        "label": "Watch: EXACTLY How to Write INSANELY Good YouTube Scripts with AI"
+      },
+      {
+        "id": "v-p3-t2",
+        "label": "Watch: Three Act Structure Explained"
+      },
+      {
+        "id": "v-p3-t3",
+        "label": "Watch: Fiction Genres Explained"
+      },
+      {
+        "id": "v-p3-t4",
+        "label": "Watch: How to Write a 30 Second Commercial Video Script"
+      },
+      {
+        "id": "v-p3-t5",
+        "label": "Watch: How to Write A Short Film Script"
+      },
+      {
+        "id": "v-p3-t6",
+        "label": "Watch: how i write 6 figure ugc ad scripts"
+      },
+      {
+        "id": "v-p3-t7",
+        "label": "Watch: How to Generate Realistic Dialogue Based AI Scripts"
+      },
+      {
+        "id": "v-p3-t8",
+        "label": "Watch: Google AI Studio Just DESTROYED ElevenLabs"
+      },
+      {
+        "id": "v-p3-t9",
+        "label": "Watch: How To Get Started With Storyboarder.ai"
+      },
+      {
+        "id": "v-p3-t10",
+        "label": "Watch: Turn Any Script Into a Visual Storyboard With Google Flow Tool"
+      },
+      {
+        "id": "v-p3-t11",
+        "label": "Watch: The Exact Claude Project Setup For YouTube Script Writing"
+      },
+      {
+        "id": "v-p3-t12",
+        "label": "Watch: Write UGC Ad Scripts That SELL"
+      }
+    ]
+  },
+  {
+    "id": "v-p4",
+    "number": "04",
+    "title": "STORYBOARDING & VISUAL PRE-PRODUCTION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 4",
+    "objective": "Master Storyboarding & Visual Pre-Production",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "How to Use Storyboard Studio in Google Flow",
+        "url": "https://www.youtube.com/watch?v=mSw8xFPpn2o",
+        "type": "yt"
+      },
+      {
+        "title": "How to make consistent AI characters",
+        "url": "https://www.youtube.com/watch?v=zmyEkFgfh5Q",
+        "type": "yt"
+      },
+      {
+        "title": "Create Cinematic AI Video using Kling",
+        "url": "https://www.youtube.com/watch?v=ue8CnA6xvdw",
+        "type": "yt"
+      },
+      {
+        "title": "AI Storyboard Workflow",
+        "url": "https://www.youtube.com/watch?v=RNbaT2Kxxjo",
+        "type": "yt"
+      },
+      {
+        "title": "Become a Midjourney Mood Board Master",
+        "url": "https://www.youtube.com/watch?v=tiHyS5ZSKsg",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "StudioBinder storyboard guide",
+        "url": "https://www.studiobinder.com/blog/how-to-make-storyboard/",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Detailed guide on creating professional storyboards, shot lists, and animatics."
+      },
+      {
+        "title": "Wonder Unit Storyboarder",
+        "url": "https://wonderunit.com/storyboarder/",
+        "type": "tool",
+        "provider": "Community",
+        "description": "Free, open-source software for rapidly drawing storyboards and planning scenes."
+      },
+      {
+        "title": "Canva storyboard maker",
+        "url": "https://www.canva.com/create/storyboards/",
+        "type": "tool",
+        "provider": "Canva",
+        "description": "Easy-to-use tool with templates for creating clean and professional storyboards."
+      },
+      {
+        "title": "Adobe storyboard guide",
+        "url": "https://www.adobe.com/creativecloud/video/discover/storyboard.html",
+        "type": "guide",
+        "provider": "Adobe",
+        "description": "Insights on translating scripts into visual sequences using Adobe's creative tools."
+      },
+      {
+        "title": "Adobe Certified Professional info",
+        "url": "https://certifiedprofessional.adobe.com/",
+        "type": "certification",
+        "provider": "Adobe",
+        "description": "Information on official Adobe certification for tools like Premiere Pro and After Effects."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Visual Storyboard & Character Seed Matrix",
+        "url": "https://www.youtube.com/watch?v=JtXVOHKDpHk",
+        "outcome": "A 12-frame visual storyboard in Figma/Miro featuring consistent character reference portraits across multiple camera angles.",
+        "steps": [
+          "Generate character turnarounds and seeds in Midjourney",
+          "Create master background and lighting plates",
+          "Layout 12 storyboard frames with action arrows",
+          "Attach camera movement and duration metadata"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Kling",
+        "url": "#"
+      },
+      {
+        "name": "Midjourney",
+        "url": "#"
+      },
+      {
+        "name": "Google Flow",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "Consistent Character Storyboard",
+      "description": "Create a consistent 10-scene storyboard featuring the same character in different environments and lighting conditions using Kling and Midjourney.",
+      "deliverables": [
+        "Achieve character and environment consistency across multiple generated scenes and build professional mood boards."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦250,000 / $200 per full storyboard",
+        "whereToFind": [
+          "Film production companies",
+          "Indie directors",
+          "Creative agencies",
+          "Game developers"
+        ],
+        "pitch": "Hi [Name], visualizing a project before production is crucial. I specialize in AI storyboarding, creating consistent character and environment mockups that bring your vision to life before a single camera rolls. Can I share my portfolio with you?"
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p4-t0",
+        "label": "Watch: How to Use Storyboard Studio in Google Flow"
+      },
+      {
+        "id": "v-p4-t1",
+        "label": "Watch: How to make consistent AI characters"
+      },
+      {
+        "id": "v-p4-t2",
+        "label": "Watch: Create Cinematic AI Video using Kling"
+      },
+      {
+        "id": "v-p4-t3",
+        "label": "Watch: AI Storyboard Workflow"
+      },
+      {
+        "id": "v-p4-t4",
+        "label": "Watch: Become a Midjourney Mood Board Master"
+      }
+    ]
+  },
+  {
+    "id": "v-p5",
+    "number": "05",
+    "title": "CINEMATIC VIDEO GENERATION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 5",
+    "objective": "Master Cinematic Video Generation",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "How to Create Lifelike Cinematic AI Videos in 2026",
+        "url": "https://www.youtube.com/watch?v=SMW_07yF35E",
+        "type": "yt"
+      },
+      {
+        "title": "Higgsfield Tutorial: How To Make 4K AI Movies",
+        "url": "https://www.youtube.com/watch?v=8LV6Ze9LQ60",
+        "type": "yt"
+      },
+      {
+        "title": "The Ultimate AI Storyboard Tutorial",
+        "url": "https://www.youtube.com/watch?v=mqY6vgrVp0c",
+        "type": "yt"
+      },
+      {
+        "title": "How To Create Viral AI Emotional Story Videos",
+        "url": "https://www.youtube.com/watch?v=8fSyFARU0qs",
+        "type": "yt"
+      },
+      {
+        "title": "Seedance 2.0 INSANE Workflow",
+        "url": "https://www.youtube.com/watch?v=_W81Oxu76Ug",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Runway Academy",
+        "url": "https://academy.runwayml.com/",
+        "type": "course",
+        "provider": "Runway",
+        "description": "Tutorials and guides on using Runway's generative AI tools for video and audio creation."
+      },
+      {
+        "title": "DaVinci Resolve training",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "course",
+        "provider": "Blackmagic",
+        "description": "Official Blackmagic Design training for editing, color correction, and audio post-production."
+      },
+      {
+        "title": "Adobe Premiere Pro video tutorials",
+        "url": "https://helpx.adobe.com/premiere-pro/tutorials.html",
+        "type": "guide",
+        "provider": "Adobe",
+        "description": "Official tutorials covering everything from basic editing to advanced video effects."
+      },
+      {
+        "title": "Google Veo documentation",
+        "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/video/overview",
+        "type": "guide",
+        "provider": "Google",
+        "description": "Guides for using Google's state-of-the-art generative AI video model, Veo."
+      },
+      {
+        "title": "Blackmagic Design training & certification",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "certification",
+        "provider": "Blackmagic",
+        "description": "Details on becoming a certified DaVinci Resolve professional in various disciplines."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Runway & Kling Motion Brush Dynamic Scene",
+        "url": "https://www.youtube.com/watch?v=TudVdrwbIuc",
+        "outcome": "A photorealistic 8-second cinematic shot with isolated animated water and moving subject using motion brush masking.",
+        "steps": [
+          "Import Midjourney keyframe into video generator",
+          "Paint motion brush masks over dynamic elements",
+          "Tune horizontal and vertical velocity sliders",
+          "Render in high resolution with cinematic film grain"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Higgsfield",
+        "url": "#"
+      },
+      {
+        "name": "Seedance",
+        "url": "#"
+      },
+      {
+        "name": "Topaz Video AI",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "Cinematic Movie Trailer",
+      "description": "Produce a 1-minute cinematic movie trailer using Higgsfield and Seedance, incorporating emotional storytelling and 4K upscaling.",
+      "deliverables": [
+        "Create lifelike, high-resolution cinematic AI films with compelling emotional arcs."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦500,000 / $400 per cinematic trailer or short film",
+        "whereToFind": [
+          "Indie filmmakers",
+          "Book authors needing trailers",
+          "Event organizers",
+          "Luxury real estate agents"
+        ],
+        "pitch": "Hi [Name], your recent book launch caught my eye! I create 4K cinematic AI video trailers that capture emotion and drive engagement. A 1-minute trailer can massively boost your marketing—let's discuss bringing your story to the screen."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p5-t0",
+        "label": "Watch: How to Create Lifelike Cinematic AI Videos in 2026"
+      },
+      {
+        "id": "v-p5-t1",
+        "label": "Watch: Higgsfield Tutorial: How To Make 4K AI Movies"
+      },
+      {
+        "id": "v-p5-t2",
+        "label": "Watch: The Ultimate AI Storyboard Tutorial"
+      },
+      {
+        "id": "v-p5-t3",
+        "label": "Watch: How To Create Viral AI Emotional Story Videos"
+      },
+      {
+        "id": "v-p5-t4",
+        "label": "Watch: Seedance 2.0 INSANE Workflow"
+      }
+    ]
+  },
+  {
+    "id": "v-p6",
+    "number": "06",
+    "title": "ANIMATION & CARTOON STORY CREATION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 6",
+    "objective": "Master Animation & Cartoon Story Creation",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "Master Pixar-Style AI Cartoon Animation",
+        "url": "https://www.youtube.com/watch?v=gCzbZx5sOvI",
+        "type": "yt"
+      },
+      {
+        "title": "How to Create Consistent AI Characters with ONE Prompt",
+        "url": "https://www.youtube.com/watch?v=PK9Ei70aMOE",
+        "type": "yt"
+      },
+      {
+        "title": "How to Create AI Animated Videos for YouTube Automation",
+        "url": "https://www.youtube.com/watch?v=vniu5MtaWfw",
+        "type": "yt"
+      },
+      {
+        "title": "How To Create Viral LONG 3D Cartoon Story Videos With AI",
+        "url": "https://www.youtube.com/watch?v=eybO7zmB564",
+        "type": "yt"
+      },
+      {
+        "title": "How to Make a Pixar-Style Animated Video",
+        "url": "https://www.youtube.com/watch?v=oHBStkBBLeE",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Blender Studio training",
+        "url": "https://studio.blender.org/training/",
+        "type": "course",
+        "provider": "Blender",
+        "description": "High-quality training materials for 3D modeling, rigging, and animation in Blender."
+      },
+      {
+        "title": "Blender animation and rigging manual",
+        "url": "https://docs.blender.org/manual/en/latest/animation/index.html",
+        "type": "guide",
+        "provider": "Blender",
+        "description": "Official documentation covering the intricacies of character animation in Blender."
+      },
+      {
+        "title": "Adobe Character Animator tutorials",
+        "url": "https://helpx.adobe.com/adobe-character-animator/tutorials.html",
+        "type": "guide",
+        "provider": "Adobe",
+        "description": "Learn how to use motion capture to bring 2D characters to life in real-time."
+      },
+      {
+        "title": "Krita animation manual",
+        "url": "https://docs.krita.org/en/user_manual/animation.html",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Guide to using Krita's powerful frame-by-frame 2D animation toolset."
+      },
+      {
+        "title": "Khan Academy: Pixar in a Box",
+        "url": "https://www.khanacademy.org/partner-content/pixar",
+        "type": "course",
+        "provider": "Community",
+        "description": "Behind-the-scenes look at how Pixar uses math and science to create animations."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Consistent Anime Character Micro-Episode",
+        "url": "https://www.youtube.com/watch?v=fXUT87PzKKs",
+        "outcome": "A 20-second animated cartoon sequence maintaining consistent character hair, eyes, and costume across 4 sequential shots.",
+        "steps": [
+          "Generate base anime character concept in Niji style",
+          "Perform video-to-video restyling via DomoAI",
+          "Synchronize dynamic action and lip motions in Pika",
+          "Compile scene cuts with anime sound effects"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Midjourney",
+        "url": "#"
+      },
+      {
+        "name": "Runway Gen-3",
+        "url": "#"
+      },
+      {
+        "name": "Luma Dream Machine",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "Pixar-Style 3D Animation",
+      "description": "Create a 2-minute 3D animated children's story or brand mascot video in a Pixar-style aesthetic with consistent characters.",
+      "deliverables": [
+        "Master 3D cartoon generation, character consistency, and storytelling suitable for YouTube automation or brand mascots."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦400,000 / $300 per animated video",
+        "whereToFind": [
+          "YouTube automation channel owners",
+          "Children's book authors",
+          "Educational platforms",
+          "Ed-tech startups"
+        ],
+        "pitch": "Hi [Name], 3D animated content is highly engaging but traditionally expensive. I use AI to produce Pixar-quality animated videos for your brand or channel at a fraction of the cost and time. Check out my latest animation sample here."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p6-t0",
+        "label": "Watch: Master Pixar-Style AI Cartoon Animation"
+      },
+      {
+        "id": "v-p6-t1",
+        "label": "Watch: How to Create Consistent AI Characters with ONE Prompt"
+      },
+      {
+        "id": "v-p6-t2",
+        "label": "Watch: How to Create AI Animated Videos for YouTube Automation"
+      },
+      {
+        "id": "v-p6-t3",
+        "label": "Watch: How To Create Viral LONG 3D Cartoon Story Videos With AI"
+      },
+      {
+        "id": "v-p6-t4",
+        "label": "Watch: How to Make a Pixar-Style Animated Video"
+      }
+    ]
+  },
+  {
+    "id": "v-p7",
+    "number": "07",
+    "title": "REALISTIC VIDEO GENERATION & DEEPFAKE TECHNOLOGY",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 7",
+    "objective": "Master Realistic Video Generation & Deepfake Technology",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "How to Create Ultra Realistic AI Avatar",
+        "url": "https://www.youtube.com/watch?v=88SmtnGn-bg",
+        "type": "yt"
+      },
+      {
+        "title": "Best Faceswapper I've Seen",
+        "url": "https://www.youtube.com/watch?v=5OwcxugdWxI",
+        "type": "yt"
+      },
+      {
+        "title": "How I Cloned My Voice & Avatar",
+        "url": "https://www.youtube.com/watch?v=io1fU5lZthc",
+        "type": "yt"
+      },
+      {
+        "title": "Bring Your AI Avatar to Life with HeyGen",
+        "url": "https://www.youtube.com/watch?v=R0EmUT4EX2g",
+        "type": "yt"
+      },
+      {
+        "title": "Ethics & Deepfake Debate",
+        "url": "https://www.youtube.com/watch?v=1gpYVAn3T9I",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Microsoft Responsible AI overview",
+        "url": "https://learn.microsoft.com/en-us/azure/ai-services/responsible-use-of-ai-overview",
+        "type": "guide",
+        "provider": "Microsoft",
+        "description": "Microsoft's principles and practices for developing and deploying AI safely."
+      },
+      {
+        "title": "Partnership on AI: Responsible Practices",
+        "url": "https://syntheticmedia.partnershiponai.org/",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Guidelines for the ethical development and disclosure of synthetic media (deepfakes)."
+      },
+      {
+        "title": "C2PA specifications",
+        "url": "https://c2pa.org/specifications/specifications/2.2/index.html",
+        "type": "guide",
+        "provider": "C2PA"
+      },
+      {
+        "title": "YouTube altered content policy",
+        "url": "https://support.google.com/youtube/answer/14328491",
+        "type": "guide",
+        "provider": "Google",
+        "description": "YouTube's rules and disclosure requirements for synthetic, AI-generated, or altered media."
+      },
+      {
+        "title": "IBM SkillsBuild AI Fundamentals",
+        "url": "https://skillsbuild.org/adult-learners/explore-learning/artificial-intelligence",
+        "type": "certification",
+        "provider": "IBM"
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Photorealistic AI Talking Avatar & Lip-Sync",
+        "url": "https://www.youtube.com/watch?v=EI5VmqNsjzg",
+        "outcome": "A seamless 30-second spokesperson video with realistic lip synchronization, micro-head gestures, and natural eye blinks.",
+        "steps": [
+          "Record or clone custom voiceover audio in ElevenLabs",
+          "Upload high-resolution portrait keyframe to Hedra / HeyGen",
+          "Fine-tune phoneme lip-matching sensitivity",
+          "Render in 1080p and composite over studio background"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "HeyGen",
+        "url": "#"
+      },
+      {
+        "name": "ElevenLabs",
+        "url": "#"
+      },
+      {
+        "name": "Faceswapper",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "AI Avatar & Voice Clone Presentation",
+      "description": "Create a highly realistic digital twin (AI Avatar) and clone a voice to produce a seamless 1-minute talking-head presentation video.",
+      "deliverables": [
+        "Build ultra-realistic AI avatars and custom voice clones for corporate training, marketing, and faceless content creation."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦250,000 / $200 per custom avatar setup + ₦50,000 / $40 per video minute",
+        "whereToFind": [
+          "Corporate HR departments",
+          "Online course creators",
+          "Real estate agents",
+          "Busy executives"
+        ],
+        "pitch": "Hi [Name], scaling your video presence shouldn't require you to be on camera all day. I build ultra-realistic AI avatars and voice clones so you can produce professional talking-head videos from just text. Imagine creating a month of content in 5 minutes."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p7-t0",
+        "label": "Watch: How to Create Ultra Realistic AI Avatar"
+      },
+      {
+        "id": "v-p7-t1",
+        "label": "Watch: Best Faceswapper I've Seen"
+      },
+      {
+        "id": "v-p7-t2",
+        "label": "Watch: How I Cloned My Voice & Avatar"
+      },
+      {
+        "id": "v-p7-t3",
+        "label": "Watch: Bring Your AI Avatar to Life with HeyGen"
+      },
+      {
+        "id": "v-p7-t4",
+        "label": "Watch: Ethics & Deepfake Debate"
+      }
+    ]
+  },
+  {
+    "id": "v-p8",
+    "number": "08",
+    "title": "UGC & SOCIAL MEDIA VIDEO CREATION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 8",
+    "objective": "Master UGC & Social Media Video Creation",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "Build Your AI UGC Studio",
+        "url": "https://www.youtube.com/watch?v=HZZPqcv1XXM",
+        "type": "yt"
+      },
+      {
+        "title": "Claude + seedance 2.0 = the BEST AI UGC ads",
+        "url": "https://www.youtube.com/watch?v=Py47FzLdF9E",
+        "type": "yt"
+      },
+      {
+        "title": "How to Create TRENDING Reels, Shorts & TikToks with AI",
+        "url": "https://www.youtube.com/watch?v=aLSExMSATaA",
+        "type": "yt"
+      },
+      {
+        "title": "Turn ANY Product into UGC Ads with Veo3",
+        "url": "https://www.youtube.com/watch?v=KTMxEbsInI0",
+        "type": "yt"
+      },
+      {
+        "title": "How to Create AI UGC Videos",
+        "url": "https://www.youtube.com/watch?v=bV7KYgWrTV0",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "YouTube Creator Academy",
+        "url": "https://creatoracademy.youtube.com/page/home",
+        "type": "course",
+        "provider": "Google",
+        "description": "Official YouTube courses on channel growth, production, policies, and monetization."
+      },
+      {
+        "title": "Meta Blueprint",
+        "url": "https://www.facebook.com/business/learn",
+        "type": "course",
+        "provider": "Community",
+        "description": "Official training on marketing and advertising across Facebook, Instagram, and WhatsApp."
+      },
+      {
+        "title": "TikTok Academy",
+        "url": "https://ads.tiktok.com/business/creativecenter/education",
+        "type": "course",
+        "provider": "Community",
+        "description": "Educational platform for learning how to succeed as a creator or brand on TikTok."
+      },
+      {
+        "title": "HubSpot Social Media Marketing course",
+        "url": "https://academy.hubspot.com/courses/social-media",
+        "type": "course",
+        "provider": "HubSpot",
+        "description": "Learn how to build a social media strategy, create engaging content, and measure ROI."
+      },
+      {
+        "title": "HubSpot Social Media Certification",
+        "url": "https://academy.hubspot.com/courses/social-media",
+        "type": "certification",
+        "provider": "HubSpot",
+        "description": "Certification validating skills in social media strategy, listening, and advertising."
+      },
+      {
+        "title": "Google Skillshop",
+        "url": "https://skillshop.withgoogle.com/",
+        "type": "certification",
+        "provider": "Google",
+        "description": "Training and certification for Google's professional tools like Google Ads and Analytics."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "High-Converting UGC Video Ad in CapCut",
+        "url": "https://www.youtube.com/watch?v=FEBnrCMYteg",
+        "outcome": "A 15-second high-converting UGC video ad with 3-second hook visual, problem-solution narrative, and animated captions.",
+        "steps": [
+          "Script 3-second curiosity gap hook",
+          "Generate AI UGC creator selfie video",
+          "Add dynamic CapCut text captions and sound bites",
+          "Overlay B-roll product mockups and clear CTA"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Seedance 2.0",
+        "url": "#"
+      },
+      {
+        "name": "Veo3",
+        "url": "#"
+      },
+      {
+        "name": "Claude",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "AI UGC Ad Package",
+      "description": "Produce a package of 3 high-converting AI-generated User Generated Content (UGC) ads optimized for TikTok, Reels, and Shorts.",
+      "deliverables": [
+        "Turn any static product into a dynamic, trending UGC video using tools like Seedance 2.0 and Veo3."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦300,000 / $250 for a 3-video UGC package",
+        "whereToFind": [
+          "Shopify store owners",
+          "Direct-to-consumer (DTC) brands",
+          "Dropshippers",
+          "TikTok Shop sellers"
+        ],
+        "pitch": "Hi [Name], your products are fantastic, but the UGC ads could be more dynamic. I run an AI UGC studio that creates trending, scroll-stopping video ads without needing to ship products to influencers. Want to see a sample I made for a similar brand?"
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p8-t0",
+        "label": "Watch: Build Your AI UGC Studio"
+      },
+      {
+        "id": "v-p8-t1",
+        "label": "Watch: Claude + seedance 2.0 = the BEST AI UGC ads"
+      },
+      {
+        "id": "v-p8-t2",
+        "label": "Watch: How to Create TRENDING Reels, Shorts & TikToks with AI"
+      },
+      {
+        "id": "v-p8-t3",
+        "label": "Watch: Turn ANY Product into UGC Ads with Veo3"
+      },
+      {
+        "id": "v-p8-t4",
+        "label": "Watch: How to Create AI UGC Videos"
+      }
+    ]
+  },
+  {
+    "id": "v-p9",
+    "number": "09",
+    "title": "AUDIO, MUSIC & VOICE-OVER PRODUCTION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 9",
+    "objective": "Master Audio, Music & Voice-Over Production",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "How to Use Suno AI Tutorial",
+        "url": "https://www.youtube.com/watch?v=BVR4rb5aDGE",
+        "type": "yt"
+      },
+      {
+        "title": "How to generate sound effects with AI",
+        "url": "https://www.youtube.com/watch?v=-TU4RKcGazc",
+        "type": "yt"
+      },
+      {
+        "title": "AI Voice Cloning & Voice-Over Tutorial",
+        "url": "https://www.youtube.com/watch?v=fMvqcBExFh4",
+        "type": "yt"
+      },
+      {
+        "title": "How to Make AI Music Videos with Perfect Lip Sync",
+        "url": "https://www.youtube.com/watch?v=7ajVhp8qM3U",
+        "type": "yt"
+      },
+      {
+        "title": "The AI Film Workflow No One is Talking About",
+        "url": "https://www.youtube.com/watch?v=ORuSQ0Fui-A",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Blackmagic Fairlight audio training",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "course",
+        "provider": "Blackmagic",
+        "description": "Comprehensive training on audio post-production and sound design in DaVinci Resolve."
+      },
+      {
+        "title": "Audacity support and tutorials",
+        "url": "https://support.audacityteam.org/",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Official documentation for the free, open-source, cross-platform audio editor."
+      },
+      {
+        "title": "BBC Academy audio skills",
+        "url": "https://www.bbc.co.uk/academy/en/skills/audio",
+        "type": "guide",
+        "provider": "BBC",
+        "description": "Tips and techniques for recording, editing, and mixing high-quality audio."
+      },
+      {
+        "title": "Freesound sound-effects library",
+        "url": "https://freesound.org/",
+        "type": "tool",
+        "provider": "Community",
+        "description": "A massive collaborative database of audio snippets, samples, and recordings."
+      },
+      {
+        "title": "Blackmagic Design certification",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "certification",
+        "provider": "Blackmagic",
+        "description": "Information on obtaining official DaVinci Resolve professional certification."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "AI Voice & Sound Effects Production with Suno",
+        "url": "https://www.youtube.com/watch?v=lNyDhDQl1Wg",
+        "outcome": "A custom 60-second original film soundtrack generated via Suno/Udio paired with multi-track Foley sound effects.",
+        "steps": [
+          "Prompt musical genre, mood, and BPM parameters",
+          "Isolate stems (melody, percussion, bass)",
+          "Layer Foley sound effects (whooshes, impacts, ambiance)",
+          "Mix volume levels and apply spatial stereo panning"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Suno AI",
+        "url": "#"
+      },
+      {
+        "name": "ElevenLabs",
+        "url": "#"
+      },
+      {
+        "name": "SyncLabs",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "Complete Audio Design for Video",
+      "description": "Generate a custom background music track, realistic sound effects (Foley), and perfectly lip-synced voiceovers for a 2-minute video.",
+      "deliverables": [
+        "Master AI audio tools to create professional soundtracks, voiceovers, and lip-syncing for any video project."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦150,000 / $100 per video audio design",
+        "whereToFind": [
+          "Indie game developers",
+          "Podcasters",
+          "YouTubers",
+          "Local radio stations"
+        ],
+        "pitch": "Hi [Name], the visual quality of your videos is great, but professional audio design can take it to the next level. I use AI to generate custom music, perfect voiceovers, and cinematic sound effects. Let me handle the audio for your next release."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p9-t0",
+        "label": "Watch: How to Use Suno AI Tutorial"
+      },
+      {
+        "id": "v-p9-t1",
+        "label": "Watch: How to generate sound effects with AI"
+      },
+      {
+        "id": "v-p9-t2",
+        "label": "Watch: AI Voice Cloning & Voice-Over Tutorial"
+      },
+      {
+        "id": "v-p9-t3",
+        "label": "Watch: How to Make AI Music Videos with Perfect Lip Sync"
+      },
+      {
+        "id": "v-p9-t4",
+        "label": "Watch: The AI Film Workflow No One is Talking About"
+      }
+    ]
+  },
+  {
+    "id": "v-p10",
+    "number": "10",
+    "title": "POST-PRODUCTION & EDITING",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 10",
+    "objective": "Master Post-Production & Editing",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "Video Editing For Beginners with AI 2026",
+        "url": "https://www.youtube.com/watch?v=X025xxPGtYs",
+        "type": "yt"
+      },
+      {
+        "title": "How I Edit Videos with AI",
+        "url": "https://www.youtube.com/watch?v=584ujZ6uZaM",
+        "type": "yt"
+      },
+      {
+        "title": "This NEW AI Color Grading Trick Changed Everything!",
+        "url": "https://www.youtube.com/watch?v=7zNMkdP40Ko",
+        "type": "yt"
+      },
+      {
+        "title": "AI Subtitle Generator",
+        "url": "https://www.youtube.com/watch?v=9PMOWZxRYxY",
+        "type": "yt"
+      },
+      {
+        "title": "Complete Descript Tutorial",
+        "url": "https://www.youtube.com/watch?v=RgwJNOXGARI",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "DaVinci Resolve training books and videos",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "course",
+        "provider": "Blackmagic",
+        "description": "In-depth resources for mastering the DaVinci Resolve post-production workflow."
+      },
+      {
+        "title": "Adobe Premiere Pro tutorials",
+        "url": "https://helpx.adobe.com/premiere-pro/tutorials.html",
+        "type": "guide",
+        "provider": "Adobe"
+      },
+      {
+        "title": "Adobe After Effects tutorials",
+        "url": "https://helpx.adobe.com/after-effects/tutorials.html",
+        "type": "guide",
+        "provider": "Adobe",
+        "description": "Official guides for motion graphics, visual effects, and compositing in After Effects."
+      },
+      {
+        "title": "Descript learning resources",
+        "url": "https://www.descript.com/learn",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Tutorials on using Descript's text-based video and audio editing platform."
+      },
+      {
+        "title": "Blackmagic Design certification",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "certification",
+        "provider": "Blackmagic",
+        "description": "Information on obtaining official DaVinci Resolve professional certification."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "DaVinci Resolve / Premiere Color Grading & Speed Ramp",
+        "url": "https://www.youtube.com/watch?v=xsVTqzratPs",
+        "outcome": "A polished multi-clip montage featuring seamless speed ramping, cinematic film LUT color grade, and motion blur correction.",
+        "steps": [
+          "Import raw AI video clips into editing timeline",
+          "Apply optical flow re-timing to smooth frame transitions",
+          "Color grade using teal-and-orange cinematic film LUT",
+          "Export in master ProRes 422 format"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Descript",
+        "url": "#"
+      },
+      {
+        "name": "CapCut AI",
+        "url": "#"
+      },
+      {
+        "name": "Topaz Video AI",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "AI Post-Production Mastery",
+      "description": "Edit a raw AI-generated video sequence, apply advanced color grading, and generate dynamic subtitles using Descript and AI editing tools.",
+      "deliverables": [
+        "Edit, color grade, and finalize AI videos to professional standards, ensuring high retention and visual appeal."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦200,000 / $150 per edited video",
+        "whereToFind": [
+          "Content creators",
+          "Creative agencies",
+          "Online educators",
+          "Corporate marketing teams"
+        ],
+        "pitch": "Hi [Name], raw video is just the beginning. I specialize in AI-assisted post-production, adding dynamic subtitles, professional color grading, and seamless edits that boost viewer retention. Let me edit your next batch of videos."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p10-t0",
+        "label": "Watch: Video Editing For Beginners with AI 2026"
+      },
+      {
+        "id": "v-p10-t1",
+        "label": "Watch: How I Edit Videos with AI"
+      },
+      {
+        "id": "v-p10-t2",
+        "label": "Watch: This NEW AI Color Grading Trick Changed Everything!"
+      },
+      {
+        "id": "v-p10-t3",
+        "label": "Watch: AI Subtitle Generator"
+      },
+      {
+        "id": "v-p10-t4",
+        "label": "Watch: Complete Descript Tutorial"
+      }
+    ]
+  },
+  {
+    "id": "v-p11",
+    "number": "11",
+    "title": "FULL CINEMATIC STORY PRODUCTION",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 11",
+    "objective": "Master Full Cinematic Story Production",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "The Complete AI Filmmaking Pipeline",
+        "url": "https://www.youtube.com/watch?v=yXxkl3zSvsk",
+        "type": "yt"
+      },
+      {
+        "title": "Seedance 2.5 - How to FIX Character & Environment Consistency",
+        "url": "https://www.youtube.com/watch?v=MckeX0s_PWI",
+        "type": "yt"
+      },
+      {
+        "title": "3 Hollywood Editing Tricks You Can Use on Your Videos",
+        "url": "https://www.youtube.com/watch?v=MNsud8wtKBs",
+        "type": "yt"
+      },
+      {
+        "title": "The Ultimate AI Video Production Blueprint",
+        "url": "https://www.youtube.com/watch?v=KfdevVUlypM",
+        "type": "yt"
+      },
+      {
+        "title": "How to make Microdramas with AI Agents",
+        "url": "https://www.youtube.com/watch?v=6fVwR4PTlqk",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "StudioBinder filmmaking guides",
+        "url": "https://www.studiobinder.com/blog/filmmaking/",
+        "type": "guide",
+        "provider": "Community",
+        "description": "Comprehensive resources on all aspects of pre-production, production, and post-production."
+      },
+      {
+        "title": "Blackmagic cinematic training",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "course",
+        "provider": "Blackmagic",
+        "description": "Training focused on achieving professional, cinematic results using DaVinci Resolve."
+      },
+      {
+        "title": "Runway Academy filmmaking lessons",
+        "url": "https://academy.runwayml.com/",
+        "type": "course",
+        "provider": "Runway",
+        "description": "Specific guides on integrating generative AI into professional filmmaking workflows."
+      },
+      {
+        "title": "BBC Academy production skills",
+        "url": "https://www.bbc.co.uk/academy/en/skills/production",
+        "type": "guide",
+        "provider": "BBC",
+        "description": "Expert advice on camera work, lighting, directing, and overall video production."
+      },
+      {
+        "title": "Blackmagic Design training & certification",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve/training",
+        "type": "certification",
+        "provider": "Blackmagic",
+        "description": "Details on becoming a certified DaVinci Resolve professional in various disciplines."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "End-to-End AI Movie & Cinematic Short Film",
+        "url": "https://www.youtube.com/watch?v=fs5S867VQzg",
+        "outcome": "A complete 60-second festival-ready AI cinematic trailer with coherent narrative, voice acting, original music, and title cards.",
+        "steps": [
+          "Finalize shot list from pre-production script",
+          "Generate 8 sequential scene clips with lighting continuity",
+          "Composite sound design, dialogue, and atmospheric score",
+          "Render final master cut with opening and closing titles"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Seedance 2.5",
+        "url": "#"
+      },
+      {
+        "name": "Midjourney",
+        "url": "#"
+      },
+      {
+        "name": "Premiere Pro",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "AI Microdrama Series",
+      "description": "Produce a 3-part microdrama series optimized for platforms like TikTok/Reels using AI agents and advanced Hollywood editing techniques.",
+      "deliverables": [
+        "Execute a complete AI filmmaking pipeline, from script to final microdrama, addressing character consistency and advanced editing."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦800,000 / $600 per microdrama series",
+        "whereToFind": [
+          "Entertainment startups",
+          "Social media agencies",
+          "Brand storytellers",
+          "TikTok producers"
+        ],
+        "pitch": "Hi [Name], serialized microdramas are exploding on social media right now. I produce complete, multi-part AI microdramas that hook viewers and build massive followings for brands. I'd love to pitch a storyline tailored to your audience."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p11-t0",
+        "label": "Watch: The Complete AI Filmmaking Pipeline"
+      },
+      {
+        "id": "v-p11-t1",
+        "label": "Watch: Seedance 2.5 - How to FIX Character & Environment Consistency"
+      },
+      {
+        "id": "v-p11-t2",
+        "label": "Watch: 3 Hollywood Editing Tricks You Can Use on Your Videos"
+      },
+      {
+        "id": "v-p11-t3",
+        "label": "Watch: The Ultimate AI Video Production Blueprint"
+      },
+      {
+        "id": "v-p11-t4",
+        "label": "Watch: How to make Microdramas with AI Agents"
+      }
+    ]
+  },
+  {
+    "id": "v-p12",
+    "number": "12",
+    "title": "DISTRIBUTION, MONETIZATION & PORTFOLIO BUILDING",
+    "badge": "AI Video Animation",
+    "weeks": "MODULE 12",
+    "objective": "Master Distribution, Monetization & Portfolio Building",
+    "color": "text-amber-500",
+    "resources": [
+      {
+        "title": "YouTube's NEW Rules for AI Videos",
+        "url": "https://www.youtube.com/watch?v=m647KpdNTDg",
+        "type": "yt"
+      },
+      {
+        "title": "I Made 1468 YouTube Videos, Here's What Works in 2025",
+        "url": "https://www.youtube.com/watch?v=rk_pO-VEFbw",
+        "type": "yt"
+      },
+      {
+        "title": "The 6 Methods I'd Use to Monetize Ai Content",
+        "url": "https://www.youtube.com/watch?v=BU0Zs4CdKIE",
+        "type": "yt"
+      },
+      {
+        "title": "AI Video Showreel",
+        "url": "https://www.youtube.com/watch?v=XjLh1djHEVc",
+        "type": "yt"
+      },
+      {
+        "title": "The AI Workflow That Scales My Content Output",
+        "url": "https://www.youtube.com/watch?v=zHvkeHE5YwU",
+        "type": "yt"
+      },
+      {
+        "title": "5 Contract Clauses Every AI Consultant Needs",
+        "url": "https://www.youtube.com/watch?v=MhzAxghBLF8",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "YouTube Creator Academy",
+        "url": "https://creatoracademy.youtube.com/page/home",
+        "type": "course",
+        "provider": "Google",
+        "description": "Official YouTube courses on channel growth, production, policies, and monetization."
+      },
+      {
+        "title": "Google Skillshop",
+        "url": "https://skillshop.withgoogle.com/",
+        "type": "guide",
+        "provider": "Google",
+        "description": "Training and certification for Google's professional tools like Google Ads and Analytics."
+      },
+      {
+        "title": "Google Analytics help and learning",
+        "url": "https://support.google.com/analytics/answer/15068052",
+        "type": "guide",
+        "provider": "Google",
+        "description": "Official documentation for tracking website traffic, user behavior, and conversions."
+      },
+      {
+        "title": "HubSpot Content Marketing course",
+        "url": "https://academy.hubspot.com/courses/content-marketing",
+        "type": "course",
+        "provider": "HubSpot",
+        "description": "Learn how to attract and engage audiences through valuable, relevant content."
+      },
+      {
+        "title": "HubSpot Digital Advertising course",
+        "url": "https://academy.hubspot.com/courses/digital-advertising",
+        "type": "course",
+        "provider": "HubSpot",
+        "description": "Comprehensive guide to creating and managing digital ad campaigns."
+      },
+      {
+        "title": "HubSpot Content Marketing Certification",
+        "url": "https://academy.hubspot.com/courses/content-marketing",
+        "type": "certification",
+        "provider": "HubSpot",
+        "description": "Certification covering content strategy, storytelling, content creation, and promotion."
+      },
+      {
+        "title": "Google Ads certifications via Skillshop",
+        "url": "https://skillshop.withgoogle.com/googleads",
+        "type": "certification",
+        "provider": "Google",
+        "description": "Official certifications validating proficiency in various Google Ads products."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Cinematic AI Video Director Showreel & Portfolio",
+        "url": "https://www.youtube.com/watch?v=HMVSCEh72n4",
+        "outcome": "A 45-second high-energy commercial director showreel published on Vimeo/YouTube alongside a client pricing proposal deck.",
+        "steps": [
+          "Select best 10 scenes across portfolio modules",
+          "Edit fast-paced rhythm cuts to upbeat commercial track",
+          "Design sleek branded lower-thirds and credit card",
+          "Publish live portfolio link and client outreach template"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "YouTube Studio",
+        "url": "#"
+      },
+      {
+        "name": "Notion",
+        "url": "#"
+      },
+      {
+        "name": "LinkedIn",
+        "url": "#"
+      }
+    ],
+    "project": {
+      "title": "AI Consulting Showreel & Contracts",
+      "description": "Create a professional AI Video Showreel and draft a set of standard contracts for AI consulting and freelance video production.",
+      "deliverables": [
+        "Successfully monetize AI content on YouTube, structure consulting deals, and scale video output efficiently."
+      ],
+      "sellingStrategy": {
+        "pricing": "₦1,000,000+ / $800+ per monthly retainer",
+        "whereToFind": [
+          "High-ticket B2B clients",
+          "Tech consulting firms",
+          "Prominent YouTubers",
+          "Enterprises adopting AI"
+        ],
+        "pitch": "Hi [Name], integrating AI into your content pipeline can save thousands of dollars and hundreds of hours. I offer AI video consulting and production retainers, helping you scale your output without sacrificing quality. Let's hop on a 15-minute call to discuss your workflow."
+      }
+    },
+    "tasks": [
+      {
+        "id": "v-p12-t0",
+        "label": "Watch: YouTube's NEW Rules for AI Videos"
+      },
+      {
+        "id": "v-p12-t1",
+        "label": "Watch: I Made 1468 YouTube Videos, Here's What Works in 2025"
+      },
+      {
+        "id": "v-p12-t2",
+        "label": "Watch: The 6 Methods I'd Use to Monetize Ai Content"
+      },
+      {
+        "id": "v-p12-t3",
+        "label": "Watch: AI Video Showreel"
+      },
+      {
+        "id": "v-p12-t4",
+        "label": "Watch: The AI Workflow That Scales My Content Output"
+      },
+      {
+        "id": "v-p12-t5",
+        "label": "Watch: 5 Contract Clauses Every AI Consultant Needs"
+      }
+    ]
+  }
+];
+
+export const MARKETING_PHASES: Phase[] = [
+  {
+    "id": "marketing-p1",
+    "number": "01",
+    "title": "Digital Marketing Landscape & Brand Strategy",
+    "badge": "STRATEGY",
+    "weeks": "Week 1",
+    "objective": "Dive deep into the foundational architecture of the modern digital landscape. You will learn to construct robust brand positioning, define psychographic buyer personas, and architect a comprehensive go-to-market strategy that cuts through the noise of the 2026 algorithmic era.",
+    "resources": [
+      {
+        "title": "Digital Marketing 101 - Full Course for Beginners",
+        "url": "https://www.youtube.com/watch?v=bixR-KIJKYM",
+        "type": "yt"
+      },
+      {
+        "title": "How to Create an Unbeatable Marketing Strategy in 2026",
+        "url": "https://www.youtube.com/watch?v=kYv_8E1_c6s",
+        "type": "yt"
+      },
+      {
+        "title": "Brand Strategy Blueprint: Brand Positioning & USP",
+        "url": "https://www.youtube.com/watch?v=G3z7oG9W5f4",
+        "type": "yt"
+      },
+      {
+        "title": "Go-To-Market (GTM) Strategy Masterclass",
+        "url": "https://www.youtube.com/watch?v=P21r759rZg0",
+        "type": "yt"
+      },
+      {
+        "title": "How to Define Your Ideal Customer Profile & Personas",
+        "url": "https://www.youtube.com/watch?v=aG47WkM99eI",
+        "type": "yt"
+      },
+      {
+        "title": "Competitor Gap Analysis & SWOT Framework",
+        "url": "https://www.youtube.com/watch?v=0qF_6m2xUq8",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "HubSpot Inbound Marketing Certification",
+        "url": "https://academy.hubspot.com/courses/inbound",
+        "type": "certification",
+        "provider": "HubSpot",
+        "description": "Comprehensive foundation in digital marketing strategy, inbound marketing, and audience targeting."
+      },
+      {
+        "title": "Fundamentals of Digital Marketing",
+        "url": "https://skillshop.exceedlms.com/student/collection/654330",
+        "type": "certification",
+        "provider": "Google",
+        "description": "Master the basics of digital marketing with interactive advertising and strategy modules."
+      },
+      {
+        "title": "Codecademy Intro to Digital Marketing",
+        "url": "https://www.codecademy.com/learn/introduction-to-digital-marketing",
+        "type": "course",
+        "provider": "Codecademy",
+        "description": "Learn how to build a digital marketing campaign and track key performance indicators."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Brand Strategy & Positioning Masterclass",
+        "url": "https://www.youtube.com/watch?v=NPqEdQDraho",
+        "outcome": "A completed Miro/Notion brand strategy playbook with 4-quadrant positioning matrix and detailed psychographic customer avatar.",
+        "steps": [
+          "Plot 4 key market competitors on X/Y value axis",
+          "Identify whitespace market opportunity",
+          "Build psychographic buyer persona (pains, desires, triggers)",
+          "Craft 1-sentence Unique Selling Proposition (USP)"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Miro",
+        "url": "https://miro.com/"
+      },
+      {
+        "name": "Notion",
+        "url": "https://notion.so/"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t1",
+        "label": "Conduct a deep-dive SWOT and competitor content gap analysis.",
+        "type": "research"
+      },
+      {
+        "id": "m-t2",
+        "label": "Architect a comprehensive psychographic buyer persona matrix.",
+        "type": "writing"
+      },
+      {
+        "id": "m-t3",
+        "label": "Draft a brand messaging architecture including USP, value pillars, and tone of voice guidelines.",
+        "type": "design"
+      }
+    ],
+    "project": {
+      "title": "Complete Brand Go-to-Market Strategy",
+      "description": "You will build a full-scale Go-to-Market (GTM) brand playbook. This involves synthesizing market research into a cohesive 15-page strategy document detailing your brand's unique positioning, hyper-targeted audience segments, primary acquisition channels, and core messaging pillars designed to penetrate saturated markets.",
+      "deliverables": [
+        "Brand Positioning Map",
+        "Competitor Matrix",
+        "Ideal Customer Profile (ICP) Dossier",
+        "Core Messaging Framework"
+      ],
+      "sellingStrategy": {
+        "pitch": "Position this document as a foundational 'Brand Blueprint' service for new startups or companies seeking to rebrand. Emphasize that execution without strategy leads to wasted ad spend.",
+        "pricing": "$500 - $1,500",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p2",
+    "number": "02",
+    "title": "Content Marketing & Social Media Strategy",
+    "badge": "SOCIAL",
+    "weeks": "Week 2",
+    "objective": "Master the psychology of attention capture and algorithmic amplification across platforms like TikTok, Instagram Reels, and LinkedIn. Learn to architect a scalable content machine, construct high-retention hooks, and map formats directly to the customer journey funnel.",
+    "resources": [
+      {
+        "title": "Content Marketing Full Course - Strategy & Distribution",
+        "url": "https://www.youtube.com/watch?v=gS60bL1s738",
+        "type": "yt"
+      },
+      {
+        "title": "Short-Form Video Masterclass: TikTok, Reels & Shorts",
+        "url": "https://www.youtube.com/watch?v=7Y9L3y8Zk7M",
+        "type": "yt"
+      },
+      {
+        "title": "How to Write Viral Hooks That Retain Attention",
+        "url": "https://www.youtube.com/watch?v=cQ3L8R0V8pM",
+        "type": "yt"
+      },
+      {
+        "title": "Content Repurposing Framework: 1 Core Asset to 10 Micro-Posts",
+        "url": "https://www.youtube.com/watch?v=5V2yW4Z31r4",
+        "type": "yt"
+      },
+      {
+        "title": "Organic LinkedIn Growth Strategy for 2026",
+        "url": "https://www.youtube.com/watch?v=E7yF4j8V6dY",
+        "type": "yt"
+      },
+      {
+        "title": "Social Media Algorithm Secrets Explained",
+        "url": "https://www.youtube.com/watch?v=f2wXpL1s74k",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Meta Social Media Marketing Professional Certificate",
+        "url": "https://www.coursera.org/professional-certificates/meta-social-media-marketing",
+        "type": "certification",
+        "provider": "Meta",
+        "description": "Learn to build a social media strategy, create content, and analyze campaigns."
+      },
+      {
+        "title": "HubSpot Content Marketing Certification",
+        "url": "https://academy.hubspot.com/courses/content-marketing",
+        "type": "certification",
+        "provider": "HubSpot",
+        "description": "Master the art of storytelling, content creation, repurposing, and promotion."
+      },
+      {
+        "title": "TikTok Creator Academy",
+        "url": "https://creator.tiktok.com/",
+        "type": "guide",
+        "provider": "TikTok",
+        "description": "Deep dive into TikTok's algorithm, short-form storytelling, and community building."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Content Marketing Strategy & Calendar Execution",
+        "url": "https://www.youtube.com/watch?v=0R_3iarc8IA",
+        "outcome": "A fully scheduled Notion content calendar with 30 posts categorized into 4 core pillars and 10 viral hook templates.",
+        "steps": [
+          "Define 4 distinct content pillars (Authority, Story, Proof, Promo)",
+          "Draft 10 viral hook variations using curiosity gaps",
+          "Build 1-to-10 repurposing pipeline SOP",
+          "Schedule 30 cross-platform posts in Buffer"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Buffer",
+        "url": "https://buffer.com/"
+      },
+      {
+        "name": "CapCut",
+        "url": "https://www.capcut.com/"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t4",
+        "label": "Develop a 30-day cross-platform content calendar with distinct content pillars.",
+        "type": "writing"
+      },
+      {
+        "id": "m-t5",
+        "label": "Script 5 high-retention short-form video hooks leveraging curiosity gaps.",
+        "type": "video"
+      },
+      {
+        "id": "m-t6",
+        "label": "Design a content repurposing workflow to turn 1 core asset into 10 micro-assets.",
+        "type": "system"
+      }
+    ],
+    "project": {
+      "title": "Omnichannel Content Ecosystem",
+      "description": "You will construct a scalable content engine. This includes a strategic content calendar mapped to the buyer's journey, a repository of hook templates, and a documented Standard Operating Procedure (SOP) for repurposing hero content (like a podcast or blog) into dozens of social-native posts.",
+      "deliverables": [
+        "30-Day Content Calendar",
+        "Hook & Script Repository",
+        "Content Repurposing SOP"
+      ],
+      "sellingStrategy": {
+        "pitch": "Pitch this as a 'Content Engine Architecture'. Businesses struggle with consistency; you are selling them a predictable system for omni-channel presence.",
+        "pricing": "$800 - $2,000/month retainer",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p3",
+    "number": "03",
+    "title": "Search Engine Optimization (SEO) & AI Search",
+    "badge": "SEO",
+    "weeks": "Week 3",
+    "objective": "Navigate the shift from traditional keyword search to AI-assisted generative engines (SGE, Perplexity, ChatGPT). Master technical SEO, semantic content structuring, schema markup implementation, and the exact entity-based signals required to become an AI-cited authority in your niche.",
+    "resources": [
+      {
+        "title": "SEO for Beginners: Rank #1 on Google (Full Course)",
+        "url": "https://www.youtube.com/watch?v=xsVTqzratPs",
+        "type": "yt"
+      },
+      {
+        "title": "Generative Engine Optimization (GEO): Ranking in ChatGPT & AI Search",
+        "url": "https://www.youtube.com/watch?v=yYyH4h5g7gE",
+        "type": "yt"
+      },
+      {
+        "title": "Technical SEO Audit Masterclass (Step-by-Step)",
+        "url": "https://www.youtube.com/watch?v=o5F_c8-5C-o",
+        "type": "yt"
+      },
+      {
+        "title": "Keyword Research & Semantic Topic Clusters Tutorial",
+        "url": "https://www.youtube.com/watch?v=GkP_Y0q8hXU",
+        "type": "yt"
+      },
+      {
+        "title": "Schema Markup & JSON-LD Structured Data Guide",
+        "url": "https://www.youtube.com/watch?v=vV0f4F5f9uM",
+        "type": "yt"
+      },
+      {
+        "title": "On-Page SEO Checklist for Highest CTR",
+        "url": "https://www.youtube.com/watch?v=4uP2L1K4jJw",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Semrush SEO Crash Course",
+        "url": "https://www.semrush.com/academy/courses/seo-crash-course/",
+        "type": "certification",
+        "provider": "Semrush",
+        "description": "Learn the fundamentals of SEO, keyword research, and on-page optimization."
+      },
+      {
+        "title": "Ahrefs Academy: SEO Training Course",
+        "url": "https://ahrefs.com/academy/seo-training-course",
+        "type": "course",
+        "provider": "Ahrefs",
+        "description": "Actionable tutorials on link building, keyword research, and technical SEO audits."
+      },
+      {
+        "title": "Google Search Console Training",
+        "url": "https://www.youtube.com/playlist?list=PLKoqnv2vTMUQQ5NDcb3u1h-q2qD-T-z8O",
+        "type": "guide",
+        "provider": "Google",
+        "description": "Official Google video series on diagnosing and optimizing search performance."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Semantic Topic Cluster & JSON-LD Schema Build",
+        "url": "https://www.youtube.com/watch?v=xsVTqzratPs",
+        "outcome": "A live semantic SEO pillar page architecture with keyword difficulty data and validated FAQ/Organization JSON-LD schema.",
+        "steps": [
+          "Conduct keyword research for pillar topic and 6 sub-topics",
+          "Map internal linking hierarchy from sub-pages to pillar",
+          "Write custom JSON-LD schema markup",
+          "Validate schema using Google Rich Results Test"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Semrush",
+        "url": "https://semrush.com"
+      },
+      {
+        "name": "Google Search Console",
+        "url": "https://search.google.com/search-console"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t7",
+        "label": "Perform a comprehensive technical SEO site audit identifying crawl errors and speed bottlenecks.",
+        "type": "code"
+      },
+      {
+        "id": "m-t8",
+        "label": "Develop a semantic keyword cluster mapped to informational and transactional intent.",
+        "type": "research"
+      },
+      {
+        "id": "m-t9",
+        "label": "Implement JSON-LD Schema markup for local business or article entities.",
+        "type": "code"
+      }
+    ],
+    "project": {
+      "title": "AI-Ready Semantic SEO Audit & Strategy",
+      "description": "You will produce a highly technical, comprehensive SEO audit and roadmap. Unlike traditional audits, this will focus on Semantic SEO—structuring content in entity clusters, optimizing for natural language processing, and mapping out a backlink strategy to establish topical authority.",
+      "deliverables": [
+        "Technical SEO Audit Report",
+        "Entity & Keyword Cluster Map",
+        "On-Page Optimization Checklist"
+      ],
+      "sellingStrategy": {
+        "pitch": "Sell this as an 'AI Search Readiness Audit'. Frame it around the fear of losing traffic to AI overviews, offering a solution to future-proof their organic visibility.",
+        "pricing": "$1,000 - $3,500",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p4",
+    "number": "04",
+    "title": "Paid Advertising & AI Bidding",
+    "badge": "PPC",
+    "weeks": "Week 4",
+    "objective": "Construct high-ROI paid acquisition funnels using algorithmic bidding strategies. You will master campaign architecture across Google Ads and Meta Ads, learning how to feed AI algorithms with the right conversion signals and first-party data to autonomously optimize your CPA and ROAS.",
+    "resources": [
+      {
+        "title": "Meta Ads (Facebook & Instagram) Masterclass",
+        "url": "https://www.youtube.com/watch?v=eYkCqgMhKUk",
+        "type": "yt"
+      },
+      {
+        "title": "Google Ads Search & Performance Max (PMax) Full Course",
+        "url": "https://www.youtube.com/watch?v=r3E9E2_J6_0",
+        "type": "yt"
+      },
+      {
+        "title": "High-ROAS Ad Creative Testing Strategy",
+        "url": "https://www.youtube.com/watch?v=b0V7mN4sB3Y",
+        "type": "yt"
+      },
+      {
+        "title": "Direct Response Copywriting for Paid Social Ads",
+        "url": "https://www.youtube.com/watch?v=Kz6E1E4sB7M",
+        "type": "yt"
+      },
+      {
+        "title": "Meta Conversions API (CAPI) & Server-Side Tracking",
+        "url": "https://www.youtube.com/watch?v=r1W6F8G2q8A",
+        "type": "yt"
+      },
+      {
+        "title": "Paid Media Budget Allocation & Bidding Algorithms",
+        "url": "https://www.youtube.com/watch?v=yQv7qXyF5b4",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Google Ads Search Certification",
+        "url": "https://skillshop.exceedlms.com/student/path/18128-google-ads-search-certification",
+        "type": "certification",
+        "provider": "Google",
+        "description": "Validate your expertise in building and optimizing Google Search campaigns."
+      },
+      {
+        "title": "Meta Blueprint: Digital Marketing Associate",
+        "url": "https://www.facebook.com/business/learn/certification",
+        "type": "certification",
+        "provider": "Meta",
+        "description": "Core understanding of value-driven advertising on Facebook and Instagram."
+      },
+      {
+        "title": "WordStream PPC University",
+        "url": "https://www.wordstream.com/learn",
+        "type": "guide",
+        "provider": "WordStream",
+        "description": "Deep dive into cost-per-click bidding, Quality Score optimization, and ad copy."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Meta Ads Full-Funnel Campaign Setup",
+        "url": "https://www.youtube.com/watch?v=t-6c16BH-0U",
+        "outcome": "A complete campaign build in Meta Ads Manager with Prospecting (TOF), Retargeting (MOF), and Purchase Retargeting (BOF) ad sets.",
+        "steps": [
+          "Configure Advantage+ campaign budget allocation",
+          "Draft 3 angles of direct-response ad copy",
+          "Setup custom and lookalike audiences",
+          "Verify pixel and Conversions API (CAPI) event fires"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Google Ads",
+        "url": "https://ads.google.com/"
+      },
+      {
+        "name": "Meta Ads Manager",
+        "url": "https://business.facebook.com/"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t10",
+        "label": "Design a full-funnel Meta Ads account structure (Top, Middle, Bottom of Funnel).",
+        "type": "system"
+      },
+      {
+        "id": "m-t11",
+        "label": "Write high-converting ad copy variations utilizing psychological triggers.",
+        "type": "writing"
+      },
+      {
+        "id": "m-t12",
+        "label": "Configure server-side conversion tracking via Facebook Conversions API (CAPI).",
+        "type": "code"
+      }
+    ],
+    "project": {
+      "title": "Performance Media Buying Architecture",
+      "description": "You will build out a complete, ready-to-launch media buying framework. This includes drafting the campaign structures, defining audience targeting parameters, writing direct-response ad copy, and documenting the pixel and server-side tracking setup required for algorithmic optimization.",
+      "deliverables": [
+        "Campaign Structure Map",
+        "Ad Copy & Creative Briefs",
+        "Conversion Tracking Implementation Guide"
+      ],
+      "sellingStrategy": {
+        "pitch": "Position as a 'Performance Growth Framework'. Focus strictly on ROI and ROAS, shifting the conversation from 'running ads' to 'buying customers at a profit.'",
+        "pricing": "$1,500 setup + 10-15% ad spend",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p5",
+    "number": "05",
+    "title": "E-commerce & Conversion Rate Optimization (CRO)",
+    "badge": "CRO",
+    "weeks": "Week 5",
+    "objective": "Master the psychology of digital storefront optimization. You will learn to dissect consumer friction points, build high-velocity A/B testing programs, design irresistible product detail pages (PDPs), and engineer upsell and cross-sell funnels to elevate Average Order Value (AOV).",
+    "resources": [
+      {
+        "title": "Complete E-commerce & Shopify Store Growth Course",
+        "url": "https://www.youtube.com/watch?v=gT8wN4m5X7U",
+        "type": "yt"
+      },
+      {
+        "title": "Conversion Rate Optimization (CRO) Masterclass",
+        "url": "https://www.youtube.com/watch?v=0hK4mP6v3Bw",
+        "type": "yt"
+      },
+      {
+        "title": "How to Build High-Converting Product Pages (5%+ CVR)",
+        "url": "https://www.youtube.com/watch?v=K_N0_9d7m2E",
+        "type": "yt"
+      },
+      {
+        "title": "A/B Testing Framework for Modern E-commerce Stores",
+        "url": "https://www.youtube.com/watch?v=x9qK6rW2e5M",
+        "type": "yt"
+      },
+      {
+        "title": "How to Maximize Average Order Value (AOV) with Upsells",
+        "url": "https://www.youtube.com/watch?v=m7N3xL1b4Jw",
+        "type": "yt"
+      },
+      {
+        "title": "Checkout Friction Audit & Cart Abandonment Fixes",
+        "url": "https://www.youtube.com/watch?v=v3W5pT8k4yE",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Shopify Partner Academy: Store Operations",
+        "url": "https://www.shopify.com/partners/academy",
+        "type": "certification",
+        "provider": "Shopify",
+        "description": "Learn the fundamentals of managing, growing, and optimizing a Shopify storefront."
+      },
+      {
+        "title": "Google Analytics 4 (GA4) for E-commerce",
+        "url": "https://skillshop.exceedlms.com/",
+        "type": "certification",
+        "provider": "Google",
+        "description": "Master tracking monetization, user behavior, and funnel drop-offs in GA4."
+      },
+      {
+        "title": "VWO Conversion Optimization Guide",
+        "url": "https://vwo.com/conversion-rate-optimization/",
+        "type": "guide",
+        "provider": "VWO",
+        "description": "Extensive guide on A/B testing methodologies and psychological conversion triggers."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Shopify Store Conversion Rate Optimization (CRO)",
+        "url": "https://www.youtube.com/watch?v=kLneJKAqRtk",
+        "outcome": "A wireframed and live-tested e-commerce product page featuring dynamic sticky add-to-cart, trust badges, and post-purchase upsell logic.",
+        "steps": [
+          "Conduct heuristic UX review to pinpoint drop-off friction",
+          "Design high-converting above-the-fold hero section",
+          "Add customer review social proof widgets",
+          "Configure 1-click upsell offer in checkout flow"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Shopify",
+        "url": "https://shopify.com"
+      },
+      {
+        "name": "Hotjar",
+        "url": "https://hotjar.com"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t13",
+        "label": "Conduct a heuristic UX audit on an e-commerce product page to identify friction points.",
+        "type": "research"
+      },
+      {
+        "id": "m-t14",
+        "label": "Design an A/B test hypothesis matrix aimed at increasing Add-To-Cart rates.",
+        "type": "design"
+      },
+      {
+        "id": "m-t15",
+        "label": "Map out an upsell and cross-sell logic flow to maximize Average Order Value.",
+        "type": "system"
+      }
+    ],
+    "project": {
+      "title": "Storefront CRO & Funnel Optimization Blueprint",
+      "description": "You will conduct an exhaustive conversion optimization overhaul for an online brand. You will identify critical drop-off stages in the user checkout funnel, wireframe an optimized Product Detail Page (PDP), and outline a 90-day testing roadmap backed by behavioral analytics.",
+      "deliverables": [
+        "Heuristic UX Audit Dossier",
+        "Optimized PDP Wireframes",
+        "A/B Testing Roadmap"
+      ],
+      "sellingStrategy": {
+        "pitch": "Sell 'Revenue Unlocking'. Show store owners how a 1% lift in conversion rate doubles net margins without spending an additional dime on ad traffic.",
+        "pricing": "$1,500 - $4,000",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p6",
+    "number": "06",
+    "title": "Email, SMS & Conversational Marketing",
+    "badge": "RETENTION",
+    "weeks": "Week 6",
+    "objective": "Harness the power of owned media to build zero-marginal-cost revenue engines. You will architect hyper-segmented automated flows in Klaviyo, craft direct-response copy that evades spam filters, design high-converting SMS campaigns, and deploy conversational DM funnels.",
+    "resources": [
+      {
+        "title": "Klaviyo Email Marketing Full Course for E-commerce",
+        "url": "https://www.youtube.com/watch?v=Kz9M6xW5q8E",
+        "type": "yt"
+      },
+      {
+        "title": "The 5 Core Automated Email Flows (Welcome, Cart, Winback)",
+        "url": "https://www.youtube.com/watch?v=4m6P8bL1s5E",
+        "type": "yt"
+      },
+      {
+        "title": "Email Copywriting Formulas That Drive Immediate Revenue",
+        "url": "https://www.youtube.com/watch?v=r7N8xW4sK2Y",
+        "type": "yt"
+      },
+      {
+        "title": "SMS Marketing Playbook: Compliant High-Urgency Campaigns",
+        "url": "https://www.youtube.com/watch?v=p4M7bV9k2Ew",
+        "type": "yt"
+      },
+      {
+        "title": "Instagram DM Funnel & ManyChat Automation Setup",
+        "url": "https://www.youtube.com/watch?v=y3W6qP8m5Bw",
+        "type": "yt"
+      },
+      {
+        "title": "Customer Retention & Lifecycle Email Sequences",
+        "url": "https://www.youtube.com/watch?v=m6R2xL8b4Nw",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Klaviyo Product Certificate",
+        "url": "https://academy.klaviyo.com/",
+        "type": "certification",
+        "provider": "Klaviyo",
+        "description": "Master list growth, segmentation, and automated flow architecture in Klaviyo."
+      },
+      {
+        "title": "HubSpot Email Marketing Certification",
+        "url": "https://academy.hubspot.com/courses/email-marketing",
+        "type": "certification",
+        "provider": "HubSpot",
+        "description": "Deep dive into email deliverability, A/B testing, and lifecycle marketing."
+      },
+      {
+        "title": "ManyChat Course",
+        "url": "https://course.manychat.com/",
+        "type": "course",
+        "provider": "ManyChat",
+        "description": "Learn to build automated Instagram and Facebook Messenger conversational flows."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Klaviyo Automated Email Marketing Flows",
+        "url": "https://www.youtube.com/watch?v=X8sH2h8jASE",
+        "outcome": "A live automated Klaviyo email flow with dynamic discount logic, personalized product recommendations, and SMS abandon cart triggers.",
+        "steps": [
+          "Create conditional customer segmentation triggers",
+          "Design branded responsive HTML email templates",
+          "Write high-converting urgency copy and subject lines",
+          "Test flow delivery and inbox placement"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Klaviyo",
+        "url": "https://klaviyo.com"
+      },
+      {
+        "name": "ManyChat",
+        "url": "https://manychat.com"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t16",
+        "label": "Architect a 5-part dynamic email Welcome Series based on subscriber behavior.",
+        "type": "system"
+      },
+      {
+        "id": "m-t17",
+        "label": "Write compelling, high-urgency SMS copy for an abandoned cart sequence.",
+        "type": "writing"
+      },
+      {
+        "id": "m-t18",
+        "label": "Build an automated Instagram DM funnel for lead qualification using ManyChat.",
+        "type": "code"
+      }
+    ],
+    "project": {
+      "title": "Automated Lifecycle Revenue Machine",
+      "description": "You will build an end-to-end retention and conversational marketing system. This includes fully mapped flow logic diagrams for Welcome, Abandoned Checkout, and Win-Back series, high-converting HTML/Figma templates, dynamic segmentation rules, and compliant SMS triggers.",
+      "deliverables": [
+        "Lifecycle Flow Logic Map",
+        "Full Copy Deck (Email + SMS)",
+        "ManyChat Interactive DM Funnel"
+      ],
+      "sellingStrategy": {
+        "pitch": "Pitch this as 'Instant Backend Cash Flow'. Explain that owned channels like Email and SMS often account for 30-40% of total revenue with zero ad spend.",
+        "pricing": "$1,200 setup + performance fee",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p7",
+    "number": "07",
+    "title": "Data Analytics & Attribution",
+    "badge": "ANALYTICS",
+    "weeks": "Week 7",
+    "objective": "Eliminate marketing guesswork through rigorous data instrumentation. You will master Google Analytics 4 (GA4), set up sophisticated tracking containers in Google Tag Manager (GTM), understand complex attribution models, and build real-time visual client reporting dashboards in Looker Studio.",
+    "resources": [
+      {
+        "title": "Google Analytics 4 (GA4) Masterclass for Digital Marketers",
+        "url": "https://www.youtube.com/watch?v=7h7kQ8x4M7U",
+        "type": "yt"
+      },
+      {
+        "title": "Google Tag Manager (GTM) Beginner to Advanced Tutorial",
+        "url": "https://www.youtube.com/watch?v=o0B7xL1m4Jw",
+        "type": "yt"
+      },
+      {
+        "title": "Building Executive Marketing Dashboards in Looker Studio",
+        "url": "https://www.youtube.com/watch?v=x5N7qP8m2Ew",
+        "type": "yt"
+      },
+      {
+        "title": "Marketing Attribution Models: Multi-Touch & Data-Driven",
+        "url": "https://www.youtube.com/watch?v=k4M9xW7sB2E",
+        "type": "yt"
+      },
+      {
+        "title": "Strict UTM Taxonomy & Campaign URL Architecture",
+        "url": "https://www.youtube.com/watch?v=b7N2xL9m4Kw",
+        "type": "yt"
+      },
+      {
+        "title": "Cookieless Measurement & Server-Side Tagging Guide",
+        "url": "https://www.youtube.com/watch?v=m5P8xW2k7Bw",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Google Analytics Certification",
+        "url": "https://skillshop.exceedlms.com/student/path/508845-google-analytics-certification",
+        "type": "certification",
+        "provider": "Google",
+        "description": "Official certification for configuring GA4 properties, tracking events, and analyzing reports."
+      },
+      {
+        "title": "Google Tag Manager Fundamentals",
+        "url": "https://analytics.google.com/analytics/academy/course/5",
+        "type": "course",
+        "provider": "Google",
+        "description": "Learn to deploy tags, triggers, and variables without hardcoding scripts on your site."
+      },
+      {
+        "title": "Looker Studio Tutorials",
+        "url": "https://support.google.com/looker-studio/answer/6283323",
+        "type": "guide",
+        "provider": "Google",
+        "description": "Guides on connecting data sources and building interactive visual dashboards."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Looker Studio & GA4 Executive Growth Dashboard",
+        "url": "https://www.youtube.com/watch?v=2IeVO5WT_Ok",
+        "outcome": "An interactive executive reporting dashboard connecting GA4, Meta Ads, and Google Ads data with blended ROAS scorecards.",
+        "steps": [
+          "Connect GA4 and Google Ads data sources in Looker Studio",
+          "Configure custom metrics for Customer Acquisition Cost (CAC) and Blended ROAS",
+          "Build interactive date filters and channel breakdown charts",
+          "Publish automated weekly PDF report schedule"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Google Analytics 4",
+        "url": "https://analytics.google.com/"
+      },
+      {
+        "name": "Google Tag Manager",
+        "url": "https://tagmanager.google.com/"
+      },
+      {
+        "name": "Looker Studio",
+        "url": "https://lookerstudio.google.com/"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t19",
+        "label": "Configure a custom event tracking plan in GTM for scroll depth and button clicks.",
+        "type": "system"
+      },
+      {
+        "id": "m-t20",
+        "label": "Establish a strict UTM tagging taxonomy for all incoming traffic campaigns.",
+        "type": "writing"
+      },
+      {
+        "id": "m-t21",
+        "label": "Build a real-time Looker Studio dashboard connecting GA4 and Google Ads data.",
+        "type": "design"
+      }
+    ],
+    "project": {
+      "title": "Executive Business Intelligence Dashboard",
+      "description": "You will design and deploy an automated data intelligence system. You will connect multiple disparate data sources (Google Ads, Meta Ads, GA4) into an automated Looker Studio dashboard, complete with KPI scorecards, Blended ROAS calculations, and customer journey attribution matrices.",
+      "deliverables": [
+        "Interactive Looker Studio Dashboard",
+        "GTM Tracking Architecture Document",
+        "UTM Governance Protocol"
+      ],
+      "sellingStrategy": {
+        "pitch": "Position this as 'Executive Clarity'. High-growth founders waste countless hours stitching together spreadsheets; you give them single-pane-of-glass truth.",
+        "pricing": "$1,000 - $2,500",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p8",
+    "number": "08",
+    "title": "Advanced AI Marketing & Agentic AI",
+    "badge": "AI AUTOMATION",
+    "weeks": "Week 8",
+    "objective": "Transform marketing operations using autonomous AI agents and programmatic pipelines. You will build no-code workflows connecting LLMs to live marketing channels, execute programmatic SEO campaigns, train custom AI assistants on brand tone, and deploy agentic customer feedback collectors.",
+    "resources": [
+      {
+        "title": "Automating Marketing Pipelines with Make.com & AI",
+        "url": "https://www.youtube.com/watch?v=v8N2xL1m5Kw",
+        "type": "yt"
+      },
+      {
+        "title": "Programmatic SEO with AI: Generating 1,000s of High-Value Pages",
+        "url": "https://www.youtube.com/watch?v=p7M4bW8k2Ew",
+        "type": "yt"
+      },
+      {
+        "title": "Building Autonomous AI Marketing Agents for Outreach",
+        "url": "https://www.youtube.com/watch?v=y5W8qP2m7Bw",
+        "type": "yt"
+      },
+      {
+        "title": "Using Claude & Gemini for Deep Market Research & Copy",
+        "url": "https://www.youtube.com/watch?v=x7N3xL8b4Jw",
+        "type": "yt"
+      },
+      {
+        "title": "Training Custom GPTs & Agents on Brand Voice Guidelines",
+        "url": "https://www.youtube.com/watch?v=k8N9xW5sB2E",
+        "type": "yt"
+      },
+      {
+        "title": "AI Competitor Scraping & Real-Time Alert Workflows",
+        "url": "https://www.youtube.com/watch?v=m9P4xW7k2Bw",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "IBM AI Foundations for Business",
+        "url": "https://www.coursera.org/specializations/ibm-ai-foundations-for-business",
+        "type": "course",
+        "provider": "IBM",
+        "description": "Understand how AI is transforming business operations, marketing, and decision-making."
+      },
+      {
+        "title": "Google Cloud Generative AI Learning Path",
+        "url": "https://www.cloudskillsboost.google/journeys/118",
+        "type": "course",
+        "provider": "Google",
+        "description": "Deep dive into Large Language Models (LLMs) and generative AI applications."
+      },
+      {
+        "title": "Zapier AI Automation Guide",
+        "url": "https://zapier.com/blog/ai-automation-guide/",
+        "type": "guide",
+        "provider": "Zapier",
+        "description": "Practical guides on connecting AI models (like OpenAI) to thousands of marketing apps."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Autonomous Marketing Automation with Make.com",
+        "url": "https://www.youtube.com/watch?v=JSA2oezQWOU",
+        "outcome": "An automated Make.com workflow that monitors industry RSS feeds, generates on-brand LinkedIn drafts via Gemini API, and stages posts in Airtable.",
+        "steps": [
+          "Configure RSS webhook trigger in Make.com",
+          "Construct Gemini API prompt with strict brand voice guidelines",
+          "Format structured JSON output for social copy and hashtags",
+          "Send draft post to Airtable review board with Slack alert"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Make.com",
+        "url": "https://make.com"
+      },
+      {
+        "name": "OpenAI Platform",
+        "url": "https://platform.openai.com"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t22",
+        "label": "Map out an AI agent workflow that monitors competitor pricing and sends alerts.",
+        "type": "system"
+      },
+      {
+        "id": "m-t23",
+        "label": "Build an automated programmatic SEO pipeline using Make.com and the Gemini API.",
+        "type": "code"
+      },
+      {
+        "id": "m-t24",
+        "label": "Train a custom GPT/Agent on a brand's tone of voice and historical ad copy.",
+        "type": "research"
+      }
+    ],
+    "project": {
+      "title": "Autonomous AI Marketing Engine",
+      "description": "You will build a fully functioning, autonomous marketing automation engine. Using Make.com or n8n coupled with LLM APIs, you will build an automated pipeline that ingests RSS feeds or news alerts, drafts on-brand social commentary, generates image assets, and stages posts for review.",
+      "deliverables": [
+        "Make.com Automation Blueprint",
+        "Custom GPT System Prompt Dossier",
+        "Programmatic SEO Spreadsheet Schema"
+      ],
+      "sellingStrategy": {
+        "pitch": "Sell '10x Marketing Leverage'. Pitch companies on cutting agency content costs by 80% while scaling output 5x using your proprietary agentic workflows.",
+        "pricing": "$2,000 - $5,000",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p9",
+    "number": "09",
+    "title": "Emerging Tech & Omnichannel",
+    "badge": "OMNICHANNEL",
+    "weeks": "Week 9",
+    "objective": "Future-proof brands against platform volatility by implementing frictionless omnichannel architectures. You will map seamless 360-degree customer journeys across physical and digital touchpoints, explore headless CMS decoupling, and design interactive AR activations for product try-ons.",
+    "resources": [
+      {
+        "title": "Omnichannel Marketing Strategy & Unified Customer Journey",
+        "url": "https://www.youtube.com/watch?v=x4N8qP2m7Bw",
+        "type": "yt"
+      },
+      {
+        "title": "Headless CMS & Decoupled Architecture for Omnichannel",
+        "url": "https://www.youtube.com/watch?v=v7N2xL9m4Kw",
+        "type": "yt"
+      },
+      {
+        "title": "Augmented Reality (AR) in Social Commerce & Brand Filters",
+        "url": "https://www.youtube.com/watch?v=p5M8bW2k7Ew",
+        "type": "yt"
+      },
+      {
+        "title": "Community-Led Growth: Turning Users into Brand Evangelists",
+        "url": "https://www.youtube.com/watch?v=y8W6qP9m5Bw",
+        "type": "yt"
+      },
+      {
+        "title": "Voice Search & Conversational AI Commerce Readiness",
+        "url": "https://www.youtube.com/watch?v=m4R7xL8b2Nw",
+        "type": "yt"
+      },
+      {
+        "title": "Customer Data Platforms (CDP) & Real-Time Personalization",
+        "url": "https://www.youtube.com/watch?v=k7N8xW4sB2E",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Hootsuite Platform Certification",
+        "url": "https://education.hootsuite.com/courses/platform-certification",
+        "type": "certification",
+        "provider": "Hootsuite",
+        "description": "Validate your ability to manage complex, multi-channel social media strategies."
+      },
+      {
+        "title": "HubSpot Frictionless Sales",
+        "url": "https://academy.hubspot.com/courses/frictionless-sales",
+        "type": "course",
+        "provider": "HubSpot",
+        "description": "Learn how to align marketing, sales, and service for a unified customer experience."
+      },
+      {
+        "title": "Contentful Headless CMS Guide",
+        "url": "https://www.contentful.com/resources/what-is-headless-cms/",
+        "type": "guide",
+        "provider": "Contentful",
+        "description": "Understand the architecture of decoupling content creation from multi-device presentation."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Omnichannel Customer Journey Architecture",
+        "url": "https://www.youtube.com/watch?v=SrG6Pbyuwrs",
+        "outcome": "A comprehensive customer journey map connecting physical in-store QR scans to automated email triggers and personalized mobile app experiences.",
+        "steps": [
+          "Map out 5 distinct customer touchpoints across journey",
+          "Model unified customer profile schema (CDP integration)",
+          "Create interactive prototype demonstrating cross-channel handoff",
+          "Document retention uplift metrics"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Contentful",
+        "url": "https://contentful.com"
+      },
+      {
+        "name": "Spark AR",
+        "url": "https://sparkar.facebook.com"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t25",
+        "label": "Map out a 360-degree customer journey across 5 different digital and physical touchpoints.",
+        "type": "research"
+      },
+      {
+        "id": "m-t26",
+        "label": "Design a conceptual AR filter activation for a retail or consumer goods brand.",
+        "type": "design"
+      },
+      {
+        "id": "m-t27",
+        "label": "Structure a headless content model to serve identical data to an app and website.",
+        "type": "system"
+      }
+    ],
+    "project": {
+      "title": "Omnichannel Customer Experience (CX) Architecture",
+      "description": "You will architect an unified customer journey roadmap. You will audit an existing retail or D2C brand, uncover fractured touchpoints between app, web, social, and email, and design a unified data model ensuring seamless customer recognition across channels.",
+      "deliverables": [
+        "360-Degree Journey Ecosystem Map",
+        "Headless Content Schema",
+        "Interactive AR Concept Deck"
+      ],
+      "sellingStrategy": {
+        "pitch": "Target mid-market brands with disconnected systems. Offer an 'Omnichannel Integration Roadmap' that stops customers from leaking between channel silos.",
+        "pricing": "$2,500 - $6,000",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p10",
+    "number": "10",
+    "title": "Creative Production & Design",
+    "badge": "CREATIVE",
+    "weeks": "Week 10",
+    "objective": "Master the intersection of direct-response psychology and high-end aesthetic execution. You will utilize cutting-edge generative image models (Midjourney, Flux) to produce commercial-grade ad creatives, design design systems in Figma, and write direct-response advertorials that captivate audiences.",
+    "resources": [
+      {
+        "title": "Midjourney for Marketing: Photorealistic Ad Creatives",
+        "url": "https://www.youtube.com/watch?v=v9N4xL2m7Kw",
+        "type": "yt"
+      },
+      {
+        "title": "Figma for Marketers: Ad Creatives & Social Assets Rapidly",
+        "url": "https://www.youtube.com/watch?v=p8M5bW9k2Ew",
+        "type": "yt"
+      },
+      {
+        "title": "Direct Response Creative Strategy: Visual Hooks & Angles",
+        "url": "https://www.youtube.com/watch?v=y7W9qP4m5Bw",
+        "type": "yt"
+      },
+      {
+        "title": "Designing High-Converting Advertorials & Editorial Pages",
+        "url": "https://www.youtube.com/watch?v=m5R9xL8b4Nw",
+        "type": "yt"
+      },
+      {
+        "title": "CapCut & Premiere Pro for Direct-Response Video Ads",
+        "url": "https://www.youtube.com/watch?v=k9N4xW7sB2E",
+        "type": "yt"
+      },
+      {
+        "title": "Brand Style Guides in Figma: Color Palettes, Fonts & Layouts",
+        "url": "https://www.youtube.com/watch?v=x6N9qP2m7Bw",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Canva Design School",
+        "url": "https://www.canva.com/designschool/",
+        "type": "course",
+        "provider": "Canva",
+        "description": "Comprehensive tutorials on graphic design principles, branding, and rapid asset creation."
+      },
+      {
+        "title": "Adobe Express Fundamentals",
+        "url": "https://helpx.adobe.com/express/tutorials.html",
+        "type": "guide",
+        "provider": "Adobe",
+        "description": "Official guides for creating stunning social graphics and short videos."
+      },
+      {
+        "title": "Figma UI/UX Crash Course",
+        "url": "https://help.figma.com/hc/en-us/categories/360002051613-Tutorials-and-videos",
+        "type": "course",
+        "provider": "Figma",
+        "description": "Learn the basics of layout, typography, and interface design in Figma."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "High-Converting Social Ad Creative Generator in Figma",
+        "url": "https://www.youtube.com/watch?v=i5THkTJ-j6k",
+        "outcome": "A scalable Figma design system containing 10 high-performing ad creative templates (Split Screen, Testimonial Card, Us vs Them, Press Feature).",
+        "steps": [
+          "Build typography and color styles conforming to brand kit",
+          "Create reusable auto-layout ad component frames (1:1 and 9:16)",
+          "Generate photorealistic product backgrounds via Midjourney",
+          "Export production-ready PNGs and SVGs"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Figma",
+        "url": "https://figma.com"
+      },
+      {
+        "name": "Midjourney",
+        "url": "https://midjourney.com"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t28",
+        "label": "Generate a batch of 10 photorealistic ad creative concepts using Midjourney.",
+        "type": "design"
+      },
+      {
+        "id": "m-t29",
+        "label": "Design a comprehensive brand style guide (Typography, Color Palette, UI Elements) in Figma.",
+        "type": "design"
+      },
+      {
+        "id": "m-t30",
+        "label": "Write 3 direct-response long-form advertorials optimized for Facebook traffic.",
+        "type": "writing"
+      }
+    ],
+    "project": {
+      "title": "Direct-Response Creative Asset Pack",
+      "description": "You will build a high-converting creative arsenal for a commercial brand. This includes 20 static ad variations generated via Midjourney, 3 video ad storyboards with hook variations, and a 1,500-word persuasive advertorial designed to pre-sell high-friction offers.",
+      "deliverables": [
+        "20 Direct-Response Ad Creatives (Figma)",
+        "3 Video Hook Storyboards",
+        "1 Long-Form Advertorial Deck"
+      ],
+      "sellingStrategy": {
+        "pitch": "Sell 'Creative Fatigue Immunity'. Paid ad performance degrades without fresh creative; offer brands an ongoing monthly 'Creative Refresh' package.",
+        "pricing": "$1,200 - $3,000/month",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p11",
+    "number": "11",
+    "title": "Marketing Infrastructure & Landing Pages",
+    "badge": "DEV / CRO",
+    "weeks": "Week 11",
+    "objective": "Construct lightning-fast, high-converting digital storefronts and landing pages without writing complex server code. You will learn visual site development in Framer and Webflow, analyze visitor friction through Microsoft Clarity session replays, and engineer friction-free lead capture funnels.",
+    "resources": [
+      {
+        "title": "Framer Tutorial for Beginners: Build High-Converting Pages Fast",
+        "url": "https://www.youtube.com/watch?v=v6N7xL2m4Kw",
+        "type": "yt"
+      },
+      {
+        "title": "Webflow Complete Course for Marketing Infrastructure",
+        "url": "https://www.youtube.com/watch?v=p9M6bW2k7Ew",
+        "type": "yt"
+      },
+      {
+        "title": "Landing Page Design Formula: Above-the-Fold & Call to Actions",
+        "url": "https://www.youtube.com/watch?v=y9W4qP8m5Bw",
+        "type": "yt"
+      },
+      {
+        "title": "Microsoft Clarity Heatmaps & Session Recording Analysis",
+        "url": "https://www.youtube.com/watch?v=m7R4xL9b2Nw",
+        "type": "yt"
+      },
+      {
+        "title": "Page Speed & Core Web Vitals Optimization for Landing Pages",
+        "url": "https://www.youtube.com/watch?v=k6N8xW5sB2E",
+        "type": "yt"
+      },
+      {
+        "title": "Lead Magnet Funnel Architecture & High-Converting Forms",
+        "url": "https://www.youtube.com/watch?v=x8N7qP4m7Bw",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "Webflow University 101",
+        "url": "https://university.webflow.com/courses/webflow-101-crash-course",
+        "type": "course",
+        "provider": "Webflow",
+        "description": "Master responsive web design, CSS grid, and flexbox using Webflow's visual editor."
+      },
+      {
+        "title": "Framer Academy: The Fundamentals",
+        "url": "https://www.framer.com/academy/",
+        "type": "course",
+        "provider": "Framer",
+        "description": "Learn how to build, publish, and animate high-performance websites in Framer."
+      },
+      {
+        "title": "Microsoft Clarity Documentation",
+        "url": "https://clarity.microsoft.com/",
+        "type": "guide",
+        "provider": "Microsoft",
+        "description": "Guides on configuring heatmaps, tracking click dead zones, and watching user session replays."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "High-Converting Landing Page Build in Framer",
+        "url": "https://www.youtube.com/watch?v=DpxDXr7-jBY",
+        "outcome": "A deployed Framer landing page with 95+ Mobile Google PageSpeed score, interactive FAQ accordions, and integrated Microsoft Clarity tracking.",
+        "steps": [
+          "Wireframe responsive layout (Desktop, Tablet, Mobile)",
+          "Build micro-interactions and smooth scroll animations",
+          "Integrate Microsoft Clarity script tag in page header",
+          "Publish to custom domain and run speed performance audit"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Framer",
+        "url": "https://framer.com"
+      },
+      {
+        "name": "Microsoft Clarity",
+        "url": "https://clarity.microsoft.com"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t31",
+        "label": "Wireframe a direct-response landing page focusing on the 'Above the Fold' hero section.",
+        "type": "design"
+      },
+      {
+        "id": "m-t32",
+        "label": "Develop and publish a pixel-perfect, mobile-responsive landing page in Webflow or Framer.",
+        "type": "code"
+      },
+      {
+        "id": "m-t33",
+        "label": "Integrate Microsoft Clarity to record sessions and generate heatmaps of user behavior.",
+        "type": "system"
+      }
+    ],
+    "project": {
+      "title": "High-Performance Direct-Response Landing Page",
+      "description": "You will build and deploy a production-ready, ultra-fast landing page in Framer or Webflow. The page must achieve a 90+ Google PageSpeed score, feature an above-the-fold value hook, leverage social proof widgets, and include integrated session recording instrumentation.",
+      "deliverables": [
+        "Published Framer/Webflow Landing Page",
+        "Speed Optimization Audit (90+ Score)",
+        "Clarity Tracking Integration"
+      ],
+      "sellingStrategy": {
+        "pitch": "Pitch 'Speed to Market'. Companies wait weeks for developers to launch landing pages; show them you can design, build, and deploy one in 48 hours.",
+        "pricing": "$1,500 - $3,500",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
+  },
+  {
+    "id": "marketing-p12",
+    "number": "12",
+    "title": "Scaling & Agency Building",
+    "badge": "SCALE",
+    "weeks": "Week 12",
+    "objective": "Transition from a practitioner to a business owner. You will architect standardized service delivery workflows, construct high-ticket client acquisition funnels, master pricing psychology, and build an operational ecosystem capable of scaling a digital marketing agency.",
+    "resources": [
+      {
+        "title": "Crafting Irresistible Grand Slam Offers Masterclass",
+        "url": "https://www.youtube.com/watch?v=2fOCe9O2dLE",
+        "type": "yt"
+      },
+      {
+        "title": "How to Start and Scale a Marketing Agency from $0 in 2026",
+        "url": "https://www.youtube.com/watch?v=v8N9xL4m2Kw",
+        "type": "yt"
+      },
+      {
+        "title": "B2B Outbound Prospecting: Cold Email & LinkedIn Lead Systems",
+        "url": "https://www.youtube.com/watch?v=p4M8bW7k2Ew",
+        "type": "yt"
+      },
+      {
+        "title": "Automated Client Onboarding System with Notion & Zapier",
+        "url": "https://www.youtube.com/watch?v=y6W8qP4m9Bw",
+        "type": "yt"
+      },
+      {
+        "title": "How to Price Marketing Services: Value-Based Retainers",
+        "url": "https://www.youtube.com/watch?v=m8R5xL2b4Nw",
+        "type": "yt"
+      },
+      {
+        "title": "Agency Operations & Hiring: Scaling Beyond Solopreneurship",
+        "url": "https://www.youtube.com/watch?v=k5N7xW9sB2E",
+        "type": "yt"
+      }
+    ],
+    "freeResources": [
+      {
+        "title": "HubSpot Agency Partner Training",
+        "url": "https://academy.hubspot.com/courses/agency-partner-certification",
+        "type": "certification",
+        "provider": "HubSpot",
+        "description": "Learn how to price, package, and sell high-margin retainer marketing services."
+      },
+      {
+        "title": "Y Combinator Startup School",
+        "url": "https://www.startupschool.org/",
+        "type": "course",
+        "provider": "Y Combinator",
+        "description": "Foundational guidance on sales, customer discovery, pricing, and rapid iteration."
+      },
+      {
+        "title": "Notion for Agencies Guide",
+        "url": "https://www.notion.so/templates/category/agencies",
+        "type": "guide",
+        "provider": "Notion",
+        "description": "Templates and best practices for managing clients, projects, and deliverables."
+      }
+    ],
+    "followAlongProjects": [
+      {
+        "title": "Client Acquisition & Grand Slam Offer Funnel",
+        "url": "https://www.youtube.com/watch?v=w6zEwLMV5Rg",
+        "outcome": "A turnkey agency client acquisition funnel: $100M Grand Slam Offer deck, automated contract & invoice flow, and client Notion portal.",
+        "steps": [
+          "Draft irresistible value proposition and risk-reversal guarantee",
+          "Configure Zapier automation linking Stripe payment to Notion client hub",
+          "Set up automated welcome email sequence and kickoff Loom recording",
+          "Execute 20 personalized outbound prospect outreaches"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Pipedrive / HubSpot CRM",
+        "url": "https://hubspot.com"
+      },
+      {
+        "name": "Loom",
+        "url": "https://loom.com"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "m-t34",
+        "label": "Draft a high-ticket 'Grand Slam Offer' addressing a specific niche market pain point.",
+        "type": "writing"
+      },
+      {
+        "id": "m-t35",
+        "label": "Build an automated client onboarding workflow using forms, contracts, and Zapier.",
+        "type": "system"
+      },
+      {
+        "id": "m-t36",
+        "label": "Map out an outbound lead generation sequence (Cold Email/LinkedIn) to acquire first clients.",
+        "type": "research"
+      }
+    ],
+    "project": {
+      "title": "Agency Growth & Client Acquisition Engine",
+      "description": "You will construct a complete operational agency infrastructure. This includes an irresistible niche-specific offer deck, an automated client onboarding funnel (connecting Stripe, Pandadoc, and Notion), a standardized service delivery SOP, and an outbound cold prospect sequence.",
+      "deliverables": [
+        "Niche 'Grand Slam Offer' Deck",
+        "Automated Client Onboarding Pipeline",
+        "Outbound Prospecting Script & Sequence"
+      ],
+      "sellingStrategy": {
+        "pitch": "This is your launchpad. Use this exact system to sign your first 3 high-ticket retainers and build predictable monthly recurring revenue.",
+        "pricing": "$3,000 - $10,000/month agency revenue goal",
+        "whereToFind": [
+          "Upwork",
+          "LinkedIn",
+          "Local Businesses"
+        ]
+      }
+    },
+    "color": "from-emerald-500 to-emerald-700"
   }
 ];
