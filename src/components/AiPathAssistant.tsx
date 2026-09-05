@@ -175,8 +175,10 @@ export default function AiPathAssistant({
         // 2. Second attempt: Client-side fallback if server is unreachable (e.g. static hosting)
         try {
           // @ts-ignore
-          const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || 'AIzaSyC_yJXpuw4uppVdIbHk_iT0EG53RAhKc14';
-          if (!apiKey) {
+          const envApiKey = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_GEMINI_API_KEY : undefined;
+          const apiKey = envApiKey || 'AIzaSyC_yJXpuw4uppVdIbHk_iT0EG53RAhKc14';
+          
+          if (!apiKey || apiKey === 'undefined') {
              throw new Error('API Key missing. Server is unreachable and no client key is available.');
           }
 
