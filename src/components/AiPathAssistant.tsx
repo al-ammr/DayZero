@@ -49,7 +49,7 @@ export default function AiPathAssistant({
   onNavigatePhase
 }: AiPathAssistantProps) {
   const [messages, setMessages] = useState<Message[]>(() => {
-    const saved = localStorage.getItem('techoptyx_assistant_chat');
+    const saved = localStorage.getItem('dayzero_assistant_chat');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -69,7 +69,7 @@ export default function AiPathAssistant({
 
   // Save chat to localStorage
   useEffect(() => {
-    localStorage.setItem('techoptyx_assistant_chat', JSON.stringify(messages));
+    localStorage.setItem('dayzero_assistant_chat', JSON.stringify(messages));
   }, [messages]);
 
   // Scroll to bottom on new message
@@ -97,7 +97,7 @@ export default function AiPathAssistant({
 
   const handleClearHistory = () => {
     setMessages([]);
-    localStorage.removeItem('techoptyx_assistant_chat');
+    localStorage.removeItem('dayzero_assistant_chat');
   };
 
   const handleSendMessage = async (customText?: string) => {
@@ -255,7 +255,7 @@ export default function AiPathAssistant({
                   </span>
                 </div>
                 <p className="text-[11px] text-on-surface-variant/80 truncate font-mono">
-                  {activePhase ? `Phase ${activePhase.number}: ${activePhase.title}` : 'TechOptyx Builder OS'}
+                  {activePhase ? `Phase ${activePhase.number}: ${activePhase.title}` : 'DayZero Builder OS'}
                 </p>
               </div>
             </div>
@@ -352,7 +352,7 @@ export default function AiPathAssistant({
                 >
                   <div className="flex items-center gap-1.5 mb-1 px-1">
                     <span className="text-[10px] font-mono text-on-surface-variant/70">
-                      {msg.role === 'user' ? 'You' : 'TechOptyx AI'}
+                      {msg.role === 'user' ? 'You' : 'DayZero AI'}
                     </span>
                     <span className="text-[9px] font-mono text-on-surface-variant/40">
                       {msg.timestamp}
@@ -428,7 +428,7 @@ export default function AiPathAssistant({
             {isTyping && (
               <div className="flex flex-col items-start space-y-1">
                 <span className="text-[10px] font-mono text-on-surface-variant/70 px-1">
-                  TechOptyx AI
+                  DayZero AI
                 </span>
                 <div className="p-3.5 rounded-2xl rounded-tl-none bg-surface-container-highest border border-outline-variant/15 flex items-center gap-2.5 text-on-surface-variant">
                   <Loader2 className="w-4 h-4 animate-spin text-primary" />

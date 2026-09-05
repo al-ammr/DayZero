@@ -344,6 +344,11 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
     setProgress(0);
     setCurrentTime(0);
     
+    // Auto-close sidebar on mobile after selecting a video
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setIsSidebarOpen(false);
+    }
+    
     // Track last played video
     localStorage.setItem('lastPlayedVideo', JSON.stringify({
       id: video.id,
@@ -387,7 +392,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-[#0B0B0F] flex flex-col md:flex-row overflow-hidden font-sans text-white"
+        className="fixed inset-0 z-[100] bg-[#0B0B0F] flex flex-row overflow-hidden font-sans text-white"
       >
         {/* Course Content Sidebar */}
         <motion.div 
@@ -398,7 +403,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
           }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
           className={cn(
-            "h-full bg-[#111118] border-r border-white/10 flex flex-col shrink-0 overflow-hidden transition-[border-color]",
+            "absolute md:relative left-0 top-0 z-50 h-full bg-[#111118] border-r border-white/10 flex flex-col shrink-0 overflow-hidden transition-[border-color]",
             !isSidebarOpen && "border-r-0 pointer-events-none"
           )}
         >

@@ -70,7 +70,7 @@ export default function AboutUs() {
               BUILDER OPERATING SYSTEM
             </span>
             <span className="text-xs font-mono text-on-surface-variant/70">
-              EST. TECHOPTYX
+              EST. DAYZERO
             </span>
           </div>
 
@@ -79,20 +79,20 @@ export default function AboutUs() {
           </h1>
 
           <p className="text-base sm:text-lg lg:text-xl text-on-surface-variant leading-relaxed max-w-3xl mb-10 font-normal">
-            TechOptyx isn't another passive tutorial repository. It is a rigorous, structured execution framework engineered for builders who want to create, deploy, and monetize AI-driven software, cinematic animation, and commerce infrastructure.
+            DayZero (a product from the parent company TechOptyx) isn't another passive tutorial repository. It is a rigorous, structured execution framework engineered for builders who want to create, deploy, and monetize AI-driven software, cinematic animation, and commerce infrastructure.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
             <a 
               href="#community" 
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary-container text-white text-sm font-semibold hover:opacity-95 hover:translate-y-[-1px] transition-all shadow-md active:translate-y-0"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary/90 text-white text-sm font-semibold hover:bg-primary hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)] active:scale-95 transition-all shadow-md backdrop-blur-md border border-primary/20"
             >
               Join the Builder Community
               <ArrowRight className="w-4 h-4" />
             </a>
             <a 
               href="#operating-system" 
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-outline-variant/30 text-on-surface text-sm font-semibold hover:bg-surface-container-high transition-all"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/10 bg-white/5 text-on-surface text-sm font-semibold hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-95 backdrop-blur-md transition-all shadow-sm"
             >
               Explore the Architecture
             </a>
@@ -122,7 +122,7 @@ export default function AboutUs() {
 
       {/* The Vision & Manifesto */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        <div className="lg:col-span-7 rounded-3xl p-8 sm:p-10 bg-surface-container/70 border border-outline-variant/20 flex flex-col justify-between">
+        <div className="lg:col-span-7 rounded-3xl p-8 sm:p-10 bg-surface-container/60 hover:bg-surface-container/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 backdrop-blur-xl border border-outline-variant/20 flex flex-col justify-between group">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-primary font-semibold uppercase tracking-wider mb-4">
               <Target className="w-4 h-4" />
@@ -136,7 +136,7 @@ export default function AboutUs() {
                 In an era where technology evolves faster than traditional education can adapt, the majority of aspiring technologists spend years trapped in passive learning loops — consuming endless videos, reading documentation, but never deploying revenue-generating assets.
               </p>
               <p>
-                TechOptyx was conceived to break that inertia. Every single module and phase has one non-negotiable objective: producing autonomous builders who understand fundamentals, leverage advanced AI models, assemble modular systems, and launch live products.
+                DayZero was conceived to break that inertia. Every single module and phase has one non-negotiable objective: producing autonomous builders who understand fundamentals, leverage advanced AI models, assemble modular systems, and launch live products.
               </p>
             </div>
           </div>
@@ -148,8 +148,8 @@ export default function AboutUs() {
         </div>
 
         {/* Vision Quote Card */}
-        <div className="lg:col-span-5 rounded-3xl p-8 sm:p-10 bg-gradient-to-br from-surface-container-high/80 to-surface-container/80 border border-outline-variant/20 flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-6 right-6 opacity-10 text-primary pointer-events-none">
+        <div className="lg:col-span-5 rounded-3xl p-8 sm:p-10 bg-gradient-to-br from-surface-container-high/60 to-surface-container/60 hover:from-surface-container-high/80 hover:to-surface-container/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 backdrop-blur-xl border border-outline-variant/20 flex flex-col justify-between relative overflow-hidden group">
+          <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity text-primary pointer-events-none">
             <Quote className="w-24 h-24" />
           </div>
 
@@ -163,7 +163,7 @@ export default function AboutUs() {
           </div>
 
           <div className="relative z-10 pt-4 border-t border-outline-variant/15">
-            <p className="text-xs font-mono text-on-surface-variant uppercase tracking-wider">The TechOptyx Standard</p>
+            <p className="text-xs font-mono text-on-surface-variant uppercase tracking-wider">The DayZero Standard</p>
           </div>
         </div>
       </div>
@@ -186,7 +186,7 @@ export default function AboutUs() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Track 1 */}
-          <div className="rounded-3xl p-7 bg-surface-container/70 border border-outline-variant/20 flex flex-col justify-between hover:border-primary/40 transition-all group">
+          <div className="rounded-3xl p-7 bg-surface-container/60 hover:bg-surface-container/90 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 backdrop-blur-xl border border-outline-variant/20 hover:border-primary/40 flex flex-col justify-between group">
             <div>
               <div className="flex items-center justify-between mb-5">
                 <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
@@ -210,7 +210,7 @@ export default function AboutUs() {
           </div>
 
           {/* Track 2 */}
-          <div className="rounded-3xl p-7 bg-surface-container/70 border border-outline-variant/20 flex flex-col justify-between hover:border-amber-500/40 transition-all group">
+          <div className="rounded-3xl p-7 bg-surface-container/60 hover:bg-surface-container/90 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300 backdrop-blur-xl border border-outline-variant/20 hover:border-amber-500/40 flex flex-col justify-between group">
             <div>
               <div className="flex items-center justify-between mb-5">
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 group-hover:scale-105 transition-transform">
@@ -234,7 +234,7 @@ export default function AboutUs() {
           </div>
 
           {/* Track 3 */}
-          <div className="rounded-3xl p-7 bg-surface-container/70 border border-outline-variant/20 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
+          <div className="rounded-3xl p-7 bg-surface-container/60 hover:bg-surface-container/90 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300 backdrop-blur-xl border border-outline-variant/20 hover:border-emerald-500/40 flex flex-col justify-between group">
             <div>
               <div className="flex items-center justify-between mb-5">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 group-hover:scale-105 transition-transform">
@@ -271,8 +271,8 @@ export default function AboutUs() {
             {/* Avatar Badge */}
             <div className="shrink-0 flex flex-col items-center gap-3">
               <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-primary via-primary-container to-secondary p-[2px] shadow-lg">
-                <div className="w-full h-full rounded-[14px] bg-surface flex items-center justify-center font-mono font-bold text-2xl text-on-surface">
-                  AS
+                <div className="w-full h-full rounded-[14px] bg-surface flex items-center justify-center font-mono font-bold text-2xl text-on-surface overflow-hidden">
+                  <img src="/founder's_image.png" alt="Amr Suleiman" className="w-full h-full object-cover" />
                 </div>
               </div>
               <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
@@ -287,16 +287,16 @@ export default function AboutUs() {
                   Amr Suleiman
                 </h3>
                 <p className="text-xs font-mono text-on-surface-variant uppercase tracking-wider">
-                  Founder & Chief Systems Architect, TechOptyx
+                  Founder & Chief Systems Architect, DayZero
                 </p>
               </div>
 
               <div className="space-y-4 text-on-surface-variant leading-relaxed text-sm sm:text-base">
                 <p>
-                  Amr Suleiman is the founder of TechOptyx and the principal architect behind its structured curriculum. His background spans applied software engineering, digital automation systems, and pragmatic AI execution.
+                  Amr Suleiman is the founder of DayZero (a product from the parent company TechOptyx) and the principal architect behind its structured curriculum. His background spans applied software engineering, digital automation systems, and pragmatic AI execution.
                 </p>
                 <p>
-                  Rejecting conventional academic models that emphasize memorization over deployment, Amr focuses relentlessly on eliminating friction between theory and production. The entire TechOptyx platform was designed to give builders an actionable roadmap to engineer, validate, and scale monetizable software and content assets.
+                  Rejecting conventional academic models that emphasize memorization over deployment, Amr focuses relentlessly on eliminating friction between theory and production. The entire DayZero platform was designed to give builders an actionable roadmap to engineer, validate, and scale monetizable software and content assets.
                 </p>
               </div>
 
@@ -368,15 +368,15 @@ export default function AboutUs() {
         </div>
       </div>
 
-      {/* TechOptyx Official Media & Channels */}
-      <div className="rounded-3xl p-8 sm:p-10 bg-surface-container/70 border border-outline-variant/20">
+      {/* DayZero Official Media & Channels */}
+      <div className="rounded-3xl p-8 sm:p-10 bg-surface-container/60 hover:bg-surface-container/80 transition-all duration-300 backdrop-blur-xl border border-outline-variant/20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <div className="text-xs font-mono text-primary font-semibold uppercase tracking-wider mb-1">
               Network & Media
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-on-surface tracking-tight">
-              Follow Official TechOptyx Channels
+              Follow Official DayZero Channels
             </h3>
           </div>
           <span className="text-xs text-on-surface-variant font-mono">Daily Updates & Drop Announcements</span>
@@ -384,10 +384,10 @@ export default function AboutUs() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           <a 
-            href="https://youtube.com/@techoptyx?si=quSfRrljyj79wRJd" 
+            href="https://youtube.com/@techoptyx" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="p-4 rounded-2xl bg-surface-container-low/60 border border-outline-variant/20 hover:border-red-500/40 hover:bg-surface-container-high transition-all flex flex-col items-center text-center group"
+            className="p-4 rounded-2xl bg-surface-container-low/40 backdrop-blur-md border border-outline-variant/20 hover:border-red-500/40 hover:bg-surface-container/80 hover:shadow-lg hover:shadow-red-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group"
           >
             <div className="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
               <Youtube className="w-5 h-5" />
@@ -397,23 +397,23 @@ export default function AboutUs() {
           </a>
 
           <a 
-            href="https://x.com/techoptyx23?t=StVniHVIRwj7-1ItTDZTvg&s=09" 
+            href="https://x.com/techoptyx" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="p-4 rounded-2xl bg-surface-container-low/60 border border-outline-variant/20 hover:border-primary/40 hover:bg-surface-container-high transition-all flex flex-col items-center text-center group"
+            className="p-4 rounded-2xl bg-surface-container-low/40 backdrop-blur-md border border-outline-variant/20 hover:border-primary/40 hover:bg-surface-container/80 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group"
           >
             <div className="w-10 h-10 rounded-xl bg-surface-container-highest text-on-surface flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
               <XIcon className="w-4 h-4" />
             </div>
             <span className="text-xs font-semibold text-on-surface">X / Twitter</span>
-            <span className="text-[10px] text-on-surface-variant font-mono mt-0.5">@techoptyx23</span>
+            <span className="text-[10px] text-on-surface-variant font-mono mt-0.5">@techoptyx</span>
           </a>
 
           <a 
-            href="https://www.instagram.com/techoptyx?igsh=dnJ0OGdyNDZydWti" 
+            href="https://www.instagram.com/techoptyx" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="p-4 rounded-2xl bg-surface-container-low/60 border border-outline-variant/20 hover:border-pink-500/40 hover:bg-surface-container-high transition-all flex flex-col items-center text-center group"
+            className="p-4 rounded-2xl bg-surface-container-low/40 backdrop-blur-md border border-outline-variant/20 hover:border-pink-500/40 hover:bg-surface-container/80 hover:shadow-lg hover:shadow-pink-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group"
           >
             <div className="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-500 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
               <Instagram className="w-5 h-5" />
@@ -423,10 +423,10 @@ export default function AboutUs() {
           </a>
 
           <a 
-            href="https://www.tiktok.com/@techoptyx?_r=1&_t=ZS-95K3DoO63we" 
+            href="https://www.tiktok.com/@techoptyx" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="p-4 rounded-2xl bg-surface-container-low/60 border border-outline-variant/20 hover:border-cyan-500/40 hover:bg-surface-container-high transition-all flex flex-col items-center text-center group"
+            className="p-4 rounded-2xl bg-surface-container-low/40 backdrop-blur-md border border-outline-variant/20 hover:border-cyan-500/40 hover:bg-surface-container/80 hover:shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group"
           >
             <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
               <TikTokIcon className="w-4 h-4" />
@@ -436,22 +436,22 @@ export default function AboutUs() {
           </a>
 
           <a 
-            href="https://www.facebook.com/profile.php?id=100066873520674" 
+            href="https://www.facebook.com/techoptyx" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="p-4 rounded-2xl bg-surface-container-low/60 border border-outline-variant/20 hover:border-blue-500/40 hover:bg-surface-container-high transition-all flex flex-col items-center text-center group"
+            className="p-4 rounded-2xl bg-surface-container-low/40 backdrop-blur-md border border-outline-variant/20 hover:border-blue-500/40 hover:bg-surface-container/80 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group"
           >
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
               <Facebook className="w-5 h-5" />
             </div>
             <span className="text-xs font-semibold text-on-surface">Facebook</span>
-            <span className="text-[10px] text-on-surface-variant font-mono mt-0.5">TechOptyx</span>
+            <span className="text-[10px] text-on-surface-variant font-mono mt-0.5">techoptyx</span>
           </a>
         </div>
       </div>
 
       {/* Community Section */}
-      <div id="community" className="rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-surface-container to-surface-container-low border border-outline-variant/20 text-center relative overflow-hidden">
+      <div id="community" className="rounded-3xl p-8 sm:p-12 bg-surface-container/60 border border-outline-variant/20 text-center relative overflow-hidden backdrop-blur-xl hover:shadow-2xl hover:border-outline-variant/40 transition-all duration-300">
         <div className="max-w-2xl mx-auto space-y-4 relative z-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-mono font-medium border border-secondary/20">
             <Users className="w-3.5 h-3.5" />
@@ -461,20 +461,20 @@ export default function AboutUs() {
             Build alongside other ambitious builders.
           </h2>
           <p className="text-sm sm:text-base text-on-surface-variant leading-relaxed font-normal">
-            TechOptyx works best in motion. Join private community channels to exchange prompts, receive feedback on live deployments, solve technical roadblocks, and discover client opportunities together.
+            DayZero works best in motion. Join private community channels to exchange prompts, receive feedback on live deployments, solve technical roadblocks, and discover client opportunities together.
           </p>
 
           <div className="pt-6 flex flex-wrap items-center justify-center gap-4">
             <a 
               href="#" 
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#5865F2] hover:bg-[#4752c4] text-white text-sm font-semibold transition-all shadow-md hover:translate-y-[-1px]"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#5865F2]/90 hover:bg-[#5865F2] text-white text-sm font-semibold transition-all shadow-lg shadow-[#5865F2]/20 hover:shadow-[#5865F2]/40 hover:scale-[1.02] active:scale-95 backdrop-blur-md border border-[#5865F2]/30"
             >
               <DiscordIcon className="w-5 h-5" />
               Join Discord Server
             </a>
             <a 
               href="#" 
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#24A1DE] hover:bg-[#1d82b3] text-white text-sm font-semibold transition-all shadow-md hover:translate-y-[-1px]"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#24A1DE]/90 hover:bg-[#24A1DE] text-white text-sm font-semibold transition-all shadow-lg shadow-[#24A1DE]/20 hover:shadow-[#24A1DE]/40 hover:scale-[1.02] active:scale-95 backdrop-blur-md border border-[#24A1DE]/30"
             >
               <TelegramIcon className="w-5 h-5" />
               Join Telegram Channel

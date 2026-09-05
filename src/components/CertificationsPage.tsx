@@ -333,16 +333,20 @@ export default function CertificationsPage() {
         .cert-page-container .track-tabs button {
           background:none; border:none; color:var(--text-muted); font-family:'IBM Plex Sans', sans-serif;
           font-size:0.87rem; font-weight:500; padding:8px 14px; border-radius:6px; cursor:pointer;
-          transition:background .15s ease, color .15s ease;
+          transition:all 0.3s ease;
         }
-        .cert-page-container .track-tabs button.active { background:var(--bg-elevated); color:var(--text-primary); }
+        .cert-page-container .track-tabs button:hover:not(.active) { background:rgba(255, 255, 255, 0.05); color:var(--text-primary); }
+        .cert-page-container .track-tabs button.active { background:var(--bg-elevated); color:var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 
         .cert-page-container .type-chips { display:flex; gap:8px; flex-wrap:wrap; }
         .cert-page-container .chip {
           background:var(--bg-surface); border:1px solid var(--line); color:var(--text-muted);
           font-size:0.82rem; font-weight:500; padding:8px 14px; border-radius:999px; cursor:pointer;
           display:flex; align-items:center; gap:7px;
-          transition:border-color .15s ease, color .15s ease;
+          transition:all 0.3s ease;
+        }
+        .cert-page-container .chip:hover:not(.active) {
+          background:var(--bg-elevated); border-color:var(--text-muted); color:var(--text-primary); transform:scale(1.02);
         }
         .cert-page-container .chip .dot { width:7px; height:7px; border-radius:50%; }
         .cert-page-container .chip[data-type="certification"] .dot { background:var(--gold); }
@@ -350,7 +354,7 @@ export default function CertificationsPage() {
         .cert-page-container .chip[data-type="guide"] .dot { background:var(--peri); }
         .cert-page-container .chip[data-type="tool"] .dot { background:var(--steel); }
         .cert-page-container .chip[data-type="all"] .dot { background:var(--text-faint); }
-        .cert-page-container .chip.active { border-color:var(--text-primary); color:var(--text-primary); }
+        .cert-page-container .chip.active { border-color:var(--text-primary); color:var(--text-primary); background:rgba(255, 255, 255, 0.05); transform:scale(1.02); }
 
         .cert-page-container .result-count { font-size:0.83rem; color:var(--text-faint); padding-top:10px; }
         .cert-page-container .result-count strong { color:var(--text-muted); }
@@ -359,12 +363,18 @@ export default function CertificationsPage() {
         
         .cert-page-container .phase {
           border:1px solid var(--line); border-radius:var(--radius-md);
-          background:var(--bg-surface); margin-bottom:14px; overflow:hidden;
+          background:rgba(17, 25, 49, 0.7); backdrop-filter:blur(10px); margin-bottom:14px; overflow:hidden;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cert-page-container .phase:hover {
+          border-color:var(--text-faint); box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
         .cert-page-container .phase summary {
           list-style:none; cursor:pointer; padding:20px 24px;
           display:flex; align-items:center; justify-content:space-between; gap:16px;
+          transition: background 0.3s ease;
         }
+        .cert-page-container .phase summary:hover { background:rgba(255, 255, 255, 0.03); }
         .cert-page-container .phase summary::-webkit-details-marker { display:none; }
         
         .cert-page-container .phase-id { display:flex; align-items:center; gap:16px; }
@@ -384,8 +394,15 @@ export default function CertificationsPage() {
           gap:12px; padding:0 24px 24px;
         }
         .cert-page-container .card {
-          background:var(--bg-card); border:1px solid var(--line-soft); border-radius:var(--radius-sm);
+          background:rgba(20, 28, 56, 0.7); backdrop-filter:blur(8px); border:1px solid var(--line-soft); border-radius:var(--radius-sm);
           padding:18px; display:flex; flex-direction:column; gap:10px;
+          transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, background 0.3s ease;
+        }
+        .cert-page-container .card:hover {
+          transform: translateY(-4px) scale(1.01);
+          box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+          border-color: var(--line);
+          background: rgba(20, 28, 56, 0.95);
         }
         .cert-page-container .card-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
         .cert-page-container .type-badge {
@@ -400,12 +417,14 @@ export default function CertificationsPage() {
         .cert-page-container .card h4 { font-size:0.98rem; font-weight:600; line-height:1.3; color: var(--text-primary); margin: 0; }
         .cert-page-container .card p { margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5; flex-grow:1; }
         .cert-page-container .card a.access {
-          margin-top:4px; display:inline-flex; align-items:center; gap:6px;
+          margin-top:8px; display:inline-flex; align-items:center; justify-content:center; gap:6px;
           font-size:0.83rem; font-weight:600; color:var(--text-primary);
-          text-decoration:none; padding-top:10px; border-top:1px solid var(--line-soft);
+          text-decoration:none; padding:10px 16px; border:1px solid var(--line-soft);
+          border-radius: 99px; background: rgba(255,255,255,0.03);
+          transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .cert-page-container .card a.access svg { width:13px; height:13px; transition:transform .15s ease; }
-        .cert-page-container .card a.access:hover { color:var(--gold); }
+        .cert-page-container .card a.access:hover { color:var(--gold); background: rgba(232, 176, 75, 0.1); border-color: rgba(232, 176, 75, 0.3); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(232, 176, 75, 0.15); }
         .cert-page-container .card a.access:hover svg { transform:translate(2px,-2px); }
 
         .cert-page-container .no-results {
@@ -551,7 +570,7 @@ export default function CertificationsPage() {
 
       <div className="wrap">
         <footer>
-          <div>© 2026 TechOptyx. All rights reserved.</div>
+          <div>© 2026 DayZero. All rights reserved.</div>
           <div>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>

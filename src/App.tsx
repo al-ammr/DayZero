@@ -302,8 +302,9 @@ export default function App() {
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 glass-panel z-50 flex items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-2 min-w-0 pr-4">
+          <img src="/main_logo.png" alt="DayZero Logo" className="w-8 h-8 object-contain shrink-0" />
           <h2 className="font-headline font-black text-lg sm:text-xl tracking-wider text-on-surface truncate">
-            TechOptyx
+            DayZero
           </h2>
         </div>
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 shrink-0">
@@ -329,11 +330,9 @@ export default function App() {
           {/* Sidebar Header with Brand & Close Button */}
           <div className="flex items-center justify-between pb-4 mb-2 border-b border-outline-variant/10">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(108,59,255,0.3)]">
-                <Rocket className="w-4 h-4 text-white" />
-              </div>
+              <img src="/main_logo.png" alt="DayZero Logo" className="w-8 h-8 object-contain shrink-0" />
               <h2 className="font-headline font-black text-lg tracking-wider text-on-surface truncate">
-                TechOptyx
+                DayZero
               </h2>
             </div>
             
@@ -912,6 +911,35 @@ export default function App() {
                       )}
                     </div>
                   )}
+
+                  {/* Skills Acquired Summary View */}
+                  {(() => {
+                    const completedPhases = ALL_PHASES.filter(p => {
+                      return p.tasks.length > 0 && p.tasks.every(t => completedTasks.includes(t.id));
+                    });
+                    
+                    if (completedPhases.length === 0) return null;
+
+                    return (
+                      <div className="space-y-6 mb-12">
+                        <div className="flex items-center gap-2">
+                          <Medal className="w-6 h-6 text-secondary" />
+                          <h2 className="text-2xl font-bold text-on-surface">Skills Acquired</h2>
+                        </div>
+                        <div className="bg-surface-container/60 backdrop-blur-xl rounded-3xl p-6 border border-outline-variant/20 shadow-sm">
+                          <div className="flex flex-wrap gap-3">
+                            {completedPhases.map((phase) => (
+                              <div key={phase.id} className="flex items-center gap-2 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/20 rounded-full transition-colors group cursor-default">
+                                <Award className="w-4 h-4 text-secondary group-hover:scale-110 transition-transform" />
+                                <span className="text-sm font-medium text-on-surface">{phase.objective || phase.title}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
                   {/* Curriculum Tracks */}
                   <div className="space-y-6">
                     <h2 className="text-2xl font-bold text-on-surface">Curriculum Tracks</h2>
@@ -1954,7 +1982,7 @@ export default function App() {
                       </p>
                       <div className="flex justify-center gap-4">
                         <a 
-                          href={`https://twitter.com/intent/tweet?text=I'm%20currently%20working%20on%20${activePhase.id.startsWith('v-p') ? 'Track%202%20(Animation)%20Module%20' : activePhase.id.startsWith('marketing-p') ? 'Track%203%20(Marketing)%20Module%20' : 'Phase%20'}${activePhase.number}:%20${encodeURIComponent(activePhase.title)}%20in%20the%20TechOptyx%20Mastery%20Roadmap!%20%23TechOptyx`}
+                          href={`https://twitter.com/intent/tweet?text=I'm%20currently%20working%20on%20${activePhase.id.startsWith('v-p') ? 'Track%202%20(Animation)%20Module%20' : activePhase.id.startsWith('marketing-p') ? 'Track%203%20(Marketing)%20Module%20' : 'Phase%20'}${activePhase.number}:%20${encodeURIComponent(activePhase.title)}%20in%20the%20DayZero%20Mastery%20Roadmap!%20%23DayZero`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-4 py-2 rounded-lg bg-[#1DA1F2] text-white text-sm font-bold hover:bg-[#1a91da] transition-colors flex items-center gap-2 btn-glow"
@@ -2028,7 +2056,7 @@ export default function App() {
             {/* Footer */}
             <footer className="mt-20 pt-10 pb-6 border-t border-outline-variant/20 flex flex-col items-center gap-4">
               <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-xs text-on-surface-variant">
-                <span>&copy; {new Date().getFullYear()} TechOptyx. All rights reserved.</span>
+                <span>&copy; {new Date().getFullYear()} DayZero. All rights reserved.</span>
                 <div className="flex items-center gap-4">
                   <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
                   <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
