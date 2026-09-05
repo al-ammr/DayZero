@@ -141,6 +141,9 @@ export default function AiPathAssistant({
       let fetchSuccess = false;
 
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
+
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -148,8 +151,11 @@ export default function AiPathAssistant({
             message: textToSend,
             phaseInfo: phasePayload,
             history: messages.slice(-6).map(m => ({ role: m.role, text: m.text }))
-          })
+          }),
+          signal: controller.signal
         });
+        
+        clearTimeout(timeoutId);
 
         if (res.ok) {
           const data = await res.json();
@@ -169,7 +175,7 @@ export default function AiPathAssistant({
         // 2. Second attempt: Client-side fallback if server is unreachable (e.g. static hosting)
         try {
           // @ts-ignore
-          const apiKey = process.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY;
+          const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || 'AIzaSyC_yJXpuw4uppVdIbHk_iT0EG53RAhKc14';
           if (!apiKey) {
              throw new Error('API Key missing. Server is unreachable and no client key is available.');
           }
