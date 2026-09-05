@@ -1,3 +1,4 @@
+import { GoogleGenAI } from '@google/genai';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -162,8 +163,55 @@ export default function AiPathAssistant({
           const errData = await res.json().catch(() => ({}));
           throw new Error(errData.error || `Server responded with status ${res.status}`);
         }
-      } catch (err: any) {
-        throw new Error(err?.message || 'Unable to communicate with the assistant server.');
+      } catch (serverErr: any) {
+        console.warn('Server-side chat failed, falling back to client-side:', serverErr);
+        
+        // 2. Second attempt: Client-side fallback if server is unreachable (e.g. static hosting)
+        try {
+          // @ts-ignore
+          const apiKey = process.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY;
+          if (!apiKey) {
+             throw new Error('API Key missing. Server is unreachable and no client key is available.');
+          }
+
+          const ai = new GoogleGenAI({ apiKey });
+          
+          let systemInstruction = `You are the expert AI Path Assistant for TechOptyx (The Builder Operating System for AI, Video Animation, and Digital Marketing).
+Your mission is to guide builders with concrete, battle-tested, actionable advice on building, launching, and monetizing projects.
+Tone: Direct, encouraging, technical yet approachable, focused on execution, real revenue, and shipped deliverables. No fluff or repetitive pleasantries. Format answers cleanly with markdown headings, bullet points, and code/prompt blocks where appropriate.`;
+
+          if (activePhase) {
+            systemInstruction += `\n\nCURRENT USER CONTEXT:
+- Track: ${trackName}
+- Current Phase/Module: Phase/Module ${activePhase.number}: ${activePhase.title}
+- Objective: ${activePhase.objective || "Not specified"}
+- Total Tasks in Phase: ${activePhase.tasks.length || 0}
+- Overall Progress: ${completedTasksCount} tasks completed`;
+          }
+
+          const prompt = `${systemInstruction}
+
+${messages.length > 0 
+  ? "PREVIOUS CONVERSATION:\n" + messages.slice(-6).map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.text}`).join("\n\n") + "\n\n"
+  : ""}
+User Query: ${textToSend}
+
+Actionable Assistant Response:`;
+
+          const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+          });
+
+          if (response.text) {
+             responseText = response.text;
+             fetchSuccess = true;
+          } else {
+             throw new Error('Empty response from model.');
+          }
+        } catch (clientErr: any) {
+           throw new Error(clientErr?.message || serverErr?.message || 'Unable to communicate with the assistant.');
+        }
       }
 
       const assistantMessage: Message = {
