@@ -421,7 +421,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
               aria-label="Close Course Content"
             >
               <PanelLeftClose className="w-5 h-5 hidden md:block group-hover:text-[#A78BFA] transition-colors" />
-              <X className="w-5 h-5 md:hidden" />
+              <X strokeWidth={1.5} className="w-5 h-5 md:hidden" />
             </button>
           </div>
 
@@ -565,7 +565,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
               title="Close player"
               aria-label="Close player"
             >
-              <X className="w-5 h-5" />
+              <X strokeWidth={1.5} className="w-5 h-5" />
             </button>
           </div>
 

@@ -302,13 +302,13 @@ export default function App() {
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 glass-panel z-50 flex items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-2 min-w-0 pr-4">
-          <img src="/main_logo.png" alt="DayZero Logo" className="w-8 h-8 object-contain shrink-0" />
+          <img src="/main_logo.png" alt="DayZero Logo" className="w-10 h-10 object-contain shrink-0" />
           <h2 className="font-headline font-black text-lg sm:text-xl tracking-wider text-on-surface truncate">
             DayZero
           </h2>
         </div>
-        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 shrink-0">
-          {isSidebarOpen ? <X /> : <Menu />}
+        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 shrink-0 text-on-surface-variant hover:text-on-surface transition-colors">
+          {isSidebarOpen ? <X strokeWidth={1.5} className="w-6 h-6" /> : <Menu />}
         </button>
       </header>
 
@@ -330,7 +330,7 @@ export default function App() {
           {/* Sidebar Header with Brand & Close Button */}
           <div className="flex items-center justify-between pb-4 mb-2 border-b border-outline-variant/10">
             <div className="flex items-center gap-2.5 min-w-0">
-              <img src="/main_logo.png" alt="DayZero Logo" className="w-8 h-8 object-contain shrink-0" />
+              <img src="/main_logo.png" alt="DayZero Logo" className="w-11 h-11 object-contain shrink-0" />
               <h2 className="font-headline font-black text-lg tracking-wider text-on-surface truncate">
                 DayZero
               </h2>
@@ -354,7 +354,7 @@ export default function App() {
               title="Close menu"
               aria-label="Close menu"
             >
-              <X className="w-5 h-5" />
+              <X strokeWidth={1.5} className="w-6 h-6" />
             </button>
           </div>
 
@@ -2093,7 +2093,7 @@ export default function App() {
         )}
       >
         {isAiOpen ? (
-          <X className="w-5 h-5 sm:w-6 sm:h-6" />
+          <X strokeWidth={1.5} className="w-5 h-5 sm:w-6 sm:h-6" />
         ) : (
           <div className="relative flex items-center justify-center">
             <Bot className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />

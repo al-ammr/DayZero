@@ -285,7 +285,7 @@ export default function AiPathAssistant({
                 title="Close assistant"
                 className="p-2 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors ml-1"
               >
-                <X className="w-5 h-5" />
+                <X strokeWidth={1.5} className="w-5 h-5" />
               </button>
             </div>
           </div>

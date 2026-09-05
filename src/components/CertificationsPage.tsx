@@ -268,27 +268,24 @@ export default function CertificationsPage() {
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap');
         
         .cert-page-container {
-          --bg-base:#0A0F1E;
-          --bg-surface:#111931;
-          --bg-elevated:#1B2540;
-          --bg-card:#141C38;
-          --line:#26305096;
-          --line-soft:#26305055;
-          --gold:#E8B04B;
-          --mint:#4FD1AE;
-          --peri:#7C9CF6;
-          --steel:#5CADE2;
-          --text-primary:#F4F6FB;
-          --text-muted:#8B93AC;
-          --text-faint:#5B6382;
+          --bg-base:var(--surface);
+          --bg-surface:var(--surface-container);
+          --bg-elevated:var(--surface-container-high);
+          --bg-card:var(--surface-container-low);
+          --line:var(--outline-variant);
+          --line-soft:var(--outline-variant);
+          --gold:#d97706; /* darker for light mode, readable in dark */
+          --mint:#059669;
+          --peri:#4f46e5;
+          --steel:#0284c7;
+          --text-primary:var(--on-surface);
+          --text-muted:var(--on-surface-variant);
+          --text-faint:var(--on-surface-variant);
           --radius-sm:6px;
           --radius-md:10px;
           --max-w:1180px;
 
           background:var(--bg-base);
-          background-image:
-            radial-gradient(ellipse 900px 500px at 10% -10%, #1B254070, transparent),
-            radial-gradient(ellipse 700px 500px at 100% 0%, #4FD1AE12, transparent);
           color:var(--text-primary);
           font-family:'IBM Plex Sans', sans-serif;
           line-height:1.55;
@@ -314,7 +311,7 @@ export default function CertificationsPage() {
 
         .cert-page-container .controls {
           position:sticky; top:0; z-index:20;
-          background:#0A0F1EF0; backdrop-filter:blur(10px);
+          background:var(--bg-base); backdrop-filter:blur(10px);
           border-bottom:1px solid var(--line);
           padding:16px 0;
         }
@@ -363,7 +360,7 @@ export default function CertificationsPage() {
         
         .cert-page-container .phase {
           border:1px solid var(--line); border-radius:var(--radius-md);
-          background:rgba(17, 25, 49, 0.7); backdrop-filter:blur(10px); margin-bottom:14px; overflow:hidden;
+          background:var(--bg-surface); backdrop-filter:blur(10px); margin-bottom:14px; overflow:hidden;
           transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .cert-page-container .phase:hover {
@@ -380,7 +377,7 @@ export default function CertificationsPage() {
         .cert-page-container .phase-id { display:flex; align-items:center; gap:16px; }
         .cert-page-container .phase-id .num {
           font-size:0.78rem; font-weight:600; color:var(--gold);
-          background:#E8B04B1A; border:1px solid #E8B04B40;
+          background:color-mix(in srgb, var(--gold) 15%, transparent); border:1px solid color-mix(in srgb, var(--gold) 30%, transparent);
           padding:5px 10px; border-radius:6px; white-space:nowrap;
         }
         .cert-page-container .phase-id h3 { font-size:1.05rem; font-weight:600; color: var(--text-primary); }
@@ -394,25 +391,25 @@ export default function CertificationsPage() {
           gap:12px; padding:0 24px 24px;
         }
         .cert-page-container .card {
-          background:rgba(20, 28, 56, 0.7); backdrop-filter:blur(8px); border:1px solid var(--line-soft); border-radius:var(--radius-sm);
+          background:var(--bg-card); backdrop-filter:blur(8px); border:1px solid var(--line-soft); border-radius:var(--radius-sm);
           padding:18px; display:flex; flex-direction:column; gap:10px;
           transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, background 0.3s ease;
         }
         .cert-page-container .card:hover {
           transform: translateY(-4px) scale(1.01);
-          box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
           border-color: var(--line);
-          background: rgba(20, 28, 56, 0.95);
+          background: var(--bg-elevated);
         }
         .cert-page-container .card-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
         .cert-page-container .type-badge {
           font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.03em;
           padding:4px 9px; border-radius:5px;
         }
-        .cert-page-container .type-badge.certification { color:var(--gold); background:#E8B04B1A; }
-        .cert-page-container .type-badge.course { color:var(--mint); background:#4FD1AE1A; }
-        .cert-page-container .type-badge.guide { color:var(--peri); background:#7C9CF61A; }
-        .cert-page-container .type-badge.tool { color:var(--steel); background:#5CADE21A; }
+        .cert-page-container .type-badge.certification { color:var(--gold); background:color-mix(in srgb, var(--gold) 15%, transparent); }
+        .cert-page-container .type-badge.course { color:var(--mint); background:color-mix(in srgb, var(--mint) 15%, transparent); }
+        .cert-page-container .type-badge.guide { color:var(--peri); background:color-mix(in srgb, var(--peri) 15%, transparent); }
+        .cert-page-container .type-badge.tool { color:var(--steel); background:color-mix(in srgb, var(--steel) 15%, transparent); }
         .cert-page-container .provider { font-size:0.78rem; color:var(--text-faint); font-weight:500; }
         .cert-page-container .card h4 { font-size:0.98rem; font-weight:600; line-height:1.3; color: var(--text-primary); margin: 0; }
         .cert-page-container .card p { margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5; flex-grow:1; }
@@ -430,14 +427,6 @@ export default function CertificationsPage() {
         .cert-page-container .no-results {
           text-align:center; padding:60px 20px; color:var(--text-faint); font-size:0.95rem;
         }
-
-        .cert-page-container footer {
-          padding:36px 0 60px; border-top:1px solid var(--line);
-          display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
-          font-size:0.85rem; color:var(--text-faint);
-        }
-        .cert-page-container footer a { color:var(--text-muted); text-decoration:none; margin-left:20px; }
-        .cert-page-container footer a:hover { color:var(--gold); }
 
         @media (max-width:640px){
           .cert-page-container .controls-row { flex-direction:column; align-items:stretch; }
@@ -566,16 +555,6 @@ export default function CertificationsPage() {
             })
           )}
         </main>
-      </div>
-
-      <div className="wrap">
-        <footer>
-          <div>© 2026 DayZero. All rights reserved.</div>
-          <div>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-          </div>
-        </footer>
       </div>
     </motion.div>
   );
