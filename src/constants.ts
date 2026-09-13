@@ -1,4 +1,4 @@
-export interface Resource {
+interface Resource {
   title: string;
   url: string;
   type: 'yt' | 'doc' | 'cert' | 'tool' | 'free' | 'course';
@@ -11,7 +11,7 @@ export interface Task {
   type?: string;
 }
 
-export interface Project {
+interface Project {
   title: string;
   description: string;
   deliverables: string[];
@@ -22,7 +22,7 @@ export interface Project {
   };
 }
 
-export interface FreeResource {
+interface FreeResource {
   title: string;
   url: string;
   type: 'certification' | 'course' | 'guide' | 'tool';
@@ -30,7 +30,7 @@ export interface FreeResource {
   description?: string;
 }
 
-export interface FollowAlongProject {
+interface FollowAlongProject {
   title: string;
   url: string;
   outcome: string;

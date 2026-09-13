@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Flame, CheckCircle2, 
@@ -44,12 +44,12 @@ import { PHASES, VIDEO_PHASES, MARKETING_PHASES, Phase, Task, PROMPTS } from './
 import { cn } from './lib/utils';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
-import AboutUs from './components/AboutUs';
-import CertificationsPage from './components/CertificationsPage';
-import PromptLibrary from './components/PromptLibrary';
-import FAQPage from './components/FAQPage';
-import PremiumVideoPlayer from './components/PremiumVideoPlayer';
-import AiPathAssistant from './components/AiPathAssistant';
+const AboutUs = React.lazy(() => import('./components/AboutUs'));
+const CertificationsPage = React.lazy(() => import('./components/CertificationsPage'));
+const PromptLibrary = React.lazy(() => import('./components/PromptLibrary'));
+const FAQPage = React.lazy(() => import('./components/FAQPage'));
+const PremiumVideoPlayer = React.lazy(() => import('./components/PremiumVideoPlayer'));
+const AiPathAssistant = React.lazy(() => import('./components/AiPathAssistant'));
 import { isYouTubeUrl, getVideoId } from './lib/youtube';
 import { 
   BarChart, 
@@ -63,7 +63,7 @@ import {
   Area
 } from 'recharts';
 
-import LandingPage from './components/LandingPage';
+const LandingPage = React.lazy(() => import('./components/LandingPage'));
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { PWAToast } from './components/PWAToast';
 
@@ -372,10 +372,12 @@ export default function App() {
 
   if (activePhaseId === 'landing') {
     return (
-      <LandingPage 
-        onEnter={() => navigateTo('dashboard', '/dashboard')} 
-        onNavigate={(view, path, track) => navigateTo(view, path, track)}
-      />
+      <Suspense fallback={<div className="p-8 flex justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}>
+        <LandingPage 
+          onEnter={() => navigateTo('dashboard', '/dashboard')} 
+          onNavigate={(view, path, track) => navigateTo(view, path, track)}
+        />
+      </Suspense>
     );
   }
 
@@ -814,7 +816,7 @@ export default function App() {
           <div id="phase-header-anchor" className="scroll-mt-24 pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-10">
             
-            <AnimatePresence mode="wait">
+            <Suspense fallback={<div className="p-8 flex justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}><AnimatePresence mode="wait">
               {activePhaseId === 'dashboard' ? (
                 <motion.div
                   key="dashboard"
@@ -1151,7 +1153,7 @@ export default function App() {
 
 
                     {/* Active Track Content */}
-                    <AnimatePresence mode="wait">
+                    <Suspense fallback={<div className="p-8 flex justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>}><AnimatePresence mode="wait">
                         {activeTrack === 'fullstack' && ( <motion.div 
                           key="fullstack"
                           initial={{ opacity: 0, y: -10 }}
@@ -1390,7 +1392,7 @@ export default function App() {
                           ))}
                         </motion.div>
                       )}
-                    </AnimatePresence>
+                    </AnimatePresence></Suspense>
                   </div>
 
                   {/* Stats Grid */}
@@ -2166,7 +2168,7 @@ export default function App() {
                   </div>
                 </motion.div>
               )}
-            </AnimatePresence>
+            </AnimatePresence></Suspense>
 
             {/* Footer */}
             <footer className="mt-20 pt-10 pb-6 border-t border-outline-variant/20 flex flex-col items-center gap-4">
@@ -2183,17 +2185,19 @@ export default function App() {
       </div>
 
       {/* AI Path Assistant */}
-      <AiPathAssistant 
-        isOpen={isAiOpen}
-        onClose={() => setIsAiOpen(false)}
-        activePhase={activePhaseId !== 'dashboard' && activePhaseId !== 'about' && activePhaseId !== 'prompt-library' && activePhaseId !== 'certifications'
-          ? ALL_PHASES.find(p => p.id === activePhaseId)
-          : undefined}
-        activeTrack={activeTrack}
-        completedTasksCount={completedTasks.length}
-        totalTasksCount={ALL_PHASES.reduce((acc, p) => acc + p.tasks.length, 0)}
-        onNavigatePhase={handleSelectPhase}
-      />
+      <Suspense fallback={<></>}>
+        <AiPathAssistant 
+          isOpen={isAiOpen}
+          onClose={() => setIsAiOpen(false)}
+          activePhase={activePhaseId !== 'dashboard' && activePhaseId !== 'about' && activePhaseId !== 'prompt-library' && activePhaseId !== 'certifications'
+            ? ALL_PHASES.find(p => p.id === activePhaseId)
+            : undefined}
+          activeTrack={activeTrack}
+          completedTasksCount={completedTasks.length}
+          totalTasksCount={ALL_PHASES.reduce((acc, p) => acc + p.tasks.length, 0)}
+          onNavigatePhase={handleSelectPhase}
+        />
+      </Suspense>
 
       {/* Floating AI Assistant Trigger Button - fully responsive for mobile, tablet, and desktop */}
       <button 
@@ -2218,11 +2222,13 @@ export default function App() {
       </button>
 
       <PWAToast />
-      <PremiumVideoPlayer 
-        isOpen={videoPlayerState.isOpen} 
-        initialVideoUrl={videoPlayerState.url} 
-        onClose={() => setVideoPlayerState({isOpen: false, url: null})} 
-      />
+      <Suspense fallback={<></>}>
+        <PremiumVideoPlayer 
+          isOpen={videoPlayerState.isOpen} 
+          initialVideoUrl={videoPlayerState.url} 
+          onClose={() => setVideoPlayerState({isOpen: false, url: null})} 
+        />
+      </Suspense>
     </div>
   );
 }

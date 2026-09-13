@@ -1,7 +1,7 @@
 import { PHASES, VIDEO_PHASES, MARKETING_PHASES, PROMPTS } from '../constants';
 import { FAQ_DATA } from '../components/FAQPage';
 
-export interface RouteSEO {
+interface RouteSEO {
   path: string;
   title: string;
   description: string;

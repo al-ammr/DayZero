@@ -3,16 +3,14 @@ import path from "path";
 import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
-import dotenv from "dotenv";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { getSEOData, generateSitemapXml } from "./seo/prerender";
 import { generateCurriculumGuidance } from "./services/curriculumAssistant";
-
-dotenv.config({ override: true });
+import { env } from "./config/env";
 
 const app = express();
-const PORT = 3000;
+const PORT = env.PORT;
 
 // Trust reverse proxy for rate limiting (Cloud Run / AI Studio infrastructure)
 app.set('trust proxy', 1);
@@ -43,9 +41,7 @@ let genAIClient: GoogleGenAI | null = null;
 let lastUsedApiKey = "";
 
 function getGenAI(): GoogleGenAI | null {
-  dotenv.config({ override: true });
-
-  const apiKey = (process.env.GEMINI_API_KEY || "").trim();
+  const apiKey = (env.GEMINI_API_KEY || "").trim();
   if (!apiKey || apiKey === "MY_GEMINI_API_KEY" || apiKey.length < 10) {
     return null;
   }
@@ -244,7 +240,7 @@ app.get("/llms-full.txt", (_req, res) => {
 });
 
 async function startServer() {
-  if (process.env.NODE_ENV !== "production") {
+  if (env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",

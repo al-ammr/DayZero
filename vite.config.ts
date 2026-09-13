@@ -3,10 +3,11 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig(() => {
   return {
-    plugins: [
+    plugins: [ visualizer({ filename: "dist/stats.html", gzipSize: true, template: "treemap" }),
       react(), 
       tailwindcss(),
       VitePWA({
@@ -90,6 +91,17 @@ export default defineConfig(() => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
+      },
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            charts: ['recharts'],
+            ui: ['lucide-react', 'motion', 'react-confetti'],
+          },
+        },
       },
     },
     server: {
