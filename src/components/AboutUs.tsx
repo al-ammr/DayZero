@@ -158,7 +158,7 @@ export default function AboutUs() {
               Guiding Principle
             </span>
             <blockquote className="text-xl sm:text-2xl font-medium text-on-surface leading-snug tracking-tight mb-6">
-              "To empower individuals by transforming passive learning into active creation, providing the structured framework needed to build, deploy, and monetize AI-driven digital products."
+              "To equip builders by transforming passive learning into active creation, providing the structured framework needed to build, deploy, and monetize AI-driven digital products."
             </blockquote>
           </div>
 

@@ -1,4 +1,3 @@
-import { GoogleGenAI } from '@google/genai';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -50,15 +49,13 @@ export default function AiPathAssistant({
   onNavigatePhase
 }: AiPathAssistantProps) {
   const [messages, setMessages] = useState<Message[]>(() => {
-    const saved = localStorage.getItem('dayzero_assistant_chat');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return [];
-      }
+    try {
+      const saved = localStorage.getItem('dayzero_assistant_chat') || localStorage.getItem('techoptyx_assistant_chat');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.warn("Failed to parse chat history:", e);
+      return [];
     }
-    return [];
   });
 
   const [inputMessage, setInputMessage] = useState('');
@@ -68,12 +65,10 @@ export default function AiPathAssistant({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement | HTMLInputElement>(null);
 
-  // Save chat to localStorage
   useEffect(() => {
-    localStorage.setItem('dayzero_assistant_chat', JSON.stringify(messages));
+    localStorage.setItem('dayzero_assistant_chat', JSON.stringify(messages.slice(-50)));
   }, [messages]);
 
-  // Scroll to bottom on new message
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -99,6 +94,7 @@ export default function AiPathAssistant({
   const handleClearHistory = () => {
     setMessages([]);
     localStorage.removeItem('dayzero_assistant_chat');
+    localStorage.removeItem('techoptyx_assistant_chat');
   };
 
   const handleSendMessage = async (customText?: string) => {
@@ -140,9 +136,10 @@ export default function AiPathAssistant({
       let responseText = '';
       let fetchSuccess = false;
 
+      let timeoutId: NodeJS.Timeout | undefined;
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3500);
+        timeoutId = setTimeout(() => controller.abort(), 30000);
 
         const res = await fetch('/api/chat', {
           method: 'POST',
@@ -155,8 +152,6 @@ export default function AiPathAssistant({
           signal: controller.signal
         });
         
-        clearTimeout(timeoutId);
-
         if (res.ok) {
           const data = await res.json();
           if (data.text) {
@@ -169,57 +164,10 @@ export default function AiPathAssistant({
           const errData = await res.json().catch(() => ({}));
           throw new Error(errData.error || `Server responded with status ${res.status}`);
         }
-      } catch (serverErr: any) {
-        console.warn('Server-side chat failed, falling back to client-side:', serverErr);
-        
-        // 2. Second attempt: Client-side fallback if server is unreachable (e.g. static hosting)
-        try {
-          // @ts-ignore
-          const envApiKey = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_GEMINI_API_KEY : undefined;
-          const apiKey = envApiKey || 'AIzaSyC_yJXpuw4uppVdIbHk_iT0EG53RAhKc14';
-          
-          if (!apiKey || apiKey === 'undefined') {
-             throw new Error('API Key missing. Server is unreachable and no client key is available.');
-          }
-
-          const ai = new GoogleGenAI({ apiKey });
-          
-          let systemInstruction = `You are the expert AI Path Assistant for TechOptyx (The Builder Operating System for AI, Video Animation, and Digital Marketing).
-Your mission is to guide builders with concrete, battle-tested, actionable advice on building, launching, and monetizing projects.
-Tone: Direct, encouraging, technical yet approachable, focused on execution, real revenue, and shipped deliverables. No fluff or repetitive pleasantries. Format answers cleanly with markdown headings, bullet points, and code/prompt blocks where appropriate.`;
-
-          if (activePhase) {
-            systemInstruction += `\n\nCURRENT USER CONTEXT:
-- Track: ${trackName}
-- Current Phase/Module: Phase/Module ${activePhase.number}: ${activePhase.title}
-- Objective: ${activePhase.objective || "Not specified"}
-- Total Tasks in Phase: ${activePhase.tasks.length || 0}
-- Overall Progress: ${completedTasksCount} tasks completed`;
-          }
-
-          const prompt = `${systemInstruction}
-
-${messages.length > 0 
-  ? "PREVIOUS CONVERSATION:\n" + messages.slice(-6).map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.text}`).join("\n\n") + "\n\n"
-  : ""}
-User Query: ${textToSend}
-
-Actionable Assistant Response:`;
-
-          const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt,
-          });
-
-          if (response.text) {
-             responseText = response.text;
-             fetchSuccess = true;
-          } else {
-             throw new Error('Empty response from model.');
-          }
-        } catch (clientErr: any) {
-           throw new Error(clientErr?.message || serverErr?.message || 'Unable to communicate with the assistant.');
-        }
+      } catch (error: unknown) {
+        throw new Error((error as Error)?.message || 'Unable to communicate with the assistant.');
+      } finally {
+        if (timeoutId) clearTimeout(timeoutId);
       }
 
       const assistantMessage: Message = {
@@ -230,12 +178,12 @@ Actionable Assistant Response:`;
       };
 
       setMessages(prev => [...prev, assistantMessage]);
-    } catch (error: any) {
-      console.error('Chat error:', error);
+    } catch (error: unknown) {
+      console.warn('Chat request notice:', error);
       const errorMessage: Message = {
-        id: `error-${Date.now()}`,
+        id: `assistant-fallback-${Date.now()}`,
         role: 'assistant',
-        text: `⚠️ **Unable to connect to the AI model.**\n\n${error.message || 'Please check your internet connection or verify your API key configuration.'}`,
+        text: `### 💡 DayZero Guidance\n\nI encountered a connection notice: *${(error as Error).message || 'Service offline'}*.\n\nTo enable full live Gemini generative AI responses, configure a valid \`GEMINI_API_KEY\` in **Settings > Secrets**. In the meantime, you can explore all phases, deliverables, scripts, and prompt templates throughout the DayZero platform!`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -294,11 +242,11 @@ Actionable Assistant Response:`;
           {/* Header */}
           <div className="px-4 py-3.5 sm:px-5 sm:py-4 border-b border-outline-variant/20 bg-surface-container-high/60 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="relative shrink-0 w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-secondary p-[1px] shadow-sm">
+              <div className="relative shrink-0 w-9 h-9 rounded-xl p-[1px] shadow-sm">
                 <div className="w-full h-full rounded-[11px] bg-surface flex items-center justify-center">
                   <Bot className="w-5 h-5 text-primary" />
                 </div>
-                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-surface animate-pulse" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-secondary rounded-full ring-2 ring-surface animate-pulse" />
               </div>
 
               <div className="truncate">
@@ -311,7 +259,7 @@ Actionable Assistant Response:`;
                   </span>
                 </div>
                 <p className="text-[11px] text-on-surface-variant/80 truncate font-mono">
-                  {activePhase ? `Phase ${activePhase.number}: ${activePhase.title}` : 'DayZero Builder OS'}
+                  {activePhase ? `Phase ${activePhase.number}: ${activePhase.title}` : 'TechOptyx Platform'}
                 </p>
               </div>
             </div>
@@ -408,7 +356,7 @@ Actionable Assistant Response:`;
                 >
                   <div className="flex items-center gap-1.5 mb-1 px-1">
                     <span className="text-[10px] font-mono text-on-surface-variant/70">
-                      {msg.role === 'user' ? 'You' : 'DayZero AI'}
+                      {msg.role === 'user' ? 'You' : 'TechOptyx AI'}
                     </span>
                     <span className="text-[9px] font-mono text-on-surface-variant/40">
                       {msg.timestamp}
@@ -419,12 +367,12 @@ Actionable Assistant Response:`;
                     className={cn(
                       "relative rounded-2xl px-4 py-3 max-w-[92%] sm:max-w-[85%] leading-relaxed break-words shadow-sm",
                       msg.role === 'user'
-                        ? "bg-primary text-white rounded-tr-none"
+                        ? "bg-primary text-on-primary rounded-tr-none"
                         : "bg-surface-container-highest/90 text-on-surface rounded-tl-none border border-outline-variant/15"
                     )}
                   >
                     {msg.role === 'assistant' ? (
-                      <div className="prose prose-invert prose-sm max-w-none space-y-2 text-xs sm:text-sm">
+                      <div className="prose prose-sm max-w-none space-y-2 text-xs sm:text-sm">
                         <Markdown
                           components={{
                             p: ({ children }) => <p className="mb-2 last:mb-0 text-on-surface leading-relaxed">{children}</p>,
@@ -484,7 +432,7 @@ Actionable Assistant Response:`;
             {isTyping && (
               <div className="flex flex-col items-start space-y-1">
                 <span className="text-[10px] font-mono text-on-surface-variant/70 px-1">
-                  DayZero AI
+                  TechOptyx AI
                 </span>
                 <div className="p-3.5 rounded-2xl rounded-tl-none bg-surface-container-highest border border-outline-variant/15 flex items-center gap-2.5 text-on-surface-variant">
                   <Loader2 className="w-4 h-4 animate-spin text-primary" />

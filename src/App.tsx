@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  CheckCircle2, 
+  Flame, CheckCircle2, 
   Circle, 
   ExternalLink,
   Info, 
@@ -37,7 +37,8 @@ import {
   Trophy,
   Shield,
   Medal,
-  Star
+  Star,
+  HelpCircle
 } from 'lucide-react';
 import { PHASES, VIDEO_PHASES, MARKETING_PHASES, Phase, Task, PROMPTS } from './constants';
 import { cn } from './lib/utils';
@@ -46,6 +47,7 @@ import { useWindowSize } from 'react-use';
 import AboutUs from './components/AboutUs';
 import CertificationsPage from './components/CertificationsPage';
 import PromptLibrary from './components/PromptLibrary';
+import FAQPage from './components/FAQPage';
 import PremiumVideoPlayer from './components/PremiumVideoPlayer';
 import AiPathAssistant from './components/AiPathAssistant';
 import { isYouTubeUrl, getVideoId } from './lib/youtube';
@@ -61,22 +63,68 @@ import {
   Area
 } from 'recharts';
 
+import LandingPage from './components/LandingPage';
+import { PWAInstallButton } from './components/PWAInstallButton';
+import { PWAToast } from './components/PWAToast';
+
+function safeParse(key: string, defaultValue: any) {
+  try {
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : defaultValue;
+  } catch (e) {
+    console.warn(`SafeParse fallback for ${key} from localStorage`, e);
+    return defaultValue;
+  }
+}
+
+function parseRouteFromUrl(): {
+  view: string | 'landing' | 'dashboard' | 'about' | 'prompt-library' | 'certifications' | 'faq';
+  track: 'fullstack' | 'video' | 'marketing' | null;
+} {
+  if (typeof window === 'undefined') return { view: 'landing', track: 'fullstack' };
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  if (path === '/about') return { view: 'about', track: 'fullstack' };
+  if (path === '/faq') return { view: 'faq', track: 'fullstack' };
+  if (path === '/prompt-library') return { view: 'prompt-library', track: 'fullstack' };
+  if (path === '/certifications') return { view: 'certifications', track: 'fullstack' };
+  if (path === '/tracks/ai-fullstack') return { view: 'dashboard', track: 'fullstack' };
+  if (path === '/tracks/video-animation') return { view: 'dashboard', track: 'video' };
+  if (path === '/tracks/digital-marketing') return { view: 'dashboard', track: 'marketing' };
+  if (path === '/dashboard') return { view: 'dashboard', track: 'fullstack' };
+  return { view: 'landing', track: 'fullstack' };
+}
+
 export default function App() {
   const ALL_PHASES = [...PHASES, ...VIDEO_PHASES, ...MARKETING_PHASES];
-  const [activePhaseId, setActivePhaseId] = useState<string | 'dashboard' | 'about' | 'prompt-library' | 'certifications'>('dashboard');
+  const initialRoute = parseRouteFromUrl();
+  const [activePhaseId, setActivePhaseId] = useState<string | 'landing' | 'dashboard' | 'about' | 'prompt-library' | 'certifications' | 'faq'>(initialRoute.view);
   const [completedTasks, setCompletedTasks] = useState<string[]>([]);
-  const [flaggedVideos, setFlaggedVideos] = useState<string[]>(() => {
-    const saved = localStorage.getItem('flaggedVideos');
-    return saved ? JSON.parse(saved) : [];
+  const [streak, setStreak] = useState<{count: number, lastDate: string | null}>(() => {
+    const parsed = safeParse('techOptyxStreak', { count: 0, lastDate: null });
+    if (parsed && parsed.lastDate) {
+      try {
+        const today = new Date().toISOString().split('T')[0];
+        const last = new Date(parsed.lastDate);
+        const current = new Date(today);
+        const diffDays = Math.ceil(Math.abs(current.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays > 1 && today !== parsed.lastDate) {
+           return { count: 0, lastDate: null };
+        }
+        return parsed;
+      } catch (e) {
+        return { count: 0, lastDate: null };
+      }
+    }
+    return { count: 0, lastDate: null };
   });
-  const [pinnedModules, setPinnedModules] = useState<string[]>(() => {
-    const saved = localStorage.getItem('pinnedModules');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [pinnedVideos, setPinnedVideos] = useState<string[]>(() => {
-    const saved = localStorage.getItem('pinnedVideos');
-    return saved ? JSON.parse(saved) : [];
-  });
+
+  useEffect(() => {
+    localStorage.setItem('techOptyxStreak', JSON.stringify(streak));
+  }, [streak]);
+
+  const [flaggedVideos, setFlaggedVideos] = useState<string[]>(() => safeParse('flaggedVideos', []));
+  const [pinnedModules, setPinnedModules] = useState<string[]>(() => safeParse('pinnedModules', []));
+  const [pinnedVideos, setPinnedVideos] = useState<string[]>(() => safeParse('pinnedVideos', []));
 
   useEffect(() => {
     localStorage.setItem('pinnedModules', JSON.stringify(pinnedModules));
@@ -126,7 +174,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
   const [isAiOpen, setIsAiOpen] = useState(false);
-  const [activeTrack, setActiveTrack] = useState<'fullstack' | 'video' | 'marketing' | null>('fullstack');
+  const [activeTrack, setActiveTrack] = useState<'fullstack' | 'video' | 'marketing' | null>(initialRoute.track || 'fullstack');
   const [trackSearchQuery, setTrackSearchQuery] = useState("");
   const [lastCopiedPromptId, setLastCopiedPromptId] = useState<string | null>(null);
   const [videoPlayerState, setVideoPlayerState] = useState<{isOpen: boolean, url: string | null}>({isOpen: false, url: null});
@@ -135,32 +183,53 @@ export default function App() {
     const saved = localStorage.getItem('theme');
     return (saved as 'light' | 'dark') || 'dark';
   });
-  const [lastPlayedVideo, setLastPlayedVideo] = useState<{id: string, title: string, url: string} | null>(() => {
-    const saved = localStorage.getItem('lastPlayedVideo');
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [lastPlayedVideo, setLastPlayedVideo] = useState<{id: string, title: string, url: string} | null>(() => safeParse('lastPlayedVideo', null));
   const { width, height } = useWindowSize();
 
-  // Handle mouse move for card glow effect
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const cards = document.querySelectorAll('.card-glow, .interactive-glow');
-      cards.forEach((card) => {
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        (card as HTMLElement).style.setProperty('--x', `${x}px`);
-        (card as HTMLElement).style.setProperty('--y', `${y}px`);
-      });
-    };
+  const navigateTo = (view: string, urlPath: string, track?: 'fullstack' | 'video' | 'marketing') => {
+    setActivePhaseId(view as any);
+    if (track) {
+      setActiveTrack(track);
+    }
+    if (typeof window !== 'undefined' && window.location.pathname !== urlPath) {
+      window.history.pushState(null, '', urlPath);
+    }
+    scrollToTop();
+  };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+  useEffect(() => {
+    const handlePopState = () => {
+      const route = parseRouteFromUrl();
+      setActivePhaseId(route.view as any);
+      if (route.track) setActiveTrack(route.track);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   useEffect(() => {
-    const saved = localStorage.getItem('completedTasks');
-    if (saved) setCompletedTasks(JSON.parse(saved));
+    if (activePhaseId === 'about') {
+      document.title = 'About TechOptyx — Mission, Founder & Philosophy | TechOptyx';
+    } else if (activePhaseId === 'faq') {
+      document.title = 'Frequently Asked Questions & AEO Knowledge Base | DayZero';
+    } else if (activePhaseId === 'prompt-library') {
+      document.title = 'AI Prompt Library — 50+ Tested Engineering Prompts | TechOptyx';
+    } else if (activePhaseId === 'certifications') {
+      document.title = 'Free Industry Certifications Directory for AI & Cloud | TechOptyx';
+    } else if (activeTrack === 'video') {
+      document.title = 'AI Video Animation & Commercial Generation Track | TechOptyx';
+    } else if (activeTrack === 'marketing') {
+      document.title = 'Digital Marketing & Answer Engine Optimization Track | TechOptyx';
+    } else if (activePhaseId === 'dashboard') {
+      document.title = 'Builder OS Curriculum Dashboard | TechOptyx';
+    } else {
+      document.title = 'TechOptyx — Earn as you Learn AI & Full-Stack Roadmap';
+    }
+  }, [activePhaseId, activeTrack]);
+
+  useEffect(() => {
+    const saved = safeParse('completedTasks', []);
+    if (saved.length > 0) setCompletedTasks(saved);
   }, []);
 
   useEffect(() => {
@@ -183,9 +252,9 @@ export default function App() {
 
   useEffect(() => {
     const handleUpdate = () => {
-      const saved = localStorage.getItem('lastPlayedVideo');
+      const saved = safeParse('lastPlayedVideo', null);
       if (saved) {
-        setLastPlayedVideo(JSON.parse(saved));
+        setLastPlayedVideo(saved);
       }
     };
     window.addEventListener('lastPlayedVideoUpdated', handleUpdate);
@@ -202,7 +271,22 @@ export default function App() {
   };
 
   const toggleTask = (taskId: string) => {
-    const newCompleted = completedTasks.includes(taskId)
+    const isCompleted = completedTasks.includes(taskId);
+    if (!isCompleted) {
+        // Marking as completed, update streak
+        const today = new Date().toISOString().split('T')[0];
+        if (streak.lastDate !== today) {
+           const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+           setStreak(s => {
+               if (s.lastDate === yesterday) {
+                   return { count: s.count + 1, lastDate: today };
+               }
+               return { count: 1, lastDate: today };
+           });
+        }
+    }
+
+    const newCompleted = isCompleted
       ? completedTasks.filter(id => id !== taskId)
       : [...completedTasks, taskId];
     setCompletedTasks(newCompleted);
@@ -286,6 +370,15 @@ export default function App() {
   const completedPhaseTasks = phaseTasks.filter(t => completedTasks.includes(t.id));
   const isPhaseCompleted = phaseTasks.length > 0 && completedPhaseTasks.length === phaseTasks.length;
 
+  if (activePhaseId === 'landing') {
+    return (
+      <LandingPage 
+        onEnter={() => navigateTo('dashboard', '/dashboard')} 
+        onNavigate={(view, path, track) => navigateTo(view, path, track)}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-surface text-on-surface selection:bg-primary-container selection:text-white animated-bg">
       {isPhaseCompleted && activePhaseId !== 'dashboard' && (
@@ -307,9 +400,12 @@ export default function App() {
             DayZero
           </h2>
         </div>
-        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 shrink-0 text-on-surface-variant hover:text-on-surface transition-colors">
-          {isSidebarOpen ? <X strokeWidth={1.5} className="w-6 h-6" /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-2">
+          <PWAInstallButton className="hidden sm:flex" />
+          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 shrink-0 text-on-surface-variant hover:text-on-surface transition-colors">
+            {isSidebarOpen ? <X strokeWidth={1.5} className="w-6 h-6" /> : <Menu />}
+          </button>
+        </div>
       </header>
 
       {/* Mobile Sidebar Overlay */}
@@ -368,7 +464,7 @@ export default function App() {
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mb-2",
                 activePhaseId === 'dashboard'
-                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  ? "bg-primary-container/20 text-primary shadow-sm"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
               )}
             >
@@ -395,7 +491,7 @@ export default function App() {
                   className={cn(
                     "px-1.5 py-1.5 rounded-lg text-[10px] font-medium transition-all text-center truncate",
                     activeTrack === 'fullstack'
-                      ? "bg-primary text-white shadow-sm font-bold"
+                      ? "bg-primary text-on-primary shadow-sm font-bold"
                       : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
                   )}
                   title="Track 1: Full-Stack AI Mastery"
@@ -456,7 +552,7 @@ export default function App() {
                       className={cn(
                         "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
                         activePhaseId === phase.id 
-                          ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]" 
+                          ? "bg-primary-container/20 text-primary shadow-sm" 
                           : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
                       )}
                     >
@@ -506,7 +602,7 @@ export default function App() {
                       className={cn(
                         "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
                         activePhaseId === phase.id 
-                          ? "bg-amber-500/20 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" 
+                          ? "bg-amber-500/20 text-amber-500 shadow-sm" 
                           : "text-on-surface-variant hover:text-on-surface hover:bg-amber-500/10"
                       )}
                     >
@@ -556,7 +652,7 @@ export default function App() {
                       className={cn(
                         "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all text-left group",
                         activePhaseId === phase.id 
-                          ? "bg-emerald-500/20 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]" 
+                          ? "bg-emerald-500/20 text-emerald-500 shadow-sm" 
                           : "text-on-surface-variant hover:text-on-surface hover:bg-emerald-500/10"
                       )}
                     >
@@ -580,14 +676,13 @@ export default function App() {
             )}
             <button
               onClick={() => {
-                setActivePhaseId('prompt-library');
+                navigateTo('prompt-library', '/prompt-library');
                 setIsSidebarOpen(false);
-                scrollToTop();
               }}
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-4 border-t border-outline-variant/10 pt-4",
                 activePhaseId === 'prompt-library'
-                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  ? "bg-primary-container/20 text-primary shadow-sm"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
               )}
             >
@@ -597,35 +692,50 @@ export default function App() {
 
             <button
               onClick={() => {
-                setActivePhaseId('about');
+                navigateTo('about', '/about');
                 setIsSidebarOpen(false);
-                scrollToTop();
               }}
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-2",
                 activePhaseId === 'about'
-                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  ? "bg-primary-container/20 text-primary shadow-sm"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
               )}
             >
               <Briefcase className="w-4 h-4" />
               <span className="text-sm font-medium">About Us</span>
             </button>
+
             <button
               onClick={() => {
-                setActivePhaseId('certifications');
+                navigateTo('certifications', '/certifications');
                 setIsSidebarOpen(false);
-                scrollToTop();
               }}
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-2",
                 activePhaseId === 'certifications'
-                  ? "bg-primary-container/20 text-primary shadow-[0_0_10px_rgba(108,59,255,0.2)]"
+                  ? "bg-primary-container/20 text-primary shadow-sm"
                   : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
               )}
             >
               <Award className="w-4 h-4" />
               <span className="text-sm font-medium">Certifications</span>
+            </button>
+
+            <button
+              onClick={() => {
+                navigateTo('faq', '/faq');
+                setIsSidebarOpen(false);
+              }}
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left group mt-2",
+                activePhaseId === 'faq'
+                  ? "bg-primary-container/20 text-primary shadow-sm"
+                  : "text-on-surface-variant hover:text-on-surface hover:bg-primary-container/10"
+              )}
+            >
+              <HelpCircle className="w-4 h-4" />
+              <span className="text-sm font-medium">FAQ & AEO Hub</span>
             </button>
           </nav>
 
@@ -637,7 +747,7 @@ export default function App() {
                 </div>
                 <div className="h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
                   <motion.div 
-                    className="h-full bg-gradient-to-r from-primary-container to-secondary" 
+                    className="h-full bg-secondary"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                   />
@@ -671,6 +781,11 @@ export default function App() {
                   </div>
                 </button>
               </div>
+
+              {/* Install App Button */}
+              <div className="mt-2">
+                <PWAInstallButton className="w-full justify-center py-3" />
+              </div>
             </div>
           </div>
         </aside>
@@ -681,7 +796,7 @@ export default function App() {
           <button
             id="open-desktop-sidebar-btn"
             onClick={() => setIsDesktopSidebarOpen(true)}
-            className="hidden lg:flex items-center gap-2.5 fixed top-4 left-4 z-40 px-3.5 py-2 rounded-xl bg-surface-container-high/95 hover:bg-surface-container-highest border border-outline-variant/30 text-on-surface text-xs font-semibold shadow-xl backdrop-blur-md transition-all hover:scale-105 group btn-glow cursor-pointer"
+            className="hidden lg:flex items-center gap-2.5 fixed top-4 left-4 z-40 px-3.5 py-2 rounded-xl bg-surface-container-high/95 hover:bg-surface-container-highest border border-outline-variant/30 text-on-surface text-xs font-semibold shadow-xl backdrop-blur-md transition-all hover:scale-105 group cursor-pointer"
             title="Open side menu (Ctrl+B)"
             aria-label="Open side menu"
           >
@@ -709,7 +824,7 @@ export default function App() {
                   className="space-y-12"
                 >
                   {/* Hero Section */}
-                  <div className="relative rounded-3xl overflow-hidden p-8 lg:p-16 mb-12 border border-outline-variant/20 group">
+                  <div className="relative rounded-md overflow-hidden p-8 lg:p-16 mb-12 border border-outline-variant/20 group">
                     <video 
                       autoPlay 
                       loop 
@@ -719,15 +834,15 @@ export default function App() {
                     >
                       <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4" type="video/mp4" />
                     </video>
-                    <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/90 to-transparent" />
+                    <div className="absolute inset-0 bg-surface/50" />
                     
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="relative z-10"
                     >
-                      <h1 className="text-5xl md:text-7xl font-black text-on-surface leading-[1.1] tracking-tighter mb-6">
-                        Build AI Products That <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">People Pay For.</span>
+                      <h1 className="text-5xl md:text-7xl font-headline font-normal text-on-surface leading-[1.1] tracking-tighter mb-6">
+                        Build AI Products That <em>People Pay For.</em>
                       </h1>
                       <div className="text-on-surface-variant text-lg max-w-2xl mb-8 leading-relaxed space-y-4">
                         <p>Stop consuming tutorials. Start building real AI-powered products that generate income.</p>
@@ -736,7 +851,7 @@ export default function App() {
                       </div>
                       <button 
                         onClick={() => handleSelectPhase(ALL_PHASES[0].id)}
-                        className="px-8 py-4 rounded-xl bg-primary-container text-white font-bold hover:translate-y-[-2px] transition-all shadow-[0_15px_30px_-5px_rgba(108,59,255,0.3)] flex items-center gap-2 text-lg"
+                        className="px-8 py-4 rounded-xl bg-primary-container text-on-primary-container font-bold hover:translate-y-[-2px] transition-all shadow-[0_15px_30px_-5px_rgba(108,59,255,0.3)] flex items-center gap-2 text-lg"
                       >
                         <Rocket className="w-6 h-6" />
                         Start Building & Earning Now
@@ -745,7 +860,7 @@ export default function App() {
                   </div>
 
                   {/* Fast Track Section */}
-                  <div className="p-8 rounded-3xl glass-panel relative overflow-hidden group">
+                  <div className="p-8 rounded-md glass-panel">
                     <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
                       <Sparkles className="w-32 h-32 text-secondary" />
                     </div>
@@ -761,7 +876,7 @@ export default function App() {
                       <div className="flex flex-wrap gap-4">
                         <button 
                           onClick={() => setVideoPlayerState({isOpen: true, url: "https://www.youtube.com/watch?v=c9Wg6Cb_YlU"})}
-                          className="px-6 py-2.5 rounded-xl bg-secondary text-on-secondary text-sm font-bold hover:scale-105 transition-transform flex items-center gap-2 shadow-[0_0_15px_rgba(103,255,198,0.3)] btn-glow"
+                          className="px-6 py-2.5 rounded-xl bg-secondary text-on-secondary text-sm font-bold hover:scale-105 transition-transform flex items-center gap-2 shadow-sm"
                         >
                           <Play className="w-4 h-4 fill-current" />
                           Start Now
@@ -775,7 +890,7 @@ export default function App() {
                   </div>
 
                   {/* Last Played Video Widget */}
-                  <div className="p-8 rounded-3xl bg-gradient-to-br from-surface-container to-surface-container-low border border-outline-variant/10 relative overflow-hidden group card-glow interactive-glow">
+                  <div className="p-8 rounded-md border border-outline-variant/10">
                     <div className="flex items-center justify-between mb-6 relative z-10">
                       <div className="flex items-center gap-3">
                         <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
@@ -801,7 +916,7 @@ export default function App() {
                         <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
                           <button 
                             onClick={() => setVideoPlayerState({isOpen: true, url: lastPlayedVideo.url})}
-                            className="w-full md:w-56 h-32 rounded-2xl bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center group/thumb relative overflow-hidden shrink-0 shadow-lg"
+                            className="w-full md:w-56 h-32 rounded-sm bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center group/thumb shrink-0 shadow-lg"
                           >
                             <img 
                               src={lastPlayedVideo.id.length > 11 
@@ -829,7 +944,7 @@ export default function App() {
                           </div>
                         </div>
                       ) : (
-                        <div className="h-32 flex flex-col items-center justify-center border border-dashed border-outline-variant/20 rounded-2xl bg-surface-container-highest/30">
+                        <div className="h-32 flex flex-col items-center justify-center border border-dashed border-outline-variant/20 rounded-sm bg-surface-container-highest/30">
                           <Play className="w-8 h-8 text-on-surface-variant/30 mb-2" />
                           <p className="text-sm text-on-surface-variant italic">No videos played yet. Start a tutorial to see it here!</p>
                         </div>
@@ -837,8 +952,6 @@ export default function App() {
                     </div>
                     
                     {/* Background Decoration */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -mr-32 -mt-32 group-hover:bg-primary/10 transition-colors" />
-                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-secondary/5 rounded-full blur-[80px] -ml-24 -mb-24 group-hover:bg-secondary/10 transition-colors" />
                   </div>
 
                                     {/* Pinned Items Section */}
@@ -857,7 +970,7 @@ export default function App() {
                                <div 
                                   key={i} 
                                   onClick={() => handleSelectPhase(phase.id)}
-                                  className="cursor-pointer group p-5 rounded-2xl border border-outline-variant/20 bg-surface-container hover:bg-surface-container-high transition-all relative overflow-hidden"
+                                  className="cursor-pointer group p-5 rounded-sm border border-outline-variant/20 bg-surface-container hover:bg-surface-container-high transition-all"
                                >
                                   <div className="flex justify-between items-start mb-2 relative z-10">
                                     <span className="text-[10px] font-label text-primary uppercase tracking-widest">Phase {phase.number}</span>
@@ -884,7 +997,7 @@ export default function App() {
                                   <div
                                     key={j}
                                     onClick={() => setVideoPlayerState({ isOpen: true, url: res.url })}
-                                    className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                    className="cursor-pointer flex items-start gap-3 p-4 rounded-sm bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
                                   >
                                     <div className="p-2 rounded-lg bg-secondary/10 text-secondary shrink-0 group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
                                       <Play className="w-4 h-4 fill-current" />
@@ -926,7 +1039,7 @@ export default function App() {
                           <Medal className="w-6 h-6 text-secondary" />
                           <h2 className="text-2xl font-bold text-on-surface">Skills Acquired</h2>
                         </div>
-                        <div className="bg-surface-container/60 backdrop-blur-xl rounded-3xl p-6 border border-outline-variant/20 shadow-sm">
+                        <div className="bg-surface-container/60 backdrop-blur-xl rounded-md p-6 border border-outline-variant/20 shadow-sm">
                           <div className="flex flex-wrap gap-3">
                             {completedPhases.map((phase) => (
                               <div key={phase.id} className="flex items-center gap-2 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/20 rounded-full transition-colors group cursor-default">
@@ -954,7 +1067,7 @@ export default function App() {
                         placeholder="Search modules and videos..."
                         value={trackSearchQuery}
                         onChange={(e) => setTrackSearchQuery(e.target.value)}
-                        className="w-full pl-11 pr-4 py-3 bg-surface-container rounded-2xl border border-outline-variant/20 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all text-on-surface placeholder:text-on-surface-variant/50"
+                        className="w-full pl-11 pr-4 py-3 bg-surface-container rounded-sm border border-outline-variant/20 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all text-on-surface placeholder:text-on-surface-variant/50"
                       />
                     </div>
                     
@@ -964,16 +1077,16 @@ export default function App() {
                       <button 
                         onClick={() => setActiveTrack(activeTrack === 'fullstack' ? null : 'fullstack')}
                         className={cn(
-                          "p-6 rounded-3xl border transition-all text-left group overflow-hidden relative",
+                          "p-6 rounded-md border transition-all text-left group overflow-hidden relative",
                           activeTrack === 'fullstack' 
-                            ? "bg-primary-container/20 border-primary/40 shadow-[0_0_20px_rgba(108,59,255,0.15)]" 
+                            ? "bg-primary-container/20 border-primary/40 shadow-sm" 
                             : "bg-surface-container border-outline-variant/20 hover:bg-surface-container-high"
                         )}
                       >
                         <div className="relative z-10 flex flex-col gap-3">
                           <div className={cn(
                             "p-3 rounded-xl w-12 h-12 flex items-center justify-center transition-colors",
-                            activeTrack === 'fullstack' ? "bg-primary text-white shadow-[0_0_15px_rgba(108,59,255,0.5)]" : "bg-primary/20 text-primary group-hover:bg-primary/30"
+                            activeTrack === 'fullstack' ? "bg-primary text-on-primary shadow-sm" : "bg-primary/20 text-primary group-hover:bg-primary/30"
                           )}>
                             <Rocket className="w-6 h-6" />
                           </div>
@@ -983,25 +1096,22 @@ export default function App() {
                             <p className="text-sm text-on-surface-variant">Master AI-powered software development</p>
                           </div>
                         </div>
-                        {activeTrack === 'fullstack' && (
-                           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-[50px] -mr-10 -mt-10" />
-                        )}
                       </button>
 
                       {/* AI Video Animation Tab */}
                       <button 
                         onClick={() => setActiveTrack(activeTrack === 'video' ? null : 'video')}
                         className={cn(
-                          "p-6 rounded-3xl border transition-all text-left group overflow-hidden relative",
+                          "p-6 rounded-md border transition-all text-left group overflow-hidden relative",
                           activeTrack === 'video' 
-                            ? "bg-amber-500/10 border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.15)]" 
+                            ? "bg-amber-500/10 border-amber-500/40 shadow-sm" 
                             : "bg-surface-container border-outline-variant/20 hover:bg-surface-container-high"
                         )}
                       >
                         <div className="relative z-10 flex flex-col gap-3">
                           <div className={cn(
                             "p-3 rounded-xl w-12 h-12 flex items-center justify-center transition-colors",
-                            activeTrack === 'video' ? "bg-amber-500 text-white shadow-[0_0_15px_rgba(245,158,11,0.5)]" : "bg-amber-500/20 text-amber-500 group-hover:bg-amber-500/30"
+                            activeTrack === 'video' ? "bg-amber-500 text-white shadow-sm" : "bg-amber-500/20 text-amber-500 group-hover:bg-amber-500/30"
                           )}>
                             <Play className="w-6 h-6" />
                           </div>
@@ -1011,25 +1121,22 @@ export default function App() {
                             <p className="text-sm text-on-surface-variant">Master AI-powered video generation and storytelling</p>
                           </div>
                         </div>
-                        {activeTrack === 'video' && (
-                           <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/20 rounded-full blur-[50px] -mr-10 -mt-10" />
-                        )}
                       </button>
 
                       {/* Digital Marketing and Commerce Tab */}
                       <button 
                         onClick={() => setActiveTrack(activeTrack === 'marketing' ? null : 'marketing')}
                         className={cn(
-                          "p-6 rounded-3xl border transition-all text-left group overflow-hidden relative",
+                          "p-6 rounded-md border transition-all text-left group overflow-hidden relative",
                           activeTrack === 'marketing' 
-                            ? "bg-emerald-500/10 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.15)]" 
+                            ? "bg-emerald-500/10 border-emerald-500/40 shadow-sm" 
                             : "bg-surface-container border-outline-variant/20 hover:bg-surface-container-high"
                         )}
                       >
                         <div className="relative z-10 flex flex-col gap-3">
                           <div className={cn(
                             "p-3 rounded-xl w-12 h-12 flex items-center justify-center transition-colors",
-                            activeTrack === 'marketing' ? "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)]" : "bg-emerald-500/20 text-emerald-500 group-hover:bg-emerald-500/30"
+                            activeTrack === 'marketing' ? "bg-emerald-500 text-white shadow-sm" : "bg-emerald-500/20 text-emerald-500 group-hover:bg-emerald-500/30"
                           )}>
                             <TrendingUp className="w-6 h-6" />
                           </div>
@@ -1039,22 +1146,18 @@ export default function App() {
                             <p className="text-sm text-on-surface-variant">Master AI-driven marketing and commerce</p>
                           </div>
                         </div>
-                        {activeTrack === 'marketing' && (
-                           <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full blur-[50px] -mr-10 -mt-10" />
-                        )}
                       </button>
                     </div>
 
 
                     {/* Active Track Content */}
                     <AnimatePresence mode="wait">
-                      {activeTrack === 'fullstack' && (
-                        <motion.div 
+                        {activeTrack === 'fullstack' && ( <motion.div 
                           key="fullstack"
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="p-6 md:p-8 rounded-3xl border border-outline-variant/20 bg-surface-container-low space-y-8"
+                          className="p-6 md:p-8 rounded-md border border-outline-variant/20 bg-surface-container-low space-y-8"
                         >
                           {PHASES.reduce((acc, phase) => {
                             const query = trackSearchQuery.toLowerCase();
@@ -1096,7 +1199,7 @@ export default function App() {
                                   <div
                                     key={j}
                                     onClick={() => setVideoPlayerState({ isOpen: true, url: res.url })}
-                                    className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                    className="cursor-pointer flex items-start gap-3 p-4 rounded-sm bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
                                   >
                                     <div className="p-2 rounded-lg bg-secondary/10 text-secondary shrink-0 group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
                                       <Play className="w-4 h-4 fill-current" />
@@ -1122,13 +1225,12 @@ export default function App() {
                         </motion.div>
                       )}
                       
-                      {activeTrack === 'video' && (
-                        <motion.div
+                        {activeTrack === 'video' && ( <motion.div
                           key="video"
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="p-6 md:p-8 rounded-3xl border border-outline-variant/20 bg-surface-container-low space-y-8"
+                          className="p-6 md:p-8 rounded-md border border-outline-variant/20 bg-surface-container-low space-y-8"
                         >
                           {VIDEO_PHASES.reduce((acc, phase) => {
                             const query = trackSearchQuery.toLowerCase();
@@ -1172,7 +1274,7 @@ export default function App() {
                                     <div
                                       key={j}
                                       onClick={() => isYt ? setVideoPlayerState({ isOpen: true, url: res.url }) : window.open(res.url, '_blank')}
-                                      className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                      className="cursor-pointer flex items-start gap-3 p-4 rounded-sm bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
                                     >
                                       <div className={cn("p-2 rounded-lg shrink-0 transition-colors", 
                                         isYt ? "bg-amber-500/10 text-amber-500 group-hover:bg-amber-500 group-hover:text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"
@@ -1206,13 +1308,12 @@ export default function App() {
                         </motion.div>
                       )}
 
-                      {activeTrack === 'marketing' && (
-                        <motion.div
+                        {activeTrack === 'marketing' && ( <motion.div
                           key="marketing"
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="p-6 md:p-8 rounded-3xl border border-outline-variant/20 bg-surface-container-low space-y-8"
+                          className="p-6 md:p-8 rounded-md border border-outline-variant/20 bg-surface-container-low space-y-8"
                         >
                           {MARKETING_PHASES.reduce((acc, phase) => {
                             const query = trackSearchQuery.toLowerCase();
@@ -1256,7 +1357,7 @@ export default function App() {
                                     <div
                                       key={j}
                                       onClick={() => isYt ? setVideoPlayerState({ isOpen: true, url: res.url }) : window.open(res.url, '_blank')}
-                                      className="cursor-pointer flex items-start gap-3 p-4 rounded-2xl bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
+                                      className="cursor-pointer flex items-start gap-3 p-4 rounded-sm bg-surface hover:bg-surface-container-highest border border-outline-variant/10 transition-colors text-left group relative shadow-sm"
                                     >
                                       <div className={cn("p-2 rounded-lg shrink-0 transition-colors", 
                                         isYt ? "bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"
@@ -1296,11 +1397,11 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
                       { label: "Overall Progress", value: `${progress}%`, icon: Target, color: "text-secondary" },
-                      { label: "Tasks Completed", value: completedTasks.length, icon: CheckCircle2, color: "text-primary" },
+                      { label: "Tasks Completed", value: completedTasks.length, icon: Flame, CheckCircle2, color: "text-primary" },
                       { label: "Active Phase", value: `Phase ${ALL_PHASES.find(p => p.tasks.some(t => !completedTasks.includes(t.id)))?.number || ALL_PHASES[ALL_PHASES.length - 1].number}`, icon: Zap, color: "text-amber-400" },
                       { label: "Potential Value", value: "₦2.5M+", icon: DollarSign, color: "text-emerald-400" }
                     ].map((stat, i) => (
-                      <div key={i} className="p-6 rounded-3xl bg-surface-container border border-outline-variant/10 relative overflow-hidden group hover:border-secondary/30 card-glow interactive-glow">
+                      <div key={i} className="p-6 rounded-md bg-surface-container border border-outline-variant/10 hover:border-secondary/30">
                         <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                           <stat.icon className="w-16 h-16" />
                         </div>
@@ -1317,7 +1418,7 @@ export default function App() {
 
                   {/* Chart & Activity */}
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2 p-8 rounded-3xl glass-card">
+                    <div className="lg:col-span-2 p-8 rounded-md">
                       <div className="flex items-center justify-between mb-8">
                         <div>
                           <h3 className="text-xl font-bold text-on-surface">Learning Velocity</h3>
@@ -1382,7 +1483,7 @@ export default function App() {
                     </div>
 
                     <div className="space-y-6">
-                      <div className="p-6 rounded-3xl glass-card card-glow interactive-glow relative overflow-hidden group">
+                      <div className="p-6 rounded-md">
                         <h3 className="text-lg font-bold mb-6 flex items-center gap-2 relative z-10 text-on-surface">
                           <Clock className="w-4 h-4 text-primary" />
                           Recent Activity
@@ -1410,7 +1511,7 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="p-6 rounded-3xl bg-gradient-to-br from-primary-container/20 to-secondary-container/10 border border-primary-container/30 card-glow interactive-glow relative overflow-hidden group">
+                      <div className="p-6 rounded-md border border-primary-container/30">
                         <div className="flex items-center gap-2 mb-4 relative z-10">
                           <Briefcase className="w-4 h-4 text-secondary" />
                           <span className="font-label text-[10px] text-secondary tracking-widest uppercase">Career Path</span>
@@ -1421,7 +1522,7 @@ export default function App() {
                         </p>
                         <button 
                           onClick={() => handleSelectPhase(ALL_PHASES.find(p => p.tasks.some(t => !completedTasks.includes(t.id)))?.id || ALL_PHASES[ALL_PHASES.length - 1].id)}
-                          className="w-full py-3 rounded-xl bg-primary-container text-white text-[10px] font-bold uppercase tracking-wider hover:scale-[1.02] transition-transform relative z-10 shadow-[0_0_15px_rgba(108,59,255,0.3)] btn-glow"
+                          className="w-full py-3 rounded-xl bg-primary-container text-on-primary-container text-[10px] font-bold uppercase tracking-wider hover:scale-[1.02] transition-transform relative z-10 shadow-sm"
                         >
                           View Selling Strategy
                         </button>
@@ -1442,7 +1543,7 @@ export default function App() {
                         <div 
                           key={i} 
                           onClick={() => handleSelectPhase(p.id)}
-                          className="p-6 rounded-3xl glass-card hover:border-secondary/30 transition-colors cursor-pointer group card-glow interactive-glow relative overflow-hidden"
+                          className="p-6 rounded-md hover:border-secondary/30 transition-colors cursor-pointer group"
                         >
                           <div className="flex items-center justify-between mb-4 relative z-10">
                             <div className="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center group-hover:bg-secondary/10 transition-colors">
@@ -1469,16 +1570,28 @@ export default function App() {
                         <span className="text-[10px] font-label text-on-surface-variant uppercase tracking-widest">Unlocked Badges</span>
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        {streak.count > 0 && (
+                            <div className="flex flex-col items-center justify-center p-6 rounded-md border border-emerald-500/30 hover:border-emerald-500/50 transition-all text-center">
+                              <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <Flame className="w-12 h-12 text-emerald-500" />
+                              </div>
+                              <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mb-4 relative z-10 shadow-sm group-hover:scale-110 transition-transform">
+                                <Flame className="w-8 h-8 text-emerald-500 drop-shadow-lg" />
+                              </div>
+                              <span className="text-[10px] font-label text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1 relative z-10">Consistency</span>
+                              <h4 className="font-bold text-xs text-on-surface line-clamp-2 relative z-10">{streak.count} Day Streak!</h4>
+                            </div>
+                        )}
                         {ALL_PHASES.filter(p => p.tasks.length > 0 && p.tasks.every(t => completedTasks.includes(t.id))).map((phase, i) => {
                           const ICONS = [Trophy, Shield, Medal, Star, Award, Zap];
                           const BadgeIcon = ICONS[(parseInt(phase.number) || 0) % ICONS.length];
                           
                           return (
-                            <div key={i} className="flex flex-col items-center justify-center p-6 rounded-3xl glass-card border border-amber-400/30 bg-gradient-to-br from-amber-400/10 to-transparent relative overflow-hidden group card-glow hover:border-amber-400/50 transition-all text-center">
+                            <div key={i} className="flex flex-col items-center justify-center p-6 rounded-md border border-amber-400/30 hover:border-amber-400/50 transition-all text-center">
                               <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                                 <Star className="w-12 h-12 text-amber-400" />
                               </div>
-                              <div className="w-16 h-16 rounded-full bg-amber-400/20 flex items-center justify-center mb-4 relative z-10 shadow-[0_0_15px_rgba(251,191,36,0.3)] group-hover:scale-110 transition-transform">
+                              <div className="w-16 h-16 rounded-full bg-amber-400/20 flex items-center justify-center mb-4 relative z-10 shadow-sm group-hover:scale-110 transition-transform">
                                 <BadgeIcon className="w-8 h-8 text-amber-400 drop-shadow-lg" />
                               </div>
                               <span className="text-[10px] font-label text-amber-400 uppercase tracking-widest mb-1 relative z-10">Phase {phase.number} Master</span>
@@ -1506,7 +1619,7 @@ export default function App() {
                           const allTasksCompleted = phaseCompletedTasks.length === phase.tasks.length;
                           
                           return (
-                            <div key={i} className="p-6 rounded-3xl glass-card relative overflow-hidden border border-outline-variant/10">
+                            <div key={i} className="p-6 rounded-md border border-outline-variant/10">
                               <div className="flex flex-col md:flex-row justify-between gap-6 relative z-10">
                                 <div className="flex-1">
                                   <div className="flex items-center gap-3 mb-2">
@@ -1538,7 +1651,7 @@ export default function App() {
                                   </div>
                                 </div>
                                 
-                                <div className="w-full md:w-1/3 p-5 rounded-2xl bg-surface-container-low border border-outline-variant/10 self-start">
+                                <div className="w-full md:w-1/3 p-5 rounded-sm bg-surface-container-low border border-outline-variant/10 self-start">
                                   <div className="flex items-center gap-2 mb-4">
                                     <Wrench className="w-4 h-4 text-primary" />
                                     <h5 className="text-xs font-bold uppercase tracking-wider text-on-surface">Skills Gained</h5>
@@ -1564,7 +1677,7 @@ export default function App() {
                   )}
 
                   {/* Prompt Library Widget */}
-                  <div className="mt-12 p-8 rounded-3xl bg-gradient-to-br from-surface-container to-surface-container-low border border-outline-variant/20 relative overflow-hidden group card-glow interactive-glow">
+                  <div className="mt-12 p-8 rounded-md border border-outline-variant/20">
                     <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
                       <Sparkles className="w-32 h-32 text-primary" />
                     </div>
@@ -1574,13 +1687,13 @@ export default function App() {
                           <Sparkles className="w-5 h-5 text-primary" />
                           <span className="font-label text-[10px] text-primary tracking-widest uppercase">AI Resources</span>
                         </div>
-                        <h3 className="text-2xl font-bold mb-3 text-on-surface">Supercharge Your Workflow</h3>
+                        <h3 className="text-2xl font-bold mb-3 text-on-surface">Accelerate Your Workflow</h3>
                         <p className="text-on-surface-variant mb-6 max-w-xl leading-relaxed">
                           Access our curated library of high-converting prompts for business, coding, marketing, and more. Stop guessing and start generating results instantly.
                         </p>
                         
                         {lastCopiedPromptId && PROMPTS.find(p => p.id === lastCopiedPromptId) && (
-                          <div className="mb-6 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10 max-w-xl">
+                          <div className="mb-6 p-4 rounded-sm bg-surface-container-low border border-outline-variant/10 max-w-xl">
                             <div className="flex items-center gap-2 mb-2">
                               <Clock className="w-3 h-3 text-secondary" />
                               <span className="text-[10px] font-label text-on-surface-variant uppercase tracking-wider">Last Copied Prompt</span>
@@ -1596,7 +1709,7 @@ export default function App() {
 
                         <button 
                           onClick={() => setActivePhaseId('prompt-library')}
-                          className="px-6 py-3 rounded-xl bg-primary text-white font-bold hover:scale-105 transition-transform flex items-center gap-2 shadow-[0_0_20px_rgba(108,59,255,0.3)] btn-glow"
+                          className="px-6 py-3 rounded-xl bg-primary text-on-primary font-bold hover:scale-105 transition-transform flex items-center gap-2 shadow-sm"
                         >
                           <Sparkles className="w-4 h-4" />
                           Explore Prompt Library
@@ -1607,6 +1720,8 @@ export default function App() {
                 </motion.div>
               ) : activePhaseId === 'about' ? (
                 <AboutUs key="about" />
+              ) : activePhaseId === 'faq' ? (
+                <FAQPage key="faq" />
               ) : activePhaseId === 'prompt-library' ? (
                 <PromptLibrary key="prompt-library" />
               ) : activePhaseId === 'certifications' ? (
@@ -1666,10 +1781,10 @@ export default function App() {
                               key={task.id}
                               onClick={() => toggleTask(task.id)}
                               className={cn(
-                                "w-full flex items-center gap-4 p-5 rounded-xl border transition-colors text-left group relative overflow-hidden",
+                                "w-full flex items-center gap-4 p-5 rounded-xl border transition-colors text-left group",
                                 completedTasks.includes(task.id)
                                   ? "bg-secondary/5 border-secondary/20 text-on-surface"
-                                  : "bg-surface-container border-outline-variant/10 text-on-surface-variant hover:border-secondary/30 hover:shadow-[0_0_15px_rgba(103,255,198,0.1)]"
+                                  : "bg-surface-container border-outline-variant/10 text-on-surface-variant hover:border-secondary/30 hover:shadow-sm"
                               )}
                             >
                               {completedTasks.includes(task.id) ? (
@@ -1710,7 +1825,7 @@ export default function App() {
                               <Component
                                 key={idx}
                                 {...props}
-                                className="flex items-center gap-4 p-5 rounded-xl bg-surface-container border border-outline-variant/10 hover:border-primary/30 group card-glow interactive-glow relative overflow-hidden text-left"
+                                className="flex items-center gap-4 p-5 rounded-xl bg-surface-container border border-outline-variant/10 hover:border-primary/30 group text-left"
                               >
                                 <div className={cn(
                                   "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 relative z-10",
@@ -1742,7 +1857,7 @@ export default function App() {
                                 href={res.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-between p-5 rounded-xl bg-gradient-to-r from-surface-container to-surface-container-highest border border-outline-variant/10 hover:border-fuchsia-400/30 group card-glow interactive-glow relative overflow-hidden"
+                                className="flex items-center justify-between p-5 rounded-xl border border-outline-variant/10 hover:border-fuchsia-400/30 group"
                               >
                                 <div className="flex items-center gap-4 min-w-0 relative z-10 w-full pr-12">
                                   <div className="w-10 h-10 rounded-lg bg-fuchsia-400/10 text-fuchsia-400 flex items-center justify-center shrink-0">
@@ -1786,7 +1901,7 @@ export default function App() {
                             {activePhase.followAlongProjects.map((proj, idx) => (
                               <div 
                                 key={idx}
-                                className="p-6 rounded-3xl bg-gradient-to-br from-surface-container to-surface-container-low border border-outline-variant/10 relative overflow-hidden group card-glow"
+                                className="p-6 rounded-md border border-outline-variant/10"
                               >
                                 <div className="flex flex-col md:flex-row gap-6 relative z-10">
                                   {(() => {
@@ -1829,7 +1944,7 @@ export default function App() {
                                     return (
                                       <Component 
                                         {...props}
-                                        className="w-full md:w-48 h-32 rounded-xl bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center group/thumb relative overflow-hidden shrink-0"
+                                        className="w-full md:w-48 h-32 rounded-xl bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center group/thumb shrink-0"
                                       >
                                         {videoId ? (
                                           <img 
@@ -1843,7 +1958,7 @@ export default function App() {
                                             }}
                                           />
                                         ) : (
-                                          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 group-hover/thumb:opacity-100 transition-opacity" />
+                                          <div className="absolute inset-0 opacity-0 group-hover/thumb:opacity-100 transition-opacity" />
                                         )}
                                         <div className="absolute inset-0 flex items-center justify-center">
                                           <Play className="w-8 h-8 text-white group-hover/thumb:text-emerald-400 group-hover/thumb:scale-110 transition-all drop-shadow-lg" />
@@ -1879,7 +1994,7 @@ export default function App() {
                     <div className="space-y-8">
                       
                       {/* Project */}
-                      <div className="p-6 rounded-3xl bg-surface-container border border-outline-variant/10 relative overflow-hidden group card-glow">
+                      <div className="p-6 rounded-md bg-surface-container border border-outline-variant/10">
                         <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                           <Award className="w-24 h-24" />
                         </div>
@@ -1919,7 +2034,7 @@ export default function App() {
                       </div>
 
                       {/* Monetization */}
-                      <div className="p-6 rounded-3xl glass-card border-outline-variant/20 relative overflow-hidden group card-glow">
+                      <div className="p-6 rounded-md border-outline-variant/20">
                         <div className="relative z-10">
                           <div className="flex items-center gap-2 mb-4">
                             <TrendingUp className="w-5 h-5 text-primary" />
@@ -1940,7 +2055,7 @@ export default function App() {
                       </div>
 
                       {/* Stack */}
-                      <div className="p-6 rounded-3xl border border-outline-variant/10 bg-surface-container relative overflow-hidden group card-glow">
+                      <div className="p-6 rounded-md border border-outline-variant/10 bg-surface-container">
                         <div className="relative z-10">
                           <div className="flex items-center gap-2 mb-4">
                             <Wrench className="w-5 h-5 text-secondary" />
@@ -1970,7 +2085,7 @@ export default function App() {
                     <motion.div 
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="p-6 rounded-2xl bg-gradient-to-r from-primary-container/20 to-secondary-container/20 border border-primary/30 text-center max-w-lg w-full"
+                      className="p-6 rounded-sm border border-primary/30 text-center max-w-lg w-full"
                     >
                       <h3 className="text-xl font-bold text-on-surface mb-2">
                         {isPhaseCompleted ? "🎉 Phase Completed!" : "🚀 Share Your Progress"}
@@ -1985,7 +2100,7 @@ export default function App() {
                           href={`https://twitter.com/intent/tweet?text=I'm%20currently%20working%20on%20${activePhase.id.startsWith('v-p') ? 'Track%202%20(Animation)%20Module%20' : activePhase.id.startsWith('marketing-p') ? 'Track%203%20(Marketing)%20Module%20' : 'Phase%20'}${activePhase.number}:%20${encodeURIComponent(activePhase.title)}%20in%20the%20DayZero%20Mastery%20Roadmap!%20%23DayZero`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 rounded-lg bg-[#1DA1F2] text-white text-sm font-bold hover:bg-[#1a91da] transition-colors flex items-center gap-2 btn-glow"
+                          className="px-4 py-2 rounded-lg bg-[#1DA1F2] text-white text-sm font-bold hover:bg-[#1a91da] transition-colors flex items-center gap-2"
                         >
                           Share on X
                         </a>
@@ -1993,7 +2108,7 @@ export default function App() {
                           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 rounded-lg bg-[#0A66C2] text-white text-sm font-bold hover:bg-[#0958a6] transition-colors flex items-center gap-2 btn-glow"
+                          className="px-4 py-2 rounded-lg bg-[#0A66C2] text-white text-sm font-bold hover:bg-[#0958a6] transition-colors flex items-center gap-2"
                         >
                           Share on LinkedIn
                         </a>
@@ -2006,7 +2121,7 @@ export default function App() {
                           onClick={() => {
                             handleSelectPhase(prevPhase.id, prevPhase.id.startsWith('v-p') ? 'video' : prevPhase.id.startsWith('marketing-p') ? 'marketing' : 'fullstack');
                           }}
-                          className="px-6 py-3 rounded-xl border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex items-center gap-2 btn-glow"
+                          className="px-6 py-3 rounded-xl border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex items-center gap-2"
                         >
                           <ChevronLeft className="w-4 h-4" />
                           <div className="text-left">
@@ -2028,12 +2143,12 @@ export default function App() {
                             handleSelectPhase(nextPhase.id, nextPhase.id.startsWith('v-p') ? 'video' : nextPhase.id.startsWith('marketing-p') ? 'marketing' : 'fullstack');
                           }}
                           className={cn(
-                            "px-6 py-3 rounded-xl text-white flex items-center gap-2 text-right btn-glow",
+                            "px-6 py-3 rounded-xl flex items-center gap-2 text-right",
                             nextPhase.id.startsWith('v-p') 
-                              ? "bg-amber-500 hover:bg-amber-600 shadow-[0_5px_15px_-3px_rgba(245,158,11,0.3)]" 
+                              ? "bg-amber-500 text-white hover:bg-amber-600 shadow-[0_5px_15px_-3px_rgba(245,158,11,0.3)]" 
                               : nextPhase.id.startsWith('marketing-p') 
-                              ? "bg-emerald-500 hover:bg-emerald-600 shadow-[0_5px_15px_-3px_rgba(16,185,129,0.3)]" 
-                              : "bg-primary-container hover:bg-primary-container/80 shadow-[0_5px_15px_-3px_rgba(108,59,255,0.3)]"
+                              ? "bg-emerald-500 text-white hover:bg-emerald-600 shadow-[0_5px_15px_-3px_rgba(16,185,129,0.3)]" 
+                              : "bg-primary text-on-primary hover:bg-primary/80 shadow-[0_5px_15px_-3px_rgba(108,59,255,0.3)]"
                           )}
                         >
                           <div>
@@ -2086,10 +2201,10 @@ export default function App() {
         aria-label="Toggle AI Path Assistant"
         className={cn(
           "fixed bottom-5 right-4 sm:bottom-8 sm:right-8 z-50 flex items-center justify-center transition-all duration-300 shadow-2xl active:scale-95 group",
-          "w-12 h-12 sm:w-14 sm:h-14 rounded-2xl sm:rounded-full",
+          "w-12 h-12 sm:w-14 sm:h-14 rounded-sm sm:rounded-full",
           isAiOpen 
             ? "bg-surface-container-highest border border-outline-variant/30 text-on-surface hover:bg-surface-container-high" 
-            : "bg-primary-container text-white hover:scale-105 shadow-[0_0_25px_rgba(108,59,255,0.45)]"
+            : "bg-primary-container text-on-primary-container hover:scale-105 shadow-sm"
         )}
       >
         {isAiOpen ? (
@@ -2102,6 +2217,7 @@ export default function App() {
         )}
       </button>
 
+      <PWAToast />
       <PremiumVideoPlayer 
         isOpen={videoPlayerState.isOpen} 
         initialVideoUrl={videoPlayerState.url} 

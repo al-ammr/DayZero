@@ -1,0 +1,38 @@
+# TechOptyx — Earn as you Learn
+
+> TechOptyx is a comprehensive builder operating system and interactive curriculum designed to help creators, developers, and entrepreneurs master AI full-stack development, AI video animation, and digital marketing while monetizing their work from Phase 1.
+
+Website: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app
+Full LLM Documentation: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/llms-full.txt
+Sitemap: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/sitemap.xml
+
+## Core Tracks
+
+- [AI & Full-Stack Development](https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/tracks/ai-fullstack): 14 practical phases taking learners from digital fundamentals, Python, and TypeScript to building LLM apps with LangChain, LangGraph, RAG pipelines, fine-tuning, and multi-agent systems. Every phase includes a sellable client deliverable.
+- [AI Video Animation & Generation](https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/tracks/video-animation): 10 progressive modules covering Midjourney, Flux, Runway Gen-3, Kling, Pika, ElevenLabs voice cloning, lip sync with Hedra/LivePortrait, and commercial video monetization.
+- [Digital Marketing & Growth](https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/tracks/digital-marketing): 10 execution phases teaching brand strategy, SEO & AEO (Answer Engine Optimization), paid social acquisition (Meta & TikTok Ads), email automation, conversion rate optimization (CRO), and client retainers.
+
+## Key Features
+
+- **Sellable Deliverables in Every Phase**: Unlike passive tutorials, each phase requires building a specific product or service with market pricing and outreach scripts.
+- **Industry Certifications Directory**: Curated free and recognized certification pathways from Google, DeepLearning.AI, AWS, Meta, and HubSpot.
+- **Battle-Tested Prompt Library**: 50+ tested, copy-paste prompts across SaaS validation, code refactoring, copywriting, Midjourney art, and marketing.
+- **AI Path Assistant**: Interactive in-browser AI mentor powered by Gemini models for real-time code reviews, project feedback, and sales strategy.
+- **Installable PWA**: Works offline and installs as a native mobile and desktop Progressive Web App.
+
+## Canonical Public URLs
+
+- Homepage & Overview: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/
+- About Us & Founder Story: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/about
+- Frequently Asked Questions (FAQ): https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/faq
+- AI & Full-Stack Track: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/tracks/ai-fullstack
+- AI Video Track: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/tracks/video-animation
+- Digital Marketing Track: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/tracks/digital-marketing
+- Prompt Library: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/prompt-library
+- Free Certifications Directory: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/certifications
+
+## Founder & Contact
+
+- Founder: Amr Suleiman (Architect & Full-Stack AI Engineer)
+- Contact & Support: amrsuleiman777@gmail.com
+- Mission: Democratize high-income technical skills and empower builders worldwide to build sustainable digital income streams.

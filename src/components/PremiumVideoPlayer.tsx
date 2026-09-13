@@ -22,13 +22,6 @@ interface PremiumVideoPlayerProps {
   onClose: () => void;
 }
 
-// Global type for YT
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
 
 export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }: PremiumVideoPlayerProps) {
   const [videos, setVideos] = useState<VideoItem[]>([]);
@@ -157,8 +150,8 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
 
       // If onYouTubeIframeAPIReady is already assigned, we might overwrite it,
       // but usually it's fine for a single player instance.
-      const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => {
+      const prev = (window as any).onYouTubeIframeAPIReady;
+      (window as any).onYouTubeIframeAPIReady = () => {
         if (prev) prev();
         initPlayer();
       };
@@ -207,7 +200,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
       }
     }
 
-    const playerOptions: any = {
+    const playerOptions: YT.PlayerOptions = {
       playerVars: {
         autoplay: 0,
         controls: 0,
@@ -235,7 +228,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
     playerRef.current = new window.YT.Player('yt-player', playerOptions);
   };
 
-  const onPlayerReady = (event: any) => {
+  const onPlayerReady = (event: YT.PlayerEvent) => {
     setDuration(event.target.getDuration());
     if (!showThumbnail || shouldPlayOnReady.current) {
       event.target.playVideo();
@@ -243,7 +236,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
     }
   };
 
-  const onPlayerStateChange = (event: any) => {
+  const onPlayerStateChange = (event: YT.OnStateChangeEvent) => {
     if (event.data === window.YT.PlayerState.PLAYING) {
       setIsPlaying(true);
       setDuration(playerRef.current.getDuration());
@@ -392,7 +385,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-[#0B0B0F] flex flex-row overflow-hidden font-sans text-white"
+        className="fixed inset-0 z-[100] bg-surface flex flex-row overflow-hidden font-sans text-on-surface"
       >
         {/* Course Content Sidebar */}
         <motion.div 
@@ -403,37 +396,37 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
           }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
           className={cn(
-            "absolute md:relative left-0 top-0 z-50 h-full bg-[#111118] border-r border-white/10 flex flex-col shrink-0 overflow-hidden transition-[border-color]",
+            "absolute md:relative left-0 top-0 z-50 h-full bg-surface-container border-r border-outline-variant/30 flex flex-col shrink-0 overflow-hidden transition-[border-color]",
             !isSidebarOpen && "border-r-0 pointer-events-none"
           )}
         >
-          <div className="p-4 border-b border-white/10 flex items-center justify-between bg-[#111118] z-10 shrink-0">
-            <h2 className="text-lg font-bold flex items-center gap-2 text-white">
-              <ListVideo className="w-5 h-5 text-[#7C3AED]" />
+          <div className="p-4 border-b border-outline-variant/30 flex items-center justify-between bg-surface-container z-10 shrink-0">
+            <h2 className="text-lg font-bold flex items-center gap-2 text-on-surface">
+              <ListVideo className="w-5 h-5 text-secondary" />
               Course Content
             </h2>
             {/* Close button works on both PC (desktop) and mobile */}
             <button 
               id="close-course-content-btn"
               onClick={() => setIsSidebarOpen(false)} 
-              className="p-1.5 hover:bg-white/10 rounded-lg text-white/70 hover:text-white transition-colors flex items-center gap-1 cursor-pointer group"
+              className="p-1.5 hover:bg-surface-container-high rounded-lg text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1 cursor-pointer group"
               title="Close Course Content (Ctrl+B)"
               aria-label="Close Course Content"
             >
-              <PanelLeftClose className="w-5 h-5 hidden md:block group-hover:text-[#A78BFA] transition-colors" />
+              <PanelLeftClose className="w-5 h-5 hidden md:block group-hover:text-primary transition-colors" />
               <X strokeWidth={1.5} className="w-5 h-5 md:hidden" />
             </button>
           </div>
 
           {/* Track Filter Tabs */}
-          <div className="p-2 border-b border-white/10 grid grid-cols-4 gap-1 bg-[#0b0b10]">
+          <div className="p-2 border-b border-outline-variant/30 grid grid-cols-4 gap-1 bg-surface-container-low">
             <button
               onClick={() => setSelectedTrackFilter('all')}
               className={cn(
                 "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
                 selectedTrackFilter === 'all'
-                  ? "bg-white/20 text-white font-bold"
-                  : "text-[#A1A1AA] hover:text-white hover:bg-white/5"
+                  ? "bg-primary text-on-primary font-bold shadow-sm"
+                  : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
               )}
             >
               All
@@ -443,8 +436,8 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
               className={cn(
                 "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
                 selectedTrackFilter === 'fullstack'
-                  ? "bg-[#7C3AED] text-white font-bold shadow-sm"
-                  : "text-[#A1A1AA] hover:text-[#7C3AED] hover:bg-white/5"
+                  ? "bg-primary text-on-primary font-bold shadow-sm"
+                  : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
               )}
               title="Track 1: Full-Stack AI Mastery"
             >
@@ -455,8 +448,8 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
               className={cn(
                 "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
                 selectedTrackFilter === 'video'
-                  ? "bg-amber-500 text-white font-bold shadow-sm"
-                  : "text-[#A1A1AA] hover:text-amber-400 hover:bg-white/5"
+                  ? "bg-primary text-on-primary font-bold shadow-sm"
+                  : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
               )}
               title="Track 2: AI Video & Animation"
             >
@@ -467,8 +460,8 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
               className={cn(
                 "py-1 px-1 rounded text-[10px] font-semibold transition-all text-center truncate",
                 selectedTrackFilter === 'marketing'
-                  ? "bg-emerald-500 text-white font-bold shadow-sm"
-                  : "text-[#A1A1AA] hover:text-emerald-400 hover:bg-white/5"
+                  ? "bg-primary text-on-primary font-bold shadow-sm"
+                  : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
               )}
               title="Track 3: Digital Marketing"
             >
@@ -481,16 +474,13 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
               <div key={phaseId} className="mb-2">
                 <button
                   onClick={() => togglePhase(phaseId)}
-                  className="w-full flex items-center justify-between p-3 hover:bg-white/5 rounded-lg transition-colors text-left"
+                  className="w-full flex items-center justify-between p-3 hover:bg-surface-container-high rounded-lg transition-colors text-left"
                 >
                   <div className="flex items-center gap-2 truncate pr-2">
-                    <span className={cn(
-                      "w-1.5 h-1.5 rounded-full shrink-0",
-                      group.track === 'video' ? "bg-amber-500" : group.track === 'marketing' ? "bg-emerald-500" : "bg-[#7C3AED]"
-                    )} />
-                    <span className="font-semibold text-sm text-[#A1A1AA] truncate">{group.title}</span>
+                    <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-secondary" />
+                    <span className="font-semibold text-sm text-on-surface-variant truncate">{group.title}</span>
                   </div>
-                  {expandedPhases[phaseId] ? <ChevronDown className="w-4 h-4 shrink-0 text-[#A1A1AA]" /> : <ChevronRight className="w-4 h-4 shrink-0 text-[#A1A1AA]" />}
+                  {expandedPhases[phaseId] ? <ChevronDown className="w-4 h-4 shrink-0 text-on-surface-variant" /> : <ChevronRight className="w-4 h-4 shrink-0 text-on-surface-variant" />}
                 </button>
                 <AnimatePresence>
                   {expandedPhases[phaseId] && (
@@ -506,25 +496,17 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                             key={video.uid}
                             onClick={() => selectVideo(video)}
                             className={cn(
-                              "w-full text-left p-3 rounded-lg text-sm transition-all flex items-start gap-3 group",
+                              "w-full text-left p-3 rounded-lg text-sm transition-all flex items-start gap-3 group border",
                               currentVideo?.uid === video.uid 
-                                ? group.track === 'video'
-                                  ? "bg-amber-500/20 text-white border border-amber-500/40"
-                                  : group.track === 'marketing'
-                                  ? "bg-emerald-500/20 text-white border border-emerald-500/40"
-                                  : "bg-[#7C3AED]/20 text-white border border-[#7C3AED]/30" 
-                                : "text-[#A1A1AA] hover:bg-white/5 hover:text-white"
+                                ? "bg-primary/5 text-primary border-primary/20 font-medium"
+                                : "text-on-surface-variant border-transparent hover:bg-surface-container-high hover:text-on-surface"
                             )}
                           >
                             <div className={cn(
                               "mt-0.5 shrink-0 w-2 h-2 rounded-full",
                               currentVideo?.uid === video.uid 
-                                ? group.track === 'video'
-                                  ? "bg-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
-                                  : group.track === 'marketing'
-                                  ? "bg-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
-                                  : "bg-[#A78BFA] shadow-[0_0_10px_#A78BFA]" 
-                                : "bg-white/20 group-hover:bg-white/50"
+                                ? "bg-primary"
+                                : "bg-outline-variant group-hover:bg-primary/50"
                             )} />
                             <span className="line-clamp-2 leading-snug">{video.title}</span>
                           </button>
@@ -539,29 +521,29 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
         </motion.div>
 
         {/* Main Player Area */}
-        <div className="flex-1 flex flex-col h-full relative bg-[#0B0B0F]">
+        <div className="flex-1 flex flex-col h-full relative bg-surface">
           {/* Top Bar */}
-          <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-20 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+          <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-20 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 pointer-events-none">
             <div className="flex items-center gap-3 pointer-events-auto min-w-0 pr-4">
               {!isSidebarOpen && (
                 <button 
                   id="open-course-content-btn"
                   onClick={() => setIsSidebarOpen(true)}
-                  className="px-3.5 py-2 bg-black/75 hover:bg-[#7C3AED] border border-white/15 rounded-xl backdrop-blur-md text-white flex items-center gap-2 text-xs font-semibold transition-all shadow-xl hover:scale-105 shrink-0 btn-glow cursor-pointer group"
+                  className="px-3.5 py-2 bg-surface hover:bg-surface-container-high border border-outline-variant/50 rounded-xl text-on-surface flex items-center gap-2 text-xs font-semibold transition-all shadow-sm hover:scale-105 shrink-0 cursor-pointer group"
                   title="Open Course Content (Ctrl+B)"
                   aria-label="Open Course Content"
                 >
-                  <PanelLeftOpen className="w-4 h-4 text-purple-300 group-hover:text-white transition-colors" />
+                  <PanelLeftOpen className="w-4 h-4 text-on-surface-variant group-hover:text-primary transition-colors" />
                   <span className="hidden sm:inline">Course Content</span>
                 </button>
               )}
-              <h1 className="text-sm md:text-lg font-bold text-white drop-shadow-md truncate max-w-[55vw]">
+              <h1 className="text-sm md:text-lg font-bold text-on-surface truncate max-w-[55vw]">
                 {currentVideo?.title}
               </h1>
             </div>
             <button 
               onClick={onClose}
-              className="p-2 bg-black/60 hover:bg-red-500/80 rounded-xl backdrop-blur-md text-white btn-glow pointer-events-auto shrink-0 transition-colors cursor-pointer"
+              className="p-2 bg-surface hover:bg-red-50 border border-outline-variant/50 hover:border-red-200 hover:text-red-600 rounded-xl text-on-surface-variant pointer-events-auto shrink-0 transition-all cursor-pointer"
               title="Close player"
               aria-label="Close player"
             >
@@ -600,8 +582,8 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                     className="w-full h-full object-cover transition-transform duration-700 group-hover/thumb:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover/thumb:bg-black/20 transition-colors" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-[#7C3AED]/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(124,58,237,0.5)] group-hover/thumb:scale-110 group-hover/thumb:bg-[#7C3AED] transition-all">
-                    <Play className="w-8 h-8 text-white fill-white ml-1" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-secondary/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl group-hover/thumb:scale-110 group-hover/thumb:bg-secondary transition-all">
+                    <Play className="w-8 h-8 text-on-primary fill-current ml-1" />
                   </div>
                 </div>
               )}
@@ -626,7 +608,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                     />
                     <div className="w-full h-1.5 bg-white/20 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-[#A78BFA] transition-all duration-100 ease-linear"
+                        className="h-full bg-secondary transition-all duration-100 ease-linear"
                         style={{ width: `${progress}%` }}
                       />
                     </div>
@@ -647,7 +629,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                     
                     <button 
                       onClick={handlePlayPause}
-                      className="w-12 h-12 bg-[#7C3AED] hover:bg-[#A78BFA] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:scale-105 text-white btn-glow"
+                      className="w-12 h-12 bg-secondary hover:bg-secondary-container rounded-full flex items-center justify-center shadow-lg hover:scale-105 text-on-primary transition-all"
                     >
                       {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-1" />}
                     </button>
@@ -668,7 +650,7 @@ export default function PremiumVideoPlayer({ isOpen, initialVideoUrl, onClose }:
                       onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
                       className={cn(
                         "text-white/80 hover:text-white hover:scale-105 transition-all p-1.5 rounded-lg flex items-center gap-1.5 text-xs font-medium cursor-pointer",
-                        isSidebarOpen ? "bg-white/15 text-purple-300" : "hover:bg-white/5"
+                        isSidebarOpen ? "bg-white/15 text-secondary" : "hover:bg-white/5"
                       )}
                       title={isSidebarOpen ? "Close Course Content (Ctrl+B)" : "Open Course Content (Ctrl+B)"}
                       aria-label={isSidebarOpen ? "Close Course Content" : "Open Course Content"}

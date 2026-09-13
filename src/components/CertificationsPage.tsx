@@ -1,7 +1,26 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 
-const DATA: Record<string, any> = {
+interface ResourceItem {
+  type: string;
+  provider: string;
+  name: string;
+  desc: string;
+}
+
+interface PhaseData {
+  id: string;
+  title: string;
+  resources: ResourceItem[];
+  filteredResources?: ResourceItem[];
+}
+
+interface TrackData {
+  name: string;
+  phases: PhaseData[];
+}
+
+const DATA: Record<string, TrackData> = {
 "track-01": {
   name: "Full-Stack AI Mastery",
   phases: [
@@ -227,18 +246,36 @@ const DATA: Record<string, any> = {
 };
 
 export default function CertificationsPage() {
-  const [activeTrack, setActiveTrack] = useState('track-01');
+  const [activeTrack, setActiveTrack] = useState('all');
   const [activeType, setActiveType] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const activeData = DATA[activeTrack] || DATA['track-01'];
+  const activeData = useMemo(() => {
+    if (activeTrack === 'all') {
+      const allPhases = Object.entries(DATA).flatMap(([trackKey, track]) => {
+        return (track.phases || []).map((p) => ({
+          ...p,
+          uniqueId: `${trackKey}-${p.id}`,
+          trackName: track.name
+        }));
+      });
+      return { phases: allPhases };
+    }
+    return {
+      phases: (DATA[activeTrack]?.phases || []).map((p) => ({
+        ...p,
+        uniqueId: p.id,
+        trackName: DATA[activeTrack].name
+      }))
+    };
+  }, [activeTrack]);
 
   let totalShown = 0;
   
   const filteredPhases = useMemo(() => {
     if (!activeData?.phases) return [];
-    return activeData.phases.map((phase: any) => {
-      const filteredResources = (phase.resources || []).filter((r: any) => {
+    return activeData.phases.map((phase) => {
+      const filteredResources = (phase.resources || []).filter((r) => {
         const typeMatch = activeType === 'all' || r.type === activeType;
         const q = searchQuery.trim().toLowerCase();
         const textMatch = !q ||
@@ -253,7 +290,7 @@ export default function CertificationsPage() {
     });
   }, [activeData, activeType, searchQuery]);
 
-  filteredPhases.forEach((p: any) => {
+  filteredPhases.forEach((p) => {
     totalShown += p.filteredResources.length;
   });
 
@@ -428,10 +465,21 @@ export default function CertificationsPage() {
           text-align:center; padding:60px 20px; color:var(--text-faint); font-size:0.95rem;
         }
 
-        @media (max-width:640px){
-          .cert-page-container .controls-row { flex-direction:column; align-items:stretch; }
-          .cert-page-container .track-tabs { justify-content:stretch; }
-          .cert-page-container .track-tabs button { flex:1; }
+        @media (max-width:800px){
+          .cert-page-container .controls-row { 
+            flex-direction: row; 
+            align-items: center; 
+            flex-wrap: nowrap; 
+            overflow-x: auto; 
+            padding-bottom: 8px; 
+            -webkit-overflow-scrolling: touch; 
+          }
+          .cert-page-container .controls-row::-webkit-scrollbar { display: none; }
+          .cert-page-container .track-tabs { flex-shrink: 0; }
+          .cert-page-container .search-box { min-width: 200px; flex-shrink: 0; }
+          .cert-page-container .type-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
+          .cert-page-container .type-chips::-webkit-scrollbar { display: none; }
+          .cert-page-container .type-chips button { flex-shrink: 0; }
           .cert-page-container .resource-grid { grid-template-columns:1fr; }
           .cert-page-container .phase summary { flex-wrap:wrap; }
         }
@@ -462,6 +510,12 @@ export default function CertificationsPage() {
               />
             </div>
             <div className="track-tabs">
+              <button 
+                className={activeTrack === 'all' ? 'active' : ''}
+                onClick={() => setActiveTrack('all')}
+              >
+                All Tracks
+              </button>
               {Object.keys(DATA).map(trackKey => (
                 <button 
                   key={trackKey}
@@ -501,7 +555,7 @@ export default function CertificationsPage() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <strong>{activeData.phases.reduce((a: any, p: any) => a + p.resources.length, 0)}</strong> resources across <strong>{activeData.phases.length}</strong> phases in {activeData.name}
+                <strong>{activeData.phases.reduce((a, p) => a + p.resources.length, 0)}</strong> resources across <strong>{activeData.phases.length}</strong> phases
               </React.Fragment>
             )}
           </div>
@@ -515,17 +569,17 @@ export default function CertificationsPage() {
               No resources match your search. Try a different keyword or type filter.
             </div>
           ) : (
-            filteredPhases.map((phase: any, i: number) => {
+            filteredPhases.map((phase, i: number) => {
               if (phase.filteredResources.length === 0) return null;
               
               const isFirstOrMatchesSearch = searchQuery ? true : i === 0;
 
               return (
-                <details key={phase.id} className="phase" open={isFirstOrMatchesSearch}>
+                <details key={phase.uniqueId} className="phase" open={isFirstOrMatchesSearch}>
                   <summary>
                     <div className="phase-id">
                       <span className="num mono">{phase.id}</span>
-                      <h3>{phase.title}</h3>
+                      <h3>{activeTrack === 'all' ? `${phase.title} (${phase.trackName})` : phase.title}</h3>
                     </div>
                     <div className="phase-meta">
                       <span className="phase-count">{phase.filteredResources.length} resource{phase.filteredResources.length !== 1 ? 's' : ''}</span>
@@ -533,7 +587,7 @@ export default function CertificationsPage() {
                     </div>
                   </summary>
                   <div className="resource-grid">
-                    {phase.filteredResources.map((r: any, j: number) => (
+                    {phase.filteredResources.map((r, j: number) => (
                       <div key={j} className="card">
                         <div className="card-top">
                           <span className={`type-badge ${r.type}`}>{r.type}</span>

@@ -1,0 +1,63 @@
+# TechOptyx robots.txt
+# Answer Engine Optimization (AEO) & Search Engine Optimization (SEO) Directive
+
+# -------------------------------------------------------------
+# AI Search & Retrieval Crawlers (Explicitly Allowed for Citations)
+# -------------------------------------------------------------
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: PerplexityBot
+User-agent: Claude-SearchBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: YouBot
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /api/
+
+# -------------------------------------------------------------
+# AI Training & Foundation Model Crawlers (Allowed by Default)
+# -------------------------------------------------------------
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: cohere-ai
+Allow: /
+Disallow: /api/
+
+# -------------------------------------------------------------
+# Traditional Search Engine Crawlers
+# -------------------------------------------------------------
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Baiduspider
+User-agent: YandexBot
+User-agent: Slurp
+Allow: /
+Disallow: /api/
+
+# -------------------------------------------------------------
+# Default Rule for All Other Crawlers
+# -------------------------------------------------------------
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /faq
+Allow: /tracks/
+Allow: /prompt-library
+Allow: /certifications
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
+
+# -------------------------------------------------------------
+# Sitemaps & LLM Context Files
+# -------------------------------------------------------------
+Sitemap: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/sitemap.xml
+# Emerging AI standards
+# LLM-Summary: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/llms.txt
+# LLM-Full: https://ais-pre-lbq5lkbylbppscqlpr6ota-504961274447.europe-west2.run.app/llms-full.txt

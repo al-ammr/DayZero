@@ -143,7 +143,7 @@ export default function PromptLibrary() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-primary text-xs font-label uppercase tracking-widest mb-6 shadow-[0_0_15px_rgba(108,59,255,0.2)]"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-primary text-xs font-label uppercase tracking-widest mb-6 shadow-sm"
           >
             <Sparkles className="w-3.5 h-3.5" />
             Prompt Library
@@ -155,7 +155,7 @@ export default function PromptLibrary() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-headline font-black mb-6 text-on-surface tracking-tight"
           >
-            Master the Art of <br className="md:hidden" /><em className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary not-italic">AI Precision</em>
+            Master the Art of <br className="md:hidden" /><em className="text-transparent bg-clip-text not-italic">AI Precision</em>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -169,7 +169,7 @@ export default function PromptLibrary() {
         </div>
 
         {/* Controls - Glassmorphism */}
-        <div className="glass-panel p-4 md:p-5 rounded-3xl mb-10 flex flex-col lg:flex-row gap-4 items-center justify-between shadow-2xl">
+        <div className="glass-panel p-4 md:p-5 rounded-md mb-10 flex flex-col lg:flex-row gap-4 items-center justify-between shadow-2xl">
           <div className="relative w-full lg:w-96 shrink-0">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant/50" />
             <input 
@@ -178,7 +178,7 @@ export default function PromptLibrary() {
               placeholder="Search prompts, tags..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-surface-container-low border border-outline-variant/20 rounded-2xl py-3 pl-11 pr-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary/50 focus:bg-surface-container transition-all shadow-inner"
+              className="w-full bg-surface-container-low border border-outline-variant/20 rounded-sm py-3 pl-11 pr-4 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary/50 focus:bg-surface-container transition-all shadow-inner"
             />
           </div>
           
@@ -196,7 +196,7 @@ export default function PromptLibrary() {
                   className={cn(
                     "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap border shrink-0",
                     activeCategory === cat.id 
-                      ? "bg-primary text-white border-primary shadow-[0_0_15px_rgba(108,59,255,0.4)]" 
+                      ? "bg-primary text-white border-primary shadow-sm" 
                       : "bg-surface-container-low text-on-surface-variant border-outline-variant/10 hover:bg-surface-container-high hover:text-on-surface"
                   )}
                 >
@@ -226,7 +226,7 @@ export default function PromptLibrary() {
                   scale: { type: "spring", bounce: 0.3, duration: 0.8, delay: (idx % 6) * 0.05 },
                   default: { duration: 0.5 }
                 }}
-                className="glass-card card-glow interactive-glow rounded-3xl p-6 md:p-8 flex flex-col group relative overflow-hidden border border-outline-variant/10 hover:border-primary/30 hover:shadow-[0_12px_40px_rgba(108,59,255,0.15)] transition-colors"
+                className="glass-card card-glow interactive-glow rounded-md p-6 md:p-8 flex flex-col group relative overflow-hidden border border-outline-variant/10 hover:border-primary/30 hover:shadow-[0_12px_40px_rgba(108,59,255,0.15)] transition-colors"
               >
                 <div className="relative z-10 flex justify-between items-start mb-6">
                   <div className="flex gap-2">
@@ -247,7 +247,7 @@ export default function PromptLibrary() {
                     className={cn(
                       "p-2 rounded-xl border transition-all",
                       favorites.includes(p.id)
-                        ? "bg-yellow-400/20 border-yellow-400/30 text-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.2)]"
+                        ? "bg-yellow-400/20 border-yellow-400/30 text-yellow-400 shadow-sm"
                         : "bg-surface-container-highest/20 border-outline-variant/10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest/40"
                     )}
                     title={favorites.includes(p.id) ? "Remove from favorites" : "Add to favorites"}
@@ -266,7 +266,7 @@ export default function PromptLibrary() {
                   }}
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   className={cn(
-                    "relative z-10 bg-surface-container border border-outline-variant/10 rounded-2xl p-5 text-sm font-mono text-on-surface-variant/90 mb-5 overflow-hidden shadow-inner",
+                    "relative z-10 bg-surface-container border border-outline-variant/10 rounded-sm p-5 text-sm font-mono text-on-surface-variant/90 mb-5 overflow-hidden shadow-inner",
                     expandedId === p.id ? "overflow-y-auto custom-scrollbar" : ""
                   )}
                 >
@@ -278,7 +278,7 @@ export default function PromptLibrary() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#111623] to-transparent pointer-events-none" 
+                        className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" 
                       />
                     )}
                   </AnimatePresence>
@@ -290,8 +290,8 @@ export default function PromptLibrary() {
                     className={cn(
                       "flex-grow flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold border btn-glow",
                       copiedId === p.id 
-                        ? "bg-green-500/20 text-green-400 border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)]" 
-                        : "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 hover:shadow-[0_0_15px_rgba(108,59,255,0.2)]"
+                        ? "bg-green-500/20 text-green-400 border-green-500/30 shadow-sm" 
+                        : "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 hover:shadow-sm"
                     )}
                   >
                     {copiedId === p.id ? (
@@ -336,7 +336,7 @@ export default function PromptLibrary() {
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-24 glass-panel rounded-3xl mt-8"
+            className="text-center py-24 glass-panel rounded-md mt-8"
           >
             <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Sparkles className="w-10 h-10 text-primary/50" />
@@ -350,7 +350,7 @@ export default function PromptLibrary() {
           <div className="text-center mt-16">
             <button 
               onClick={() => setVisibleCount(prev => prev + 6)}
-              className="px-8 py-4 rounded-2xl glass-panel text-sm font-bold uppercase tracking-widest text-on-surface hover:bg-surface-container-high hover:scale-105 active:scale-95 shadow-xl btn-glow"
+              className="px-8 py-4 rounded-sm glass-panel text-sm font-bold uppercase tracking-widest text-on-surface hover:bg-surface-container-high hover:scale-105 active:scale-95 shadow-xl btn-glow"
             >
               Load More Prompts
             </button>

@@ -110,3 +110,36 @@ Curriculum content is bundled directly and consumed at runtime — all curriculu
 
 Built by **Amr Suleiman** under **TechOptyx**.  
 *Tagline: Earn while you learn. From Day Zero.*
+
+## Progressive Web App (PWA)
+
+This application is configured as a fully installable Progressive Web App (PWA).
+
+### How to Install
+
+**Desktop (Chrome/Edge):**
+1. Open the app in your browser.
+2. Look for the install icon (a screen with a down arrow) in the right side of the address bar, OR use the "Install App" button in the app's sidebar.
+
+**Android (Chrome):**
+1. A prompt will appear inviting you to "Install TechOptyx".
+2. Alternatively, use the "Install App" button in the sidebar menu or the "Add to Home screen" option in Chrome's menu.
+
+**iOS (Safari):**
+1. Due to Apple's restrictions, iOS does not support automatic install prompts.
+2. Open the app in Safari.
+3. Tap the "Install on iOS" button in the sidebar to see guided instructions.
+4. Tap the **Share** button in Safari's bottom bar.
+5. Scroll down and tap **Add to Home Screen**.
+
+### Updating the PWA Logo
+
+We have generated default placeholder icons for the PWA using a simple logo placeholder.
+To generate a new full set of PWA icons using your own custom brand logo:
+
+1. Replace `public/main_logo.png` with your own square, high-res logo (SVG or PNG).
+2. Run the PWA asset generator:
+   ```bash
+   npx pwa-assets-generator --preset minimal public/main_logo.png
+   ```
+3. This will automatically overwrite all the required sizes (`pwa-192x192.png`, `pwa-512x512.png`, `maskable-icon-512x512.png`, `apple-touch-icon-180x180.png`, and `favicon.ico`) with your new brand mark!
